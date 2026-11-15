@@ -111,13 +111,6 @@
 
   <section id="top" data-screen-label="Ouverture" style="position:relative;background:#f4f0e5;color:#202820;padding:clamp(24px,4vh,52px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};overflow:hidden;scroll-margin-top:80px;display:flex;flex-direction:column;align-items:center;justify-content:center">
     <h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap">Casa Rosa, traiteur fait maison à Aurillac</h1>
-    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0">
-        <span style="display:none;position:absolute;left:-118px;top:40%;width:250px;height:192px;transform:rotate(-8deg)"><svg sc-camel-view-box="0 0 260 200" width="100%" height="100%" fill="none" stroke="#8D1D2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M60 84 L60 158 C60 176 74 186 92 186 L210 186 C228 186 240 176 240 158 L240 84"></path><path d="M50 84 L250 84"></path><path d="M58 70 C92 50 208 50 242 70 L242 84 L58 84 Z"></path><path d="M134 54 C134 42 166 42 166 54"></path><path d="M60 102 L8 92 C0 90 -2 104 6 106 L60 118"></path><path d="M220 104 C226 124 226 146 218 164"></path><path d="M118 34 C110 24 126 16 118 6 M150 30 C142 20 158 12 150 2 M182 34 C174 24 190 16 182 6"></path></svg></span>
-        <span style="position:absolute;right:-40px;top:-56px;width:200px;height:200px;transform:rotate(96deg)"><svg sc-camel-view-box="0 0 120 120" width="100%" height="100%" fill="none" stroke="#8D1D2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 106 C10 56 46 16 108 12 C110 70 72 108 14 106 Z"></path><path d="M14 106 C44 76 70 48 98 22"></path><path d="M40 80 C38 66 40 56 46 48 M56 64 C66 64 76 60 84 54 M60 58 C58 46 62 38 68 32"></path></svg></span>
-        <span style="position:absolute;right:-18px;bottom:-60px;width:86px;height:236px;transform:rotate(-28deg)"><svg sc-camel-view-box="0 0 80 220" width="100%" height="100%" fill="none" stroke="#8D1D2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 8 C20 8 12 30 14 50 C16 70 28 80 40 80 C52 80 64 70 66 50 C68 30 60 8 40 8 Z"></path><path d="M28 30 C26 42 28 56 36 64"></path><path d="M36 80 L33 208 C33 214 47 214 47 208 L44 80"></path></svg></span>
-      </div>
-    </sc-if>
 
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <div style="zoom:{{ heroStageZoom }};position:relative;z-index:1;width:1160px;display:flex;flex-direction:column;align-items:center;gap:26px">
@@ -199,13 +192,6 @@
           <svg sc-camel-view-box="0 0 120 64" width="120" height="64" style="flex:0 0 auto"><path d="M0 4 Q60 44 120 4" stroke="#B08D57" stroke-width="1.5" fill="none"></path><rect x="56.5" y="22" width="7" height="6" rx="1.5" fill="#B08D57"></rect><ellipse class="cr-bulb" cx="60" cy="37" rx="6.5" ry="9" fill="#B08D57" style="animation-delay:1.9s"></ellipse></svg>
           <svg sc-camel-view-box="0 0 120 64" width="120" height="64" style="flex:0 0 auto"><path d="M0 4 Q60 44 120 4" stroke="#B08D57" stroke-width="1.5" fill="none"></path><rect x="56.5" y="22" width="7" height="6" rx="1.5" fill="#B08D57"></rect><ellipse class="cr-bulb" cx="60" cy="37" rx="6.5" ry="9" fill="#8D1D2C" style="animation-delay:.45s"></ellipse></svg>
         </div>
-        <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-          <!-- Line drawings in the site's doodle style: a fir tree and a bauble -->
-          <span style="position:absolute;left:13%;top:96px;width:96px;height:140px;opacity:.8;transform:rotate(-4deg)"><svg sc-camel-view-box="0 0 96 140" width="100%" height="100%" fill="none" stroke="#f4f0e5" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M48 18 L26 52 H38 L18 86 H32 L10 120 H86 L64 86 H78 L58 52 H70 Z"></path><path d="M42 120 V134 H54 V120"></path><path d="M30 70 Q48 79 66 66 M22 104 Q48 114 74 99" stroke="#B08D57"></path><path d="M48 2 L51 10 L59 10 L53 15 L55 23 L48 18 L41 23 L43 15 L37 10 L45 10 Z" fill="#B08D57" stroke="#B08D57" stroke-width="1"></path></svg></span>
-          <span style="position:absolute;right:13%;top:58px;width:80px;height:130px;opacity:.8;transform:rotate(5deg)"><svg sc-camel-view-box="0 0 80 130" width="100%" height="100%" fill="none" stroke="#f4f0e5" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M40 0 V34"></path><rect x="33" y="34" width="14" height="9" rx="2" fill="#B08D57" stroke="#B08D57"></rect><circle cx="40" cy="78" r="32"></circle><path d="M10 72 Q25 62 40 72 T70 72 M9 86 Q25 96 40 86 T71 86" stroke="#B08D57"></path><path d="M24 60 Q29 53 37 51" stroke-width="2.2"></path></svg></span>
-          <span style="position:absolute;left:29%;top:132px;width:16px;height:16px;opacity:.85"><svg sc-camel-view-box="0 0 24 24" width="100%" height="100%"><path d="M12 1 L15 9 L23 9 L17 14 L19 22 L12 17 L5 22 L7 14 L1 9 L9 9 Z" fill="#B08D57"></path></svg></span>
-          <span style="position:absolute;right:30%;top:168px;width:12px;height:12px;opacity:.75"><svg sc-camel-view-box="0 0 24 24" width="100%" height="100%"><path d="M12 1 L15 9 L23 9 L17 14 L19 22 L12 17 L5 22 L7 14 L1 9 L9 9 Z" fill="#f4f0e5"></path></svg></span>
-        </sc-if>
       </div>
     </sc-if>
     <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
@@ -216,15 +202,11 @@
               <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.on }}" style="background:{{ m.bg }};color:{{ m.fg }};appearance:none;cursor:pointer;border:0;border-radius:999px;min-height:40px;padding:0 20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">{{ m.label }}</button>
             </sc-for>
           </div>
-          <div role="group" aria-label="Pour qui" style="display:flex;gap:22px">
-            <sc-for list="{{ wkAuds }}" as="m" hint-placeholder-count="2">
-              <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.on }}" style="opacity:{{ m.op }};border-bottom-color:{{ m.line }};appearance:none;cursor:pointer;background:transparent;color:#f4f0e5;border:0;border-bottom:2px solid;padding:6px 2px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:opacity .2s,border-color .2s">{{ m.label }}</button>
-            </sc-for>
-          </div>
         </div>
         <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ wkKicker }}</p>
         <h2 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1;text-wrap:balance">{{ wkTitle }}</h2>
       </div>
+      <sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ true }}">
       <div ref="{{ menuRef }}" style="zoom:{{ tableZoom }};width:1160px;margin:0 auto;display:flex;justify-content:{{ wkJust }};gap:{{ wkGap }}">
         <sc-for list="{{ week }}" as="d" hint-placeholder-count="5">
           <div style="transform:{{ d.t }};opacity:{{ d.o }};transition:{{ d.tr }};width:226px;display:flex;flex-direction:column;align-items:center;gap:16px">
@@ -246,6 +228,13 @@
           </div>
         </sc-for>
       </div>
+      </sc-if>
+      <sc-if value="{{ isNoel }}" hint-placeholder-val="{{ false }}">
+        <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center">
+          <p style="margin:0;font-size:20px;line-height:1.6;text-wrap:balance">Mon menu de fêtes arrive très bientôt. Il sera servi tout le mois de décembre, du lundi au vendredi, pour les particuliers comme pour les entreprises.</p>
+          <button sc-camel-on-click="{{ askNoel }}" style="appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#f4f0e5;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap" style-hover="background:#8D1D2C;color:#f4f0e5">Réserver pour décembre</button>
+        </div>
+      </sc-if>
     </sc-if>
     <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;z-index:1;zoom:{{ wkZoom }};display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:720px">
@@ -255,14 +244,10 @@
             <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.on }}" style="background:{{ m.bg }};color:{{ m.fg }};appearance:none;cursor:pointer;border:0;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;transition:background .2s,color .2s">{{ m.label }}</button>
           </sc-for>
         </div>
-        <div role="group" aria-label="Pour qui" style="display:flex;gap:22px">
-          <sc-for list="{{ wkAuds }}" as="m" hint-placeholder-count="2">
-            <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.on }}" style="opacity:{{ m.op }};border-bottom-color:{{ m.line }};appearance:none;cursor:pointer;background:transparent;color:#f4f0e5;border:0;border-bottom:2px solid;padding:6px 2px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:opacity .2s,border-color .2s">{{ m.label }}</button>
-          </sc-for>
-        </div>
       </div>
       <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ wkKicker }}</p>
       <h2 style="margin:12px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(34px,4.2vw,54px);line-height:1;text-wrap:balance">{{ wkTitle }}</h2>
+      <sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;gap:6px;margin-top:20px">
         <sc-for list="{{ wkTabs }}" as="t" hint-placeholder-count="5">
           <button sc-camel-on-click="{{ t.pick }}" style="background:{{ t.bg }};color:{{ t.fg }};appearance:none;cursor:pointer;height:36px;min-width:52px;padding:0 12px;border-radius:999px;border:1.5px solid #f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;transition:background .2s,color .2s">{{ t.short }}</button>
@@ -287,6 +272,11 @@
         <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase">Dessert</span><span style="font-size:16px;font-weight:600;line-height:1.3">{{ wkDessert }}</span></div>
       </div>
       <button sc-camel-on-click="{{ wkOrder }}" style="margin-top:22px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#f4f0e5;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap" style-hover="background:#8D1D2C;color:#f4f0e5">{{ wkOrderLabel }}</button>
+      </sc-if>
+      <sc-if value="{{ isNoel }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:22px 0 0;font-size:17px;line-height:1.6;text-wrap:balance">Mon menu de fêtes arrive très bientôt. Il sera servi tout le mois de décembre, du lundi au vendredi, pour les particuliers comme pour les entreprises.</p>
+        <button sc-camel-on-click="{{ askNoel }}" style="margin-top:22px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#f4f0e5;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap" style-hover="background:#8D1D2C;color:#f4f0e5">Réserver pour décembre</button>
+      </sc-if>
     </div>
     </sc-if>
   </section>
@@ -297,36 +287,37 @@
         <div>
           <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Click and collect ou livraison · du lundi au vendredi</p>
           <h2 style="font-size:{{ cH2 }};margin:12px 0 0;font-family:'Titan One',sans-serif;font-weight:400;line-height:1;text-wrap:balance">Votre repas, à votre nom</h2>
-          <p style="display:{{ cIntro }};margin:14px 0 0;font-size:17px;line-height:1.5;max-width:40ch;text-wrap:pretty">Commande au plus tard la veille avant 13h. Je cuisine, votre prénom est sur la barquette.</p>
+          <p style="display:{{ cIntro }};margin:14px 0 0;font-size:17px;line-height:1.5;max-width:40ch;text-wrap:pretty">Commande conseillée la veille avant 13h. Je cuisine, votre prénom est sur la barquette.</p>
         </div>
         <div role="group" aria-label="Mode de commande" style="display:flex;border:1.5px solid #202820;border-radius:999px;padding:3px;gap:3px">
           <button sc-camel-on-click="{{ pickCollect }}" aria-pressed="{{ collectOn }}" style="background:{{ collectBg }};color:{{ collectFg }};flex:1 1 0;min-width:0;min-height:42px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Click and collect</button>
           <button sc-camel-on-click="{{ pickLiv }}" aria-pressed="{{ livOn }}" style="background:{{ livBg }};color:{{ livFg }};flex:1 1 0;min-width:0;min-height:42px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Livraison</button>
         </div>
+        <p style="margin:-6px 0 0;display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.4"><span style="width:8px;height:8px;border-radius:50%;background:#B08D57;flex:0 0 auto"></span>{{ modeHint }}</p>
         <div style="display:flex;flex-direction:column;border:1.5px solid #202820;border-radius:16px;overflow:hidden">
-            <button sc-camel-on-click="{{ pickmenu }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:{{ cHeadPad }};width:100%;appearance:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
-              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05;white-space:nowrap">Menu complet</span><span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Entrée, plat, dessert au choix</span></span>
-              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:21px;line-height:1;white-space:nowrap">17 €</span>
+          <div style="display:flex">
+            <button sc-camel-on-click="{{ pickmenu }}" aria-pressed="{{ menuOn }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:{{ cHeadPad }};flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Menu complet · 17 €</span>
+              <span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Entrée, plat et dessert</span>
             </button>
-            <sc-if value="{{ isMenu }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:12px 16px 14px;background:#fbf9f3;border-top:1.5px solid #202820">
-                <sc-for list="{{ courses }}" as="co" hint-placeholder-count="3">
-                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px">
-                    <span style="flex:0 0 64px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">{{ co.k }}</span>
-                    <span style="flex:1 1 230px;min-width:0;display:flex;border:1.5px solid #202820;border-radius:22px;padding:3px;gap:3px">
-                      <sc-for list="{{ co.opts }}" as="o" hint-placeholder-count="2">
-                        <button sc-camel-on-click="{{ o.pick }}" style="background:{{ o.bg }};color:{{ o.fg }};flex:1 1 0;min-width:0;min-height:36px;appearance:none;border:0;border-radius:18px;cursor:pointer;padding:6px 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;line-height:1.15;transition:background .2s,color .2s">{{ o.v }}</button>
-                      </sc-for>
-                    </span>
-                  </div>
-                </sc-for>
+            <div style="width:0;border-left:1.5px solid #202820"></div>
+            <button sc-camel-on-click="{{ pickcarte }}" aria-pressed="{{ carteOn }}" style="background:{{ carteBg }};color:{{ carteFg }};padding:{{ cHeadPad }};flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05;white-space:nowrap">À la carte</span>
+              <span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Entrée 3,50 · Plat 11,50 · Dessert 4,50</span>
+            </button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:12px 16px 14px;background:#fbf9f3;border-top:1.5px solid #202820">
+            <sc-for list="{{ courses }}" as="co" hint-placeholder-count="3">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px">
+                <button sc-camel-on-click="{{ co.toggle }}" aria-pressed="{{ co.on }}" style="background:{{ co.lb }};color:{{ co.lf }};border:1.5px solid {{ co.lbd }};cursor:{{ co.cur }};flex:0 0 112px;min-height:32px;appearance:none;border-radius:999px;padding:4px 8px;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:left;white-space:nowrap;transition:background .2s,color .2s">{{ co.label }}</button>
+                <span style="opacity:{{ co.op }};flex:1 1 230px;min-width:0;display:flex;border:1.5px solid #202820;border-radius:22px;padding:3px;gap:3px;transition:opacity .2s">
+                  <sc-for list="{{ co.opts }}" as="o" hint-placeholder-count="2">
+                    <button sc-camel-on-click="{{ o.pick }}" style="background:{{ o.bg }};color:{{ o.fg }};flex:1 1 0;min-width:0;min-height:36px;appearance:none;border:0;border-radius:18px;cursor:pointer;padding:6px 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;line-height:1.15;transition:background .2s,color .2s">{{ o.v }}</button>
+                  </sc-for>
+                </span>
               </div>
-            </sc-if>
-            <div style="border-top:1.5px solid #202820"></div>
-            <button sc-camel-on-click="{{ picksalade }}" style="background:{{ saladeBg }};color:{{ saladeFg }};padding:{{ cHeadPad }};width:100%;appearance:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
-              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Salade fraîcheur</span><span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Salade composée, compote maison</span></span>
-              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:21px;line-height:1;white-space:nowrap">11,50 €</span>
-            </button>
+            </sc-for>
+          </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
           <button sc-camel-on-click="{{ togglePain }}" style="background:{{ painBg }};color:{{ painFg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:46px;padding:0 18px 0 8px;display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">
@@ -343,6 +334,32 @@
           <div style="display:flex;flex-wrap:wrap;gap:8px">
             <sc-for list="{{ dates }}" as="d" hint-placeholder-count="3">
               <button sc-camel-on-click="{{ d.pick }}" style="background:{{ d.bg }};color:{{ d.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:44px;padding:0 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">{{ d.short }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Zone</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
+                <button sc-camel-on-click="{{ z.pick }}" style="background:{{ z.bg }};color:{{ z.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ z.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Créneau</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="4">
+                <button sc-camel-on-click="{{ sl.pick }}" style="background:{{ sl.bg }};color:{{ sl.fg }};opacity:{{ sl.op }};text-decoration:{{ sl.deco }};cursor:{{ sl.cur }};appearance:none;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ sl.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Paiement</span>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ pays }}" as="py" hint-placeholder-count="3">
+              <button sc-camel-on-click="{{ py.pick }}" style="background:{{ py.bg }};color:{{ py.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ py.label }}</button>
             </sc-for>
           </div>
         </div>
@@ -406,7 +423,7 @@
     </div>
   </section>
 
-  <section id="engagements" data-screen-label="Engagements" style="position:relative;background:#114232;color:#f4f0e5;padding:clamp(48px,7vh,72px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};display:flex;align-items:center;overflow:hidden;scroll-margin-top:80px">
+  <section id="engagements" data-screen-label="Engagements" style="position:relative;background:#ECE3CF;color:#202820;padding:clamp(48px,7vh,72px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};display:flex;align-items:center;overflow:hidden;scroll-margin-top:80px">
     <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
       <div aria-hidden="false" style="position:absolute;right:4%;top:7%;width:132px;background:#fbf9f3;border:1.5px solid #202820;border-radius:3px;padding:8px 8px 10px;transform:rotate(5deg);box-shadow:0 14px 18px -12px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:7px;color:#202820">
         <span style="position:absolute;left:50%;top:-10px;width:56px;height:18px;margin-left:-28px;background:#B08D57;opacity:.85;transform:rotate(-8.0deg)"></span>
@@ -420,10 +437,10 @@
         <h2 style="margin:16px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(40px,5vw,68px);line-height:1;text-wrap:balance">Ma façon de cuisiner</h2>
         <p style="margin:22px 0 0;font-size:clamp(17px,1.5vw,19px);line-height:1.6;max-width:38ch;text-wrap:pretty">Mes quatre règles, écrites sur des fiches, mijotent dans ma cocotte.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px">
-        <button sc-camel-on-click="{{ pick1 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #f4f0e5;min-height:44px;background:{{ pb1 }};color:{{ pf1 }};transform:{{ pr1 }};transition:background .25s,color .25s,transform .3s">Fait maison</button>
-        <button sc-camel-on-click="{{ pick2 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #f4f0e5;min-height:44px;background:{{ pb2 }};color:{{ pf2 }};transform:{{ pr2 }};transition:background .25s,color .25s,transform .3s">De saison</button>
-        <button sc-camel-on-click="{{ pick3 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #f4f0e5;min-height:44px;background:{{ pb3 }};color:{{ pf3 }};transform:{{ pr3 }};transition:background .25s,color .25s,transform .3s">Local &amp; bio</button>
-        <button sc-camel-on-click="{{ pick4 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #f4f0e5;min-height:44px;background:{{ pb4 }};color:{{ pf4 }};transform:{{ pr4 }};transition:background .25s,color .25s,transform .3s">Sur commande</button>
+        <button sc-camel-on-click="{{ pick1 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb1 }};color:{{ pf1 }};transform:{{ pr1 }};transition:background .25s,color .25s,transform .3s">Fait maison</button>
+        <button sc-camel-on-click="{{ pick2 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb2 }};color:{{ pf2 }};transform:{{ pr2 }};transition:background .25s,color .25s,transform .3s">Équilibré</button>
+        <button sc-camel-on-click="{{ pick3 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb3 }};color:{{ pf3 }};transform:{{ pr3 }};transition:background .25s,color .25s,transform .3s">De saison</button>
+        <button sc-camel-on-click="{{ pick4 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb4 }};color:{{ pf4 }};transform:{{ pr4 }};transition:background .25s,color .25s,transform .3s">Sur commande</button>
         </div>
         <p style="margin:22px 0 0;display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:#B08D57;box-shadow:0 0 0 2px #f4f0e5"></span>Choisissez une fiche, elle sort de la cocotte.</p>
       </div>
@@ -448,27 +465,27 @@
           </div>
           <div style="position:absolute;left:30px;top:300px;width:420px;height:300px;z-index:{{ z2 }};transform:{{ t2 }};transition:transform .8s cubic-bezier(.2,.9,.25,1.08)">
             <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:4px;display:flex;flex-direction:column;padding:26px 28px 34px;color:#202820">
-              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">De saison</div>
+              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Équilibré</div>
               <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#114232">Fiche n° 02 · Casa Rosa · Aurillac</div>
               <div style="border-top:1.5px dashed #B08D57;margin:14px 0 12px"></div>
-              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Le menu change avec les saisons. On cuisine ce qui pousse au moment où on le mange.</p>
+              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Des plats gourmands, souvent mijotés, avec le sucre et le sel modérés. On se fait plaisir, sans excès.</p>
               <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px">
-                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Saison</span>
+                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Sucre &amp; sel</span>
                 <span style="flex:1;border-bottom:2px dotted #9a9c94;transform:translateY(-3px)"></span>
-                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">En cours</span>
+                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">Modérés</span>
               </div>
             </div>
           </div>
           <div style="position:absolute;left:30px;top:300px;width:420px;height:300px;z-index:{{ z3 }};transform:{{ t3 }};transition:transform .8s cubic-bezier(.2,.9,.25,1.08)">
             <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:4px;display:flex;flex-direction:column;padding:26px 28px 34px;color:#202820">
-              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Local &amp; bio</div>
+              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">De saison</div>
               <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#114232">Fiche n° 03 · Casa Rosa · Aurillac</div>
               <div style="border-top:1.5px dashed #B08D57;margin:14px 0 12px"></div>
-              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Des légumes de saison cultivés au plus près, dans le Cantal. Le bio dès que possible.</p>
+              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Le menu suit les saisons, avec des légumes du Cantal, bio dès que possible. On cuisine ce qui pousse au moment où on le mange.</p>
               <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px">
-                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Origine</span>
+                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Saison</span>
                 <span style="flex:1;border-bottom:2px dotted #9a9c94;transform:translateY(-3px)"></span>
-                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">Cantal</span>
+                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">En cours</span>
               </div>
             </div>
           </div>
@@ -477,7 +494,7 @@
               <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Sur commande</div>
               <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#114232">Fiche n° 04 · Casa Rosa · Aurillac</div>
               <div style="border-top:1.5px dashed #B08D57;margin:14px 0 12px"></div>
-              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Vous commandez la veille avant 13h, je cuisine la bonne quantité. Le gaspillage reste au minimum.</p>
+              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Commandez de préférence la veille avant 13h : je cuisine la bonne quantité, et le gaspillage reste au minimum.</p>
               <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px">
                 <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Commande</span>
                 <span style="flex:1;border-bottom:2px dotted #9a9c94;transform:translateY(-3px)"></span>
@@ -487,19 +504,20 @@
           </div>
           </div>
           <div style="transform:{{ lidT }};transition:transform .8s cubic-bezier(.2,.9,.25,1.08);position:absolute;z-index:12;left:-14px;right:-14px;top:282px;height:56px;transform-origin:50% 100%;pointer-events:none">
-            <div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:#8D1D2C;border:1.5px solid #202820;border-radius:50% 50% 12px 12px / 100% 100% 12px 12px;box-shadow:inset 0 8px 0 rgba(244,240,229,.16),inset 0 -6px 0 rgba(32,40,32,.18)"></div>
-            <div style="position:absolute;left:50%;top:-8px;width:70px;height:24px;margin-left:-35px;background:#B08D57;border-radius:12px 12px 5px 5px"></div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,#ad3043 0%,#8D1D2C 55%,#6c1522 100%);border:1px solid #4a0f18;border-radius:50% 50% 12px 12px / 100% 100% 12px 12px;box-shadow:inset 0 7px 10px rgba(255,255,255,.2),inset 0 -5px 7px rgba(0,0,0,.25)"></div>
+            <div style="position:absolute;left:50%;top:-10px;width:64px;height:24px;margin-left:-32px;background:linear-gradient(180deg,#e4cb98 0%,#B08D57 60%,#86683a 100%);border:1px solid #7a5d33;border-radius:14px 14px 6px 6px;box-shadow:inset 0 3px 4px rgba(255,255,255,.4)"></div>
           </div>
           <div style="position:absolute;left:0;right:0;bottom:6px;height:260px;z-index:10">
-            <div style="position:absolute;left:-30px;top:44px;z-index:11;width:58px;height:46px;background:#8D1D2C;border:1.5px solid #202820;border-radius:24px 8px 8px 24px;box-shadow:inset 0 -5px 0 rgba(32,40,32,.18)"><span style="position:absolute;left:12px;top:13px;width:22px;height:16px;border-radius:8px;background:#114232;border:1.5px solid #202820"></span></div>
-            <div style="position:absolute;right:-30px;top:44px;z-index:11;width:58px;height:46px;background:#8D1D2C;border:1.5px solid #202820;border-radius:8px 24px 24px 8px;box-shadow:inset 0 -5px 0 rgba(32,40,32,.18)"><span style="position:absolute;right:12px;top:13px;width:22px;height:16px;border-radius:8px;background:#114232;border:1.5px solid #202820"></span></div>
-            <div style="position:absolute;inset:0;background:#8D1D2C;border:1.5px solid #202820;border-radius:10px 10px 46px 46px / 10px 10px 34px 34px;box-shadow:inset 0 16px 0 rgba(244,240,229,.14),inset -34px -20px 0 rgba(32,40,32,.16),0 30px 34px -22px rgba(10,20,14,.6);overflow:hidden">
-              <span style="position:absolute;left:0;right:0;top:0;height:20px;background:#8a1e2a;border-bottom:1.5px solid #202820"></span>
-              <span style="position:absolute;left:44px;top:46px;width:12px;height:120px;border-radius:6px;background:rgba(244,240,229,.28)"></span>
+            <div style="position:absolute;left:-30px;top:40px;z-index:11;width:52px;height:40px;background:linear-gradient(180deg,#e0c690 0%,#B08D57 55%,#80633a 100%);border:1px solid #7a5d33;border-radius:22px 8px 8px 22px;box-shadow:inset 0 3px 4px rgba(255,255,255,.35)"><span style="position:absolute;left:11px;top:12px;width:20px;height:14px;border-radius:7px;background:#ECE3CF;box-shadow:inset 0 2px 3px rgba(0,0,0,.3)"></span></div>
+            <div style="position:absolute;right:-30px;top:40px;z-index:11;width:52px;height:40px;background:linear-gradient(180deg,#e0c690 0%,#B08D57 55%,#80633a 100%);border:1px solid #7a5d33;border-radius:8px 22px 22px 8px;box-shadow:inset 0 3px 4px rgba(255,255,255,.35)"><span style="position:absolute;right:11px;top:12px;width:20px;height:14px;border-radius:7px;background:#ECE3CF;box-shadow:inset 0 2px 3px rgba(0,0,0,.3)"></span></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(90deg,#5c101b 0%,#8D1D2C 18%,#a52a3c 34%,#8D1D2C 58%,#6f1623 82%,#4f0d17 100%);border:1px solid #4a0f18;border-radius:10px 10px 46px 46px / 10px 10px 34px 34px;box-shadow:0 30px 34px -22px rgba(10,20,14,.55);overflow:hidden">
+              <span style="position:absolute;left:0;right:0;top:0;height:18px;background:linear-gradient(180deg,#5c101b,#7a1826);border-bottom:1px solid #4a0f18"></span>
+              <span style="position:absolute;left:0;right:0;top:18px;height:2px;background:#B08D57;opacity:.8"></span>
+              <span style="position:absolute;left:64px;top:40px;width:18px;height:150px;border-radius:9px;background:rgba(255,255,255,.22);filter:blur(5px)"></span>
             </div>
-            <div style="position:absolute;left:50%;top:58%;transform:translate(-50%,-50%) rotate(-3deg);background:#f4f0e5;color:#202820;border:1.5px solid #202820;border-radius:8px;padding:12px 26px;display:flex;flex-direction:column;align-items:center;gap:5px;box-shadow:inset 0 0 0 4px #f4f0e5,inset 0 0 0 5.5px #202820">
-              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1;white-space:nowrap">Casa Rosa</span>
-              <span style="font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#8D1D2C;white-space:nowrap">Mes engagements</span>
+            <div style="position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);background:linear-gradient(180deg,#ead3a3 0%,#c4a26b 55%,#a5824d 100%);color:#2b1f10;border:1px solid #7a5d33;border-radius:6px;padding:11px 24px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.18),0 4px 8px rgba(0,0,0,.25)">
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1;white-space:nowrap">Casa Rosa</span>
+              <span style="font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap">Mes engagements</span>
             </div>
           </div>
         </div>
@@ -520,21 +538,15 @@
         <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:12px;line-height:1.1;text-align:center">Tartes fines au concombre</span>
       </div>
     </sc-if>
-    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0">
-        <span style="position:absolute;right:-30px;top:30%;width:96px;height:240px;transform:rotate(-32deg)"><svg sc-camel-view-box="0 0 80 200" width="100%" height="100%" fill="none" stroke="#8D1D2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 118 C10 92 12 26 40 8 C68 26 70 92 40 118 Z"></path><path d="M40 118 C26 90 28 30 40 8 C52 30 54 90 40 118"></path><path d="M40 8 L40 118"></path><path d="M34 118 L34 188 C34 194 46 194 46 188 L46 118 Z"></path><path d="M36 182 L44 182"></path></svg></span>
-        <span style="position:absolute;left:-46px;bottom:-30px;width:190px;height:216px;transform:rotate(18deg)"><svg sc-camel-view-box="0 0 140 160" width="100%" height="100%" fill="none" stroke="#8D1D2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M70 156 C70 120 68 80 72 40"></path><path d="M71 112 C46 112 26 96 22 72 C46 70 66 86 71 112 Z"></path><path d="M71 112 C52 100 38 88 28 76"></path><path d="M70 92 C94 92 114 76 118 52 C94 50 74 66 70 92 Z"></path><path d="M70 92 C88 80 102 68 112 56"></path><path d="M72 46 C60 34 58 18 66 6 C80 16 82 32 72 46 Z"></path></svg></span>
-      </div>
-    </sc-if>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 20px;text-align:center"><span style="font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase">Qui cuisine ?</span><h2 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(28px,3vw,40px);line-height:1">Derrière les fourneaux</h2></div>
 
     <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
       <div style="zoom:{{ zoom }};position:relative;z-index:1;max-width:1286px;margin:0 auto">
         <div style="position:relative;width:418px;margin:32px auto 0">
-          <span style="position:absolute;top:153px;right:calc(100% + 131px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.12;color:#202820;transform:rotate(4deg)">Chili de<br>lentilles</span>
-          <span style="position:absolute;top:350px;right:calc(100% + 141px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.12;color:#8D1D2C;transform:rotate(3deg)">Paëlla de pâtes</span>
-          <span style="position:absolute;top:112px;left:calc(100% + 60px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.08;color:#114232;transform:rotate(4deg)">Tajine au blé<br>fumé bio</span>
-          <span style="position:absolute;top:324px;left:calc(100% + 64px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.08;color:#202820;transform:rotate(3deg)">Couscous au<br>millet du<br>Cantal</span>
+          <span style="position:absolute;top:153px;right:calc(100% + 131px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.12;color:#202820;transform:rotate(4deg)">Chili sin carne<br>aux lentilles<br>de la Planèze</span>
+          <span style="position:absolute;top:350px;right:calc(100% + 141px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.12;color:#8D1D2C;transform:rotate(3deg)">Paëlla de pâtes<br>aux fruits de mer</span>
+          <span style="position:absolute;top:112px;left:calc(100% + 60px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.08;color:#114232;transform:rotate(4deg)">Mijotés<br>gourmands</span>
+          <span style="position:absolute;top:324px;left:calc(100% + 64px);white-space:nowrap;font-family:'Titan One',sans-serif;font-size:32px;line-height:1.08;color:#202820;transform:rotate(3deg)">Sucre &amp; sel<br>modérés</span>
           <div style="position:relative;width:418px;aspect-ratio:418/536;border:1.5px solid #202820;border-radius:50% 50% 14px 14px / 39% 39% 14px 14px;padding:5.5px">
             <div role="img" aria-label="Céline, basilic dans une main et fraises dans l'autre" style="width:100%;height:100%;border-radius:50% 50% 8px 8px / 38.8% 38.8% 8px 8px;background:#b3190f url(&quot;assets/celine-portrait.jpg&quot;) center / cover no-repeat"></div>
             <span style="position:absolute;left:50%;bottom:-38px;transform:translateX(-50%) rotate(-3deg);background:#114232;color:#f4f0e5;font-family:'Titan One',sans-serif;font-size:48px;line-height:1.2;padding:4px 36px 6px;border-radius:999px;white-space:nowrap">Céline</span>
@@ -546,23 +558,24 @@
     <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:560px;margin:36px auto 0;padding:0 20px">
         <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:-6px;position:relative;z-index:1">
-          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.1;color:#202820;transform:rotate(4deg);margin-bottom:-14px">Chili de<br>lentilles</span>
-          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.08;color:#114232;transform:rotate(4deg);text-align:left">Tajine au blé<br>fumé bio</span>
+          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.1;color:#202820;transform:rotate(4deg);margin-bottom:-14px">Chili<br>sin carne</span>
+          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.08;color:#114232;transform:rotate(4deg);text-align:left">Mijotés<br>gourmands</span>
         </div>
         <div style="position:relative;width:min(300px,76%);margin:24px auto 0;aspect-ratio:418/536;border:1.5px solid #202820;border-radius:50% 50% 12px 12px / 39% 39% 12px 12px;padding:4.5px">
           <div role="img" aria-label="Céline, basilic dans une main et fraises dans l'autre" style="width:100%;height:100%;border-radius:50% 50% 7px 7px / 38.8% 38.8% 7px 7px;background:#b3190f url(&quot;assets/celine-portrait.jpg&quot;) center / cover no-repeat"></div>
           <span style="position:absolute;left:50%;bottom:-30px;transform:translateX(-50%) rotate(-3deg);background:#114232;color:#f4f0e5;font-family:'Titan One',sans-serif;font-size:38px;line-height:1.2;padding:3px 28px 5px;border-radius:999px;white-space:nowrap">Céline</span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-top:56px">
-          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.1;color:#8D1D2C;transform:rotate(3deg);margin-top:18px">Paëlla de<br>pâtes</span>
-          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.08;color:#202820;transform:rotate(3deg)">Couscous au<br>millet du<br>Cantal</span>
+          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.1;color:#8D1D2C;transform:rotate(3deg);margin-top:18px">Paëlla<br>de pâtes</span>
+          <span style="font-family:'Titan One',sans-serif;font-size:clamp(19px,5.4vw,25px);white-space:nowrap;line-height:1.08;color:#202820;transform:rotate(3deg)">Sucre &amp; sel<br>modérés</span>
         </div>
       </div>
     </sc-if>
 
     <div ref="{{ celBotRef }}" style="position:relative;z-index:1;margin-top:{{ celMt }};gap:{{ celGap }};display:flex;flex-direction:column;align-items:center;padding:0 20px">
-      <p style="margin:0;max-width:560px;text-align:center;font-size:clamp(17px,1.6vw,20px);line-height:1.6;text-wrap:balance">Cuisinière passionnée, je prépare des repas équilibrés et faits maison, avec des légumes de saison du Cantal. Le bio, dès que possible.</p>
+      <p style="margin:0;max-width:560px;text-align:center;font-size:clamp(17px,1.6vw,20px);line-height:1.6;text-wrap:balance">Cuisinière passionnée, je prépare des repas équilibrés et faits maison, avec des légumes de saison du Cantal. Le bio, dès que possible. Je suis aussi conseillère Thermomix.</p>
       <p style="margin:0;font-size:14px;text-align:center">Végétarien, vegan, sans gluten ou sans lactose : <a href="#contact" style="font-weight:700;color:#202820;text-underline-offset:4px" style-hover="color:#8D1D2C">on adapte votre repas</a>.</p>
+      <p style="margin:0;font-size:14px;text-align:center">Lu dans la presse : <a href="https://www.lamontagne.fr/aurillac-15000/actualites/avec-casarosa-des-box-repas-equilibrees-et-livrees-a-lheure-du-dejeuner-aux-entreprises-d-aurillac_14568325/" target="_blank" rel="noopener" style="font-weight:700;color:#202820;text-underline-offset:4px" style-hover="color:#8D1D2C">La Montagne</a> · <a href="https://aurillacagglo.fr/fr/actualites/casa-rosa-de-la-terre-a-l-assiette/" target="_blank" rel="noopener" style="font-weight:700;color:#202820;text-underline-offset:4px" style-hover="color:#8D1D2C">Aurillac Agglo</a></p>
     </div>
   </section>
 
@@ -593,6 +606,38 @@
         <p style="margin:0;font-size:17px;line-height:1.55;max-width:40ch;text-wrap:pretty">Je livre les repas aux entreprises, administrations et collectivités, et aux particuliers aussi. Dans Aurillac, tout part à vélo avec <strong style="font-weight:800">Cycl’of Course</strong>, des coursiers en parcours de retour à l’emploi.</p>
         <p style="margin:0;display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:#B08D57;box-shadow:0 0 0 2px #f4f0e5;flex:0 0 auto"></span>À vélo dans Aurillac · bassin aurillacois selon les secteurs</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px"><button sc-camel-on-click="{{ askDelivery }}" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;appearance:none;flex:0 0 auto;border:0;background:#f4f0e5;color:#202820" style-hover="background:#202820;color:#f4f0e5">Demander la livraison</button></div>
+        <div style="margin-top:16px;padding-top:20px;border-top:1.5px solid rgba(244,240,229,.3);display:flex;flex-direction:column;gap:10px">
+          <h3 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(22px,2.2vw,28px);line-height:1.1">Cuisine en direct à votre événement</h3>
+          <p style="margin:0;font-size:16px;line-height:1.55;max-width:46ch;text-wrap:pretty">Amuse-bouches préparés devant vos invités, plancha, pancakes au Cantal… Je cuisine sur place et j’anime votre événement pendant que vos clients dégustent.</p>
+          <div><button sc-camel-on-click="{{ askLive }}" style="display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;cursor:pointer;appearance:none;border:1.5px solid #f4f0e5;background:transparent;color:#f4f0e5" style-hover="background:#f4f0e5;color:#202820">Animer mon événement</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="evenements" data-screen-label="Événements" style="position:relative;background:#ECE3CF;color:#202820;padding:clamp(44px,7vh,76px) clamp(20px,5vw,64px);overflow:hidden;scroll-margin-top:80px">
+    <div style="width:100%;max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px 64px">
+      <div style="flex:1 1 340px;max-width:560px;display:flex;flex-direction:column;gap:16px">
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8D1D2C">Particuliers · sur devis</p>
+        <h2 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1;text-wrap:balance">Vos fêtes, à votre table</h2>
+        <p style="margin:0;font-size:17px;line-height:1.6;max-width:44ch;text-wrap:pretty">Anniversaires, repas de famille, réceptions : je prépare un repas sur mesure et je le livre sur place, en buffet chaud ou en buffet froid. À Aurillac, à Arpajon, et bien au-delà pour vos événements.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="border:1.5px solid #202820;border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px">Anniversaires</span>
+          <span style="border:1.5px solid #202820;border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px">Repas de famille</span>
+          <span style="border:1.5px solid #202820;border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px">Buffet chaud ou froid</span>
+        </div>
+        <div style="margin-top:6px"><button sc-camel-on-click="{{ askEvent }}" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;cursor:pointer;appearance:none;border:0;background:#8D1D2C;color:#f4f0e5" style-hover="background:#202820;color:#f4f0e5">Demander un devis</button></div>
+      </div>
+      <div style="flex:0 1 380px;width:100%;max-width:380px;margin:0 auto;transform:rotate(1.5deg)">
+        <div style="background:#fbf9f3;border:1.5px solid #202820;border-radius:6px;padding:12px;box-shadow:0 22px 30px -18px rgba(32,40,32,.45)">
+          <div style="border:1.5px solid #B08D57;border-radius:3px;padding:30px 26px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+            <span style="font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#114232">Casa Rosa · Aurillac</span>
+            <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:1">La carte de saison</span>
+            <span style="width:60px;border-top:1.5px solid #B08D57"></span>
+            <p style="margin:0;font-size:15px;line-height:1.6;max-width:28ch">Quatre cartes dans l’année, une par saison, pour vos repas de famille et vos fêtes.</p>
+            <span style="margin-top:6px;font-family:'Titan One',sans-serif;font-weight:400;font-size:18px;color:#8D1D2C">[Carte d’hiver à venir]</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -607,7 +652,7 @@
     <div style="flex:1 1 380px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:640px">
       <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8D1D2C">Je viens chez vous · sur devis</p>
       <h2 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1;text-wrap:balance">Les Ateliers du Quotidien</h2>
-      <p style="display:{{ atSub }};margin:0;font-size:17px;line-height:1.55;max-width:60ch;text-wrap:pretty">Je me déplace directement dans vos locaux : entreprises, écoles, collectivités, associations, structures d'insertion. J'apporte les produits, les recettes et l'animation, votre équipe cuisine sur place.</p>
+      <p style="display:{{ atSub }};margin:0;font-size:17px;line-height:1.55;max-width:60ch;text-wrap:pretty">Je me déplace directement dans vos locaux : entreprises, écoles, collectivités, associations, structures d'insertion. J'apporte les produits, les recettes et l'animation, votre équipe cuisine sur place. Pour les écoles, des goûters sains ; pour tous, des menus faciles à refaire chez soi.</p>
     </div>
       <div style="display:{{ atPolDisp }}"><div style="flex:0 0 auto;position:relative;width:196px;background:#fbf9f3;border:1.5px solid #202820;border-radius:3px;padding:12px 12px 14px;transform:rotate(3.5deg);box-shadow:0 16px 20px -14px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:10px">
           <span style="position:absolute;left:50%;top:-12px;width:78px;height:22px;margin-left:-39px;background:#114232;opacity:.85;transform:rotate(-5.25deg)"></span>
@@ -703,7 +748,7 @@
     </div>
   </section>
 
-  <section id="avis" data-screen-label="Avis" style="position:relative;background:#114232;color:#f4f0e5;padding:clamp(40px,6vh,64px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};overflow:hidden;scroll-margin-top:80px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <section id="avis" data-screen-label="Avis" style="position:relative;background:#ECE3CF;color:#202820;padding:clamp(40px,6vh,64px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};overflow:hidden;scroll-margin-top:80px;display:flex;flex-direction:column;align-items:center;justify-content:center">
     <div ref="{{ avisHeadRef }}" style="width:100%;max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 40px">
       <div style="display:flex;flex-direction:column;gap:12px;max-width:660px">
         <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Avis clients</p>
@@ -717,7 +762,7 @@
           <span style="color:#8D1D2C;font-size:17px;letter-spacing:2px;line-height:1">★★★★★</span>
           <span style="font-size:13px;font-weight:700;white-space:nowrap">38 avis Google</span>
         </div>
-        <a href="#" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;appearance:none;flex:0 0 auto;border:0;background:#f4f0e5;color:#202820" style-hover="background:#202820;color:#f4f0e5">Laisser un avis sur Google</a>
+        <a href="#" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;appearance:none;flex:0 0 auto;border:0;background:#114232;color:#f4f0e5" style-hover="background:#8D1D2C;color:#f4f0e5">Laisser un avis sur Google</a>
       </div>
     </div>
     <div ref="{{ avisRef }}" style="zoom:{{ avisZoom }};position:relative;width:100%;margin-top:clamp(20px,4vh,40px);padding-top:30px">
@@ -794,6 +839,7 @@
       <span>Traiteur fait maison · Aurillac</span>
       <a href="tel:0687949722" style="color:#f4f0e5;font-weight:700;text-decoration:none">06 87 94 97 22</a>
       <a href="mailto:casarosa15000@gmail.com" style="color:#f4f0e5;font-weight:700">casarosa15000@gmail.com</a>
+      <span><a href="#" style="color:#f4f0e5;font-weight:700">Facebook</a> · <a href="#" style="color:#f4f0e5;font-weight:700">Instagram</a></span>
       <span>Mentions légales [à compléter]</span>
     </div>
   </footer>
@@ -839,15 +885,15 @@ class Component extends DCLogic {
       const on = active === k;
       out['t' + k] = on ? 'translateY(-258px) rotate(0deg)' : `translateY(${rest}px) rotate(0deg)`;
       out['z' + k] = on ? 9 : k;
-      out['pb' + k] = on ? '#f4f0e5' : 'transparent';
-      out['pf' + k] = on ? '#114232' : '#f4f0e5';
+      out['pb' + k] = on ? '#114232' : 'transparent';
+      out['pf' + k] = on ? '#f4f0e5' : '#202820';
       out['pr' + k] = on ? 'rotate(-3deg)' : 'rotate(0deg)';
       out['pick' + k] = () => { this.stopAuto(); this.swapTo(k); };
     }
     return out;
   }
   cmdRef = React.createRef();
-  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', mode: 'collect', adresse: '', truckGo: false, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
+  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: -1, pay: 0, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   watchCmd() {
     const el = this.cmdRef.current;
@@ -875,8 +921,11 @@ class Component extends DCLogic {
   cmdVals() {
     const c = this.cmd;
     const fmt = n => (n % 1 ? n.toFixed(2).replace('.', ',') : String(n)) + ' €';
-    const base = c.formule === 'menu' ? 17 : 11.5;
-    const total = c.qty * (base + (c.pain ? 1 : 0));
+    // Céline's prices: full menu 17 €, or à la carte (starter / main / dessert)
+    const PRICES = [3.5, 11.5, 4.5];
+    const isCarte = c.formule === 'carte', carte = c.carte;
+    const unit = isCarte ? PRICES.reduce((sum, p, i) => sum + (carte[i] ? p : 0), 0) : 17;
+    const total = c.qty * (unit + (c.pain ? 1 : 0));
     const dates = this.getDates();
     const dSel = dates[Math.min(c.dateIdx, dates.length - 1)];
     const long = dSel.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -889,30 +938,50 @@ class Component extends DCLogic {
       return [cur];
     };
     const OPTS = [['Entrée', dayOpts(1)], ['Plat', dayOpts(2)], ['Dessert', dayOpts(3)]];
-    const courses = OPTS.map(([k, list], i) => ({
-      k, opts: list.map((v, n) => ({ v, bg: c.ch[i] === n ? '#202820' : 'transparent', fg: c.ch[i] === n ? '#f4f0e5' : '#202820',
-        pick: () => { const ch = c.ch.slice(); ch[i] = n; this.setCmd({ ch, ...reset }); } })),
-    }));
-    const lines = c.formule === 'menu'
-      ? OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] }))
-      : [{ k: 'Salade', v: 'Salade composée' }, { k: 'Dessert', v: 'Compote maison' }];
+    const courses = OPTS.map(([k, list], i) => {
+      const on = !isCarte || carte[i];
+      return {
+        k, label: isCarte ? k + ' · ' + fmt(PRICES[i]) : k, on: String(on), op: on ? 1 : 0.4,
+        lb: isCarte && on ? '#114232' : 'transparent', lf: isCarte ? (on ? '#f4f0e5' : '#202820') : '#114232',
+        lbd: isCarte ? (on ? '#114232' : '#202820') : 'transparent', cur: isCarte ? 'pointer' : 'default',
+        toggle: () => { if (!isCarte) return; const cc = carte.slice(); cc[i] = !cc[i]; this.setCmd({ carte: cc, ...reset }); },
+        opts: list.map((v, n) => ({ v, bg: c.ch[i] === n ? '#202820' : 'transparent', fg: c.ch[i] === n ? '#f4f0e5' : '#202820',
+          pick: () => { const ch = c.ch.slice(); ch[i] = n; this.setCmd({ ch, ...reset }); } })),
+      };
+    });
+    // Delivery: 3 zones (zone 2 and 3 prices to come), slots from 11h30 to 13h15
+    const isLiv = c.mode === 'livraison';
+    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
+    const SLOTS = ['11h30', '12h00', '12h30', '13h00'];
+    const full = i => i === 1 + (c.dateIdx % 3); // sample taken slot, until real bookings fill them
+    const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
+    const lines = OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] })).filter((l, i) => !isCarte || carte[i]);
     if (c.pain) lines.push({ k: 'En plus', v: 'Pain artisanal' });
+    if (isLiv) lines.push({ k: 'Livraison', v: ZONES[c.zone][0] + (c.slot >= 0 ? ' · ' + SLOTS[c.slot] : '') });
+    lines.push({ k: 'Paiement', v: PAYS[c.pay] });
     return {
       cmdRef: this.cmdRef,
       menuBg: sel(c.formule === 'menu').bg, menuFg: sel(c.formule === 'menu').fg, menuRot: c.formule === 'menu' ? 'rotate(-1.5deg)' : 'rotate(0deg)',
-      saladeBg: sel(c.formule === 'salade').bg, saladeFg: sel(c.formule === 'salade').fg, saladeRot: c.formule === 'salade' ? 'rotate(1.5deg)' : 'rotate(0deg)',
+      menuOn: String(!isCarte), carteOn: String(isCarte),
+      carteBg: sel(isCarte).bg, carteFg: sel(isCarte).fg,
       pickmenu: () => this.setCmd({ formule: 'menu', ...reset }),
-      picksalade: () => this.setCmd({ formule: 'salade', ...reset }),
+      pickcarte: () => this.setCmd({ formule: 'carte', ...reset }),
+      modeHint: isLiv ? 'Livraison de 11h30 à 13h15, à Aurillac et Arpajon · à partir de 5 menus complets' : 'Retrait sur place · adresse et horaires [à compléter]',
+      zones: ZONES.map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === c.zone), pick: () => this.setCmd({ zone: i, ...reset }) })),
+      slots: SLOTS.map((label, i) => ({ label: full(i) ? label + ' · complet' : label, ...sel(i === c.slot),
+        op: full(i) ? 0.45 : 1, deco: full(i) ? 'line-through' : 'none', cur: full(i) ? 'not-allowed' : 'pointer',
+        pick: () => { if (!full(i)) this.setCmd({ slot: i, ...reset }); } })),
+      pays: PAYS.map((label, i) => ({ label, ...sel(i === c.pay), pick: () => this.setCmd({ pay: i, ...reset }) })),
       painBg: c.pain ? '#202820' : 'transparent', painFg: c.pain ? '#f4f0e5' : '#202820',
       painDot: c.pain ? '#8D1D2C' : 'transparent', painMark: c.pain ? '✓' : '',
       togglePain: () => this.setCmd({ pain: !c.pain, ...reset }),
       qtyLabel: c.qty + (c.qty > 1 ? ' repas' : ' repas'),
       qtyMinus: () => this.setCmd({ qty: Math.max(1, c.qty - 1), ...reset }),
-      qtyPlus: () => this.setCmd({ qty: Math.min(20, c.qty + 1), ...reset }),
+      qtyPlus: () => this.setCmd({ qty: Math.min(50, c.qty + 1), ...reset }),
       dates: dates.map((d, i) => ({
         short: d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }),
         ...sel(i === c.dateIdx),
-        pick: () => this.setCmd({ dateIdx: i, ch: [0, 0, 0], ...reset }),
+        pick: () => this.setCmd({ dateIdx: i, ch: [0, 0, 0], slot: -1, ...reset }),
       })),
       prenom: c.prenom,
       onPrenom: e => this.setCmd({ prenom: e.target.value, ...reset }),
@@ -920,12 +989,12 @@ class Component extends DCLogic {
       onNom: e => this.setCmd({ nom: e.target.value, ...reset }),
       email: c.email,
       onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
-      isLiv: c.mode === 'livraison',
+      isLiv,
       collectOn: String(c.mode === 'collect'), livOn: String(c.mode === 'livraison'),
       collectBg: sel(c.mode === 'collect').bg, collectFg: sel(c.mode === 'collect').fg,
       livBg: sel(c.mode === 'livraison').bg, livFg: sel(c.mode === 'livraison').fg,
       pickCollect: () => this.setCmd({ mode: 'collect', ...reset }),
-      pickLiv: () => this.setCmd({ mode: 'livraison', ...reset }),
+      pickLiv: () => this.setCmd({ mode: 'livraison', formule: 'menu', qty: Math.max(5, c.qty), ...reset }),
       adresse: c.adresse,
       onAdresse: e => this.setCmd({ adresse: e.target.value, ...reset }),
       whenLabel: c.mode === 'livraison' ? 'Livraison le' : 'Retrait le',
@@ -939,9 +1008,12 @@ class Component extends DCLogic {
         if (!p) { this.setCmd({ msg: 'Indiquez votre prénom : il sera écrit sur l’étiquette.' }); return; }
         if (!c.nom.trim()) { this.setCmd({ msg: 'Indiquez aussi votre nom.' }); return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim())) { this.setCmd({ msg: 'Indiquez une adresse e-mail valide.' }); return; }
-        if (c.mode === 'livraison' && !c.adresse.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
-        if (c.mode === 'livraison') {
-          this.setCmd({ msg: 'C’est noté, ' + p + '. Livraison le ' + long + ' : ' + c.adresse.trim() + '.' });
+        if (isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
+        if (isLiv && (isCarte || c.qty < 5)) { this.setCmd({ msg: 'La livraison est possible à partir de 5 menus complets.' }); return; }
+        if (isLiv && c.slot < 0) { this.setCmd({ msg: 'Choisissez un créneau de livraison.' }); return; }
+        if (isLiv && !c.adresse.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
+        if (isLiv) {
+          this.setCmd({ msg: 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + SLOTS[c.slot] + ' : ' + c.adresse.trim() + '.' });
           this.stick(true);
           return;
         }
@@ -949,8 +1021,8 @@ class Component extends DCLogic {
         this.stick(true);
       },
       total: fmt(total), msg: c.msg,
-      lTitle: c.formule === 'menu' ? 'Menu complet' : 'Salade fraîcheur',
-      lSub: c.formule === 'menu' ? 'Menu du jour' : 'Formule fraîcheur',
+      lTitle: isCarte ? 'À la carte' : 'Menu complet',
+      lSub: isCarte ? 'Plats du jour' : 'Menu du jour',
       lLines: lines,
       lName: c.prenom.trim() || '______',
       lDate: long,
@@ -991,54 +1063,22 @@ class Component extends DCLogic {
     Object.entries(map).forEach(([k, el]) => { if (!el || el.dataset.rv || this.seen[k]) return; el.dataset.rv = k; this.io3.observe(el); });
   }
   WEEK = [
-    ['Lundi', 'Velouté de saison', 'Chili de lentilles', 'Compote maison'],
+    ['Lundi', 'Velouté de saison', 'Chili sin carne', 'Compote maison'],
     ['Mardi', 'Taboulé de chou-fleur', 'Paëlla de pâtes', 'Riz au lait'],
     ['Mercredi', 'Velouté de saison', 'Tajine au blé fumé bio', 'Compote maison'],
     ['Jeudi', 'Taboulé de chou-fleur', 'Couscous au millet du Cantal', 'Riz au lait'],
     ['Vendredi', 'Carottes râpées au cumin', 'Paëlla de pâtes', 'Crumble de saison'],
   ];
-  // Menus are examples to replace with Céline's own (the Noël menu runs all December)
+  // One menu for individuals and companies. The Noël tab waits for Céline's December menu.
   MENUS = {
-    semaine: { label: 'Menu de la semaine',
-      title: { part: 'Le menu de la semaine', ent: 'Le menu entreprises' },
-      kicker: { part: 'Du lundi au vendredi · commande la veille avant 13h', ent: 'Livré au bureau · commande la veille avant 13h' },
-      ent: [
-        ['Lundi', 'Salade de lentilles du Puy', 'Poulet rôti, légumes de saison', 'Fromage blanc au miel'],
-        ['Mardi', 'Velouté de saison', 'Lasagnes végétariennes', 'Tarte aux pommes'],
-        ['Mercredi', 'Taboulé de chou-fleur', 'Truffade, salade verte', 'Compote maison'],
-        ['Jeudi', 'Carottes râpées au cumin', 'Bœuf mijoté, purée maison', 'Riz au lait'],
-        ['Vendredi', 'Salade de chèvre chaud', 'Poisson du jour, riz pilaf', 'Crumble de saison'] ] },
-    noel: { label: 'Noël',
-      title: { part: 'Le menu de Noël', ent: 'Noël en entreprise' },
-      kicker: { part: 'Tout le mois de décembre · commande la veille avant 13h', ent: 'Tout le mois de décembre · livré au bureau' },
-      part: [
-        ['Lundi', 'Velouté de châtaignes', 'Volaille aux morilles, purée maison', 'Bûchette aux marrons'],
-        ['Mardi', 'Terrine de campagne, chutney de figues', 'Saumon rôti, écrasé de panais', 'Mendiants au chocolat'],
-        ['Mercredi', 'Salade d’hiver aux noix', 'Pot-au-feu de fêtes', 'Panna cotta au pain d’épices'],
-        ['Jeudi', 'Feuilleté au bleu d’Auvergne', 'Chapon farci, gratin dauphinois', 'Bûche chocolat-praliné'],
-        ['Vendredi', 'Velouté de potimarron', 'Truite du Cantal, riz pilaf', 'Clémentines rôties au miel'] ],
-      ent: [
-        ['Lundi', 'Verrine de saumon fumé', 'Volaille aux marrons, légumes rôtis', 'Bûchette individuelle'],
-        ['Mardi', 'Velouté de châtaignes', 'Bœuf mijoté aux airelles', 'Tiramisu au pain d’épices'],
-        ['Mercredi', 'Toasts festifs au chèvre', 'Truffade de fêtes', 'Mendiants maison'],
-        ['Jeudi', 'Terrine maison', 'Chapon, gratin dauphinois', 'Bûche chocolat-praliné'],
-        ['Vendredi', 'Salade d’hiver aux noix', 'Poisson du jour, beurre aux agrumes', 'Clémentines rôties au miel'] ] },
+    semaine: { label: 'Menu de la semaine', title: 'Le menu de la semaine', kicker: 'Du lundi au vendredi · particuliers et entreprises' },
+    noel: { label: 'Noël', title: 'Le menu de Noël', kicker: 'Tout le mois de décembre', soon: true },
   };
-  AUDIENCES = [['part', 'Particuliers'], ['ent', 'Entreprises']];
   weekVals(w, wide) {
-    const period = this.wkPeriod || 'semaine', aud = this.wkAud || 'part', M = this.MENUS[period];
-    const direct = period === 'semaine' && aud === 'part';
-    const WEEK = direct ? this.WEEK : M[aud], N = WEEK.length;
+    const period = this.wkPeriod || 'semaine', M = this.MENUS[period];
+    const WEEK = this.WEEK, N = WEEK.length;
     const { H, pv, ph } = this.pads(w), s = this.seen.menu;
     const goOrder = i => {
-      if (!direct) {
-        const day = WEEK[i][0].toLowerCase(), fete = period === 'noel' ? 'de Noël ' : '';
-        this.setCt({ sujet: aud === 'ent' ? 1 : 0, msg: '', message: aud === 'ent'
-          ? 'Bonjour Céline, nous aimerions le menu ' + fete + 'entreprises du ' + day + '. Structure et nombre de repas : '
-          : 'Bonjour Céline, je souhaite commander le menu ' + fete + 'du ' + day + '. Nombre de repas : ' });
-        this.scrollToId('contact');
-        return;
-      }
       const idx = this.getDates().findIndex(d => d.getDay() === i + 1);
       if (idx >= 0) this.setCmd({ dateIdx: idx, formule: 'menu', ch: [0, 0, 0], stamped: false, msg: '' });
       this.scrollToId('commander');
@@ -1054,12 +1094,10 @@ class Component extends DCLogic {
       wkPeriods: Object.entries(this.MENUS).map(([key, m]) => ({ label: m.label, on: String(key === period),
         bg: key === period ? '#f4f0e5' : 'transparent', fg: key === period ? '#202820' : '#f4f0e5',
         pick: () => { if (key === period) return; this.wkPeriod = key; this.wkI = 0; this.forceUpdate(); } })),
-      wkAuds: this.AUDIENCES.map(([key, label]) => ({ label, on: String(key === aud),
-        line: key === aud ? '#B08D57' : 'transparent', op: key === aud ? 1 : 0.7,
-        pick: () => { if (key === aud) return; this.wkAud = key; this.wkI = 0; this.forceUpdate(); } })),
-      wkTitle: M.title[aud], wkKicker: M.kicker[aud], isNoel: period === 'noel',
+      wkTitle: M.title, wkKicker: M.kicker, isNoel: period === 'noel', hasMenu: !M.soon,
+      askNoel: () => { this.setCt({ sujet: 0, msg: '', message: 'Bonjour Céline, je souhaite réserver le menu de Noël en décembre. Nombre de repas et dates : ' }); this.scrollToId('contact'); },
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
-      wkOrderLabel: (direct ? 'Commander pour ' : 'Demander pour ') + cur[0].toLowerCase(),
+      wkOrderLabel: 'Commander pour ' + cur[0].toLowerCase(),
       wkDay: cur[0], wkDayLower: cur[0].toLowerCase(), wkEntree: cur[1], wkPlat: cur[2], wkDessert: cur[3],
       wkPrev: go(-1), wkNext: go(1), wkOrder: () => goOrder(k),
       wkTabs: WEEK.map(([name], i) => ({ short: name.slice(0, 3), bg: i === k ? '#f4f0e5' : 'transparent', fg: i === k ? '#202820' : '#f4f0e5',
@@ -1087,6 +1125,8 @@ class Component extends DCLogic {
         tr: `transform .6s cubic-bezier(.3,1.3,.5,1) ${(3 - i) * 0.16}s, opacity .3s ease ${(3 - i) * 0.16}s`,
         lt: `translateX(-50%) rotate(${-r * 1.5}deg)` })),
       askDelivery: () => { this.setCt({ sujet: 1, message: 'Bonjour Céline, nous aimerions être livrés pour le déjeuner. Structure : ', msg: '' }); this.scrollToId('contact'); },
+      askLive: () => { this.setCt({ sujet: 3, message: 'Bonjour Céline, nous aimerions une animation cuisine en direct pour notre événement. Date, lieu et nombre de personnes : ', msg: '' }); this.scrollToId('contact'); },
+      askEvent: () => { this.setCt({ sujet: 3, message: 'Bonjour Céline, je prépare un événement (anniversaire, repas de famille…). Date, lieu, nombre de personnes et envies : ', msg: '' }); this.scrollToId('contact'); },
       entTextZoom: (wide ? Math.max(0.6, Math.min(1, (H - 80 - 2 * pv - 8) / 400)) : 1).toFixed(3),
       stackZoom: (wide ? Math.max(0.5, Math.min(0.82, (H - 80 - 2 * pv) / 480, (w - 2 * ph - 340 - 64) / 440)) : Math.min(1, (w - 40) / 440)).toFixed(3),
     };
