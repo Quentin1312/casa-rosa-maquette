@@ -284,171 +284,234 @@
     </sc-if>
   </section>
 
-  <section id="commander" data-screen-label="Commander" style="background:#f4f0e5;color:#202820;padding:clamp(40px,6vh,64px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};display:flex;align-items:center;overflow:hidden;scroll-margin-top:80px">
-    <div style="width:100%;max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px 56px">
-      <div style="zoom:{{ leftZoom }};gap:{{ cGap }};flex:1 1 340px;min-width:0;max-width:500px;display:flex;flex-direction:column">
-        <div>
-          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Click and collect ou livraison · du lundi au vendredi</p>
-          <h2 style="font-size:{{ cH2 }};margin:12px 0 0;font-family:'Titan One',sans-serif;font-weight:400;line-height:1;text-wrap:balance">Votre repas, à votre nom</h2>
-          <p style="display:{{ cIntro }};margin:14px 0 0;font-size:17px;line-height:1.5;max-width:40ch;text-wrap:pretty">Commande conseillée la veille avant 13h. Je cuisine, votre prénom est sur la barquette.</p>
-        </div>
-        <div role="group" aria-label="Mode de commande" style="display:flex;border:1.5px solid #202820;border-radius:999px;padding:3px;gap:3px">
-          <button sc-camel-on-click="{{ pickCollect }}" aria-pressed="{{ collectOn }}" style="background:{{ collectBg }};color:{{ collectFg }};flex:1 1 0;min-width:0;min-height:42px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Click and collect</button>
-          <button sc-camel-on-click="{{ pickLiv }}" aria-pressed="{{ livOn }}" style="background:{{ livBg }};color:{{ livFg }};flex:1 1 0;min-width:0;min-height:42px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Livraison</button>
-        </div>
-        <p style="margin:-6px 0 0;display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.4"><span style="width:8px;height:8px;border-radius:50%;background:#B08D57;flex:0 0 auto"></span>{{ modeHint }}</p>
-        <div style="display:flex;flex-direction:column;border:1.5px solid #202820;border-radius:16px;overflow:hidden">
-          <div style="display:flex">
-            <button sc-camel-on-click="{{ pickmenu }}" aria-pressed="{{ menuOn }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:{{ cHeadPad }};flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
-              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Menu complet · 17 €</span>
-              <span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Entrée, plat et dessert</span>
-            </button>
-            <div style="width:0;border-left:1.5px solid #202820"></div>
-            <button sc-camel-on-click="{{ pickcarte }}" aria-pressed="{{ carteOn }}" style="background:{{ carteBg }};color:{{ carteFg }};padding:{{ cHeadPad }};flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
-              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05;white-space:nowrap">À la carte</span>
-              <span style="display:{{ cIntro }};font-size:13px;line-height:1.35">Entrée 3,50 · Plat 11,50 · Dessert 4,50</span>
-            </button>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px;padding:12px 16px 14px;background:#fbf9f3;border-top:1.5px solid #202820">
-            <sc-for list="{{ courses }}" as="co" hint-placeholder-count="3">
-              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px">
-                <button sc-camel-on-click="{{ co.toggle }}" aria-pressed="{{ co.on }}" style="background:{{ co.lb }};color:{{ co.lf }};border:1.5px solid {{ co.lbd }};cursor:{{ co.cur }};flex:0 0 112px;min-height:32px;appearance:none;border-radius:999px;padding:4px 8px;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:left;white-space:nowrap;transition:background .2s,color .2s">{{ co.label }}</button>
-                <span style="opacity:{{ co.op }};flex:1 1 230px;min-width:0;display:flex;border:1.5px solid #202820;border-radius:22px;padding:3px;gap:3px;transition:opacity .2s">
-                  <sc-for list="{{ co.opts }}" as="o" hint-placeholder-count="2">
-                    <button sc-camel-on-click="{{ o.pick }}" style="background:{{ o.bg }};color:{{ o.fg }};flex:1 1 0;min-width:0;min-height:36px;appearance:none;border:0;border-radius:18px;cursor:pointer;padding:6px 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;line-height:1.15;transition:background .2s,color .2s">{{ o.v }}</button>
-                  </sc-for>
-                </span>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
-          <button sc-camel-on-click="{{ togglePain }}" style="background:{{ painBg }};color:{{ painFg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:46px;padding:0 18px 0 8px;display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">
-            <span style="background:{{ painDot }};width:30px;height:30px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:#f4f0e5">{{ painMark }}</span>Pain artisanal +1 €
-          </button>
-          <div style="display:flex;align-items:center;gap:4px;border:1.5px solid #202820;border-radius:999px;padding:4px">
-            <button sc-camel-on-click="{{ qtyMinus }}" aria-label="Retirer un repas" style="appearance:none;cursor:pointer;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#202820;font-size:22px;line-height:1;font-family:'Bricolage Grotesque',sans-serif" style-hover="background:#202820;color:#f4f0e5">−</button>
-            <span style="min-width:72px;text-align:center;font-weight:700;font-size:15px">{{ qtyLabel }}</span>
-            <button sc-camel-on-click="{{ qtyPlus }}" aria-label="Ajouter un repas" style="appearance:none;cursor:pointer;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#202820;font-size:22px;line-height:1;font-family:'Bricolage Grotesque',sans-serif" style-hover="background:#202820;color:#f4f0e5">+</button>
-          </div>
-        </div>
-        <button sc-camel-on-click="{{ addLine }}" style="appearance:none;cursor:pointer;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px dashed #114232;background:transparent;color:#114232;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px" style-hover="background:#114232;color:#f4f0e5">+ {{ addLabel }}</button>
-        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:14px;background:#fbf9f3;border:1.5px solid #202820">
-            <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">Ma commande · {{ cartSum }}</span>
-            <sc-for list="{{ cartLines }}" as="cl" hint-placeholder-count="2">
-              <div style="display:flex;align-items:center;gap:10px;border-top:1px dashed #c9c3b4;padding-top:8px">
-                <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:14px">{{ cl.name }}</span><span style="font-size:13px;line-height:1.35">{{ cl.text }}</span></div>
-                <span style="font-family:'Titan One',sans-serif;font-size:16px;white-space:nowrap">{{ cl.price }}</span>
-                <button sc-camel-on-click="{{ cl.remove }}" aria-label="Retirer cette ligne" style="appearance:none;cursor:pointer;width:32px;height:32px;border-radius:50%;border:1.5px solid #202820;background:transparent;color:#202820;font-size:16px;line-height:1">×</button>
-              </div>
-            </sc-for>
-          </div>
-        </sc-if>
-        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
-          <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">{{ whenLabel }}</span>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <sc-for list="{{ dates }}" as="d" hint-placeholder-count="3">
-              <button sc-camel-on-click="{{ d.pick }}" style="background:{{ d.bg }};color:{{ d.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:44px;padding:0 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">{{ d.short }}</button>
-            </sc-for>
-          </div>
-        </div>
-        <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
-            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Commune</span>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <sc-for list="{{ communes }}" as="cm" hint-placeholder-count="2">
-                <button sc-camel-on-click="{{ cm.pick }}" style="background:{{ cm.bg }};color:{{ cm.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ cm.label }}</button>
-              </sc-for>
-            </div>
-          </div>
-          <sc-if value="{{ showZones }}" hint-placeholder-val="{{ true }}">
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
-            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Zone</span>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
-                <button sc-camel-on-click="{{ z.pick }}" style="background:{{ z.bg }};color:{{ z.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ z.label }}</button>
-              </sc-for>
-            </div>
-          </div>
-          </sc-if>
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
-            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Créneau</span>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="4">
-                <button sc-camel-on-click="{{ sl.pick }}" style="background:{{ sl.bg }};color:{{ sl.fg }};opacity:{{ sl.op }};text-decoration:{{ sl.deco }};cursor:{{ sl.cur }};appearance:none;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ sl.label }}</button>
-              </sc-for>
-            </div>
-          </div>
-        </sc-if>
-        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
-          <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Paiement</span>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <sc-for list="{{ pays }}" as="py" hint-placeholder-count="3">
-              <button sc-camel-on-click="{{ py.pick }}" style="background:{{ py.bg }};color:{{ py.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ py.label }}</button>
-            </sc-for>
-          </div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px">
-          <input value="{{ prenom }}" sc-camel-on-change="{{ onPrenom }}" placeholder="Prénom" aria-label="Prénom" autocomplete="given-name" maxlength="18" style="flex:1 1 140px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-          <input value="{{ nom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom" aria-label="Nom" autocomplete="family-name" maxlength="30" style="flex:1 1 140px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-          <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="60" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-          <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 150px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-          <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
-            <input value="{{ complement }}" sc-camel-on-change="{{ onComplement }}" placeholder="Complément (entreprise, étage…)" aria-label="Complément d’adresse" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-            <input value="{{ rue }}" sc-camel-on-change="{{ onRue }}" placeholder="N° et rue de livraison" aria-label="N° et rue de livraison" autocomplete="address-line1" maxlength="120" style="order:-1;flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
-          </sc-if>
-          <button sc-camel-on-click="{{ order }}" style="appearance:none;cursor:pointer;height:54px;padding:0 26px;border-radius:999px;border:0;background:#8D1D2C;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;flex:1 0 auto" style-hover="background:#202820">Commander · {{ total }}</button>
-        </div>
-        <sc-if value="{{ msg }}" hint-placeholder-val="{{ false }}">
-          <p style="margin:0;font-size:14px;line-height:1.5">{{ msg }}</p>
-        </sc-if>
+  <section id="commander" data-screen-label="Commander" style="background:#f4f0e5;color:#202820;padding:clamp(48px,7vh,80px) clamp(20px,5vw,64px);overflow-x:clip;scroll-margin-top:80px">
+    <div style="width:100%;max-width:1120px;margin:0 auto">
+      <div style="max-width:640px">
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Click and collect ou livraison · du lundi au vendredi</p>
+        <h2 style="font-size:clamp(36px,4.4vw,58px);margin:12px 0 0;font-family:'Titan One',sans-serif;font-weight:400;line-height:1;text-wrap:balance">Votre repas, à votre nom</h2>
+        <p style="margin:14px 0 0;font-size:17px;line-height:1.5;max-width:42ch;text-wrap:pretty">Commande conseillée la veille avant 13h. Je cuisine, votre prénom est sur la barquette.</p>
       </div>
-      <div style="zoom:{{ trayZoom }};flex:0 0 auto;margin:0 auto">
-        <div ref="{{ cmdRef }}" style="position:relative;width:420px;padding:0 30px 20px">
-          <div style="transform:{{ breadT }};opacity:{{ breadO }};position:absolute;right:-6px;bottom:70px;z-index:1;width:150px;height:96px;transition:transform .55s cubic-bezier(.3,1.35,.5,1),opacity .25s ease">
-            <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:50% 50% 46% 46% / 62% 62% 38% 38%;box-shadow:inset 0 -14px 0 rgba(32,40,32,.07),0 16px 20px -14px rgba(32,40,32,.45);overflow:hidden">
-              <span style="position:absolute;left:30px;top:30px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span><span style="position:absolute;left:62px;top:24px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span><span style="position:absolute;left:94px;top:30px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span>
+      <div style="display:flex;flex-direction:{{ cDir }};align-items:stretch;justify-content:space-between;gap:48px 56px;margin-top:40px">
+        <div style="flex:1 1 auto;min-width:0;max-width:640px;display:flex;flex-direction:column">
+
+          <div style="display:flex;padding-bottom:30px">
+            <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px">
+              <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">1</span>À emporter ou livré ?</h3>
+              <div role="group" aria-label="Mode de commande" style="display:flex;border:1.5px solid #202820;border-radius:999px;padding:3px;gap:3px;max-width:440px">
+                <button sc-camel-on-click="{{ pickCollect }}" aria-pressed="{{ collectOn }}" style="background:{{ collectBg }};color:{{ collectFg }};flex:1 1 0;min-width:0;min-height:44px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Click and collect</button>
+                <button sc-camel-on-click="{{ pickLiv }}" aria-pressed="{{ livOn }}" style="background:{{ livBg }};color:{{ livFg }};flex:1 1 0;min-width:0;min-height:44px;appearance:none;border:0;border-radius:999px;cursor:pointer;padding:6px 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s">Livraison</button>
+              </div>
+              <p style="margin:0;display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.45"><span style="width:8px;height:8px;margin-top:7px;border-radius:50%;background:#B08D57;flex:0 0 auto"></span>{{ modeHint }}</p>
             </div>
           </div>
-          <sc-if value="{{ qtyMany }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;left:0;top:70px;z-index:3;width:66px;height:66px;border-radius:50%;background:#202820;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-weight:400;font-size:23px;line-height:1;transform:rotate(-12deg);box-shadow:0 10px 14px -8px rgba(32,40,32,.5)">{{ qtyX }}</div>
-          </sc-if>
-          <div style="opacity:{{ lo }};transform:{{ ly }};transition:{{ lt }};position:relative;z-index:2;width:360px;margin:26px auto 0;transform-origin:50% 0%">
-            <div style="position:absolute;left:50%;top:-14px;z-index:5;width:34px;height:34px;margin-left:-17px;pointer-events:none">
-              <span style="position:absolute;left:12px;top:20px;width:18px;height:10px;border-radius:50%;background:rgba(32,40,32,.28);filter:blur(2px)"></span>
-              <span style="position:absolute;inset:0;border-radius:50%;background:#8D1D2C;border:1.5px solid #202820;box-shadow:inset -4px -5px 0 rgba(32,40,32,.22)"></span>
-              <span style="position:absolute;left:8px;top:7px;width:9px;height:6px;border-radius:50%;background:rgba(244,240,229,.75);transform:rotate(-30deg)"></span>
+
+          <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
+            <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px">
+              <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">2</span>{{ whenTitle }}</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ dates }}" as="d" hint-placeholder-count="3">
+                  <button sc-camel-on-click="{{ d.pick }}" style="background:{{ d.bg }};color:{{ d.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:44px;padding:0 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">{{ d.short }}</button>
+                </sc-for>
+              </div>
             </div>
-              <div style="position:relative;background:#fbf9f3;color:#202820;border:1.5px solid #202820;border-radius:6px;box-shadow:0 2px 0 rgba(32,40,32,.08),0 22px 30px -18px rgba(32,40,32,.45);padding:34px 22px 18px;display:flex;flex-direction:column">
-                <span style="opacity:{{ stO }};transform:{{ stT }};position:absolute;top:-18px;right:-22px;z-index:3;background:#f4f0e5;white-space:nowrap;border:2.5px solid #8D1D2C;color:#8D1D2C;border-radius:8px;padding:3px 10px 5px;font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1;transition:opacity .2s,transform .35s cubic-bezier(.2,.9,.25,1.3)">Commandé</span>
-                <div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase"><span>Casa Rosa · Aurillac</span><span>{{ lMode }}</span></div>
-                <div style="margin-top:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:30px;line-height:1">{{ lTitle }}</div>
-                <div style="margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">{{ lSub }}</div>
-                <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
-                <div style="display:flex;flex-direction:column;gap:10px">
-                  <sc-for list="{{ lLines }}" as="l" hint-placeholder-count="3">
-                    <div style="display:flex;flex-direction:column;gap:3px">
-                      <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">{{ l.k }}</span>
-                      <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.1;text-wrap:balance">{{ l.v }}</span>
+          </div>
+
+          <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
+            <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
+              <div>
+                <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">3</span>Vos plats</h3>
+                <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Pour plusieurs menus différents, composez-en un, ajoutez-le, puis passez au suivant.</p>
+              </div>
+              <div style="display:flex;flex-direction:column;border:1.5px solid #202820;border-radius:16px;overflow:hidden">
+                <div style="display:flex">
+                  <button sc-camel-on-click="{{ pickmenu }}" aria-pressed="{{ menuOn }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:12px 16px;flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
+                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Menu complet · 17 €</span>
+                    <span style="font-size:13px;line-height:1.35">Entrée, plat et dessert</span>
+                  </button>
+                  <div style="width:0;border-left:1.5px solid #202820"></div>
+                  <button sc-camel-on-click="{{ pickcarte }}" aria-pressed="{{ carteOn }}" style="background:{{ carteBg }};color:{{ carteFg }};padding:12px 16px;flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
+                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05;white-space:nowrap">À la carte</span>
+                    <span style="font-size:13px;line-height:1.35">Entrée 3,50 · Plat 11,50 · Dessert 4,50</span>
+                  </button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px;padding:14px 16px 16px;background:#fbf9f3;border-top:1.5px solid #202820">
+                  <sc-for list="{{ courses }}" as="co" hint-placeholder-count="3">
+                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px">
+                      <button sc-camel-on-click="{{ co.toggle }}" aria-pressed="{{ co.on }}" style="background:{{ co.lb }};color:{{ co.lf }};border:1.5px solid {{ co.lbd }};cursor:{{ co.cur }};flex:0 0 112px;min-height:32px;appearance:none;border-radius:999px;padding:4px 8px;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:left;white-space:nowrap;transition:background .2s,color .2s">{{ co.label }}</button>
+                      <span style="opacity:{{ co.op }};flex:1 1 230px;min-width:0;display:flex;border:1.5px solid #202820;border-radius:22px;padding:3px;gap:3px;transition:opacity .2s">
+                        <sc-for list="{{ co.opts }}" as="o" hint-placeholder-count="2">
+                          <button sc-camel-on-click="{{ o.pick }}" style="background:{{ o.bg }};color:{{ o.fg }};flex:1 1 0;min-width:0;min-height:38px;appearance:none;border:0;border-radius:18px;cursor:pointer;padding:6px 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;line-height:1.15;transition:background .2s,color .2s">{{ o.v }}</button>
+                        </sc-for>
+                      </span>
                     </div>
                   </sc-for>
                 </div>
-                <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
-                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px">
-                  <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">Pour</span><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1.05;color:#8D1D2C;overflow-wrap:anywhere">{{ lName }}</span></div>
-                  <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">{{ lWhen }}</span><span style="font-size:15px;font-weight:700;line-height:1.3">{{ lDate }}</span></div>
-                </div>
-                <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px">
-                  <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">{{ mealsLabel }}</span>
-                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:.9;white-space:nowrap">{{ total }}</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+                <button sc-camel-on-click="{{ togglePain }}" style="background:{{ painBg }};color:{{ painFg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:46px;padding:0 18px 0 8px;display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;transition:background .2s,color .2s">
+                  <span style="background:{{ painDot }};width:30px;height:30px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:#f4f0e5">{{ painMark }}</span>Pain artisanal +1 €
+                </button>
+                <div style="display:flex;align-items:center;gap:4px;border:1.5px solid #202820;border-radius:999px;padding:4px">
+                  <button sc-camel-on-click="{{ qtyMinus }}" aria-label="Retirer un repas" style="appearance:none;cursor:pointer;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#202820;font-size:22px;line-height:1;font-family:'Bricolage Grotesque',sans-serif" style-hover="background:#202820;color:#f4f0e5">−</button>
+                  <span style="min-width:72px;text-align:center;font-weight:700;font-size:15px">{{ qtyLabel }}</span>
+                  <button sc-camel-on-click="{{ qtyPlus }}" aria-label="Ajouter un repas" style="appearance:none;cursor:pointer;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#202820;font-size:22px;line-height:1;font-family:'Bricolage Grotesque',sans-serif" style-hover="background:#202820;color:#f4f0e5">+</button>
                 </div>
               </div>
+              <button sc-camel-on-click="{{ addLine }}" style="align-self:flex-start;appearance:none;cursor:pointer;min-height:48px;padding:0 22px;border-radius:999px;border:1.5px dashed #114232;background:transparent;color:#114232;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px" style-hover="background:#114232;color:#f4f0e5">+ {{ addLabel }}</button>
+              <sc-if value="{{ hint }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:-4px 0 0;font-size:14px;font-weight:700;line-height:1.45;color:#114232">{{ hint }}</p>
+              </sc-if>
+            </div>
+          </div>
+
+          <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
+              <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
+                <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">4</span>Où et à quelle heure ?</h3>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Commune</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ communes }}" as="cm" hint-placeholder-count="2">
+                      <button sc-camel-on-click="{{ cm.pick }}" style="background:{{ cm.bg }};color:{{ cm.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ cm.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <sc-if value="{{ showZones }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Zone</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                      <sc-for list="{{ zones }}" as="z" hint-placeholder-count="2">
+                        <button sc-camel-on-click="{{ z.pick }}" style="background:{{ z.bg }};color:{{ z.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ z.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <input value="{{ rue }}" sc-camel-on-change="{{ onRue }}" placeholder="N° et rue de livraison" aria-label="N° et rue de livraison" autocomplete="address-line1" maxlength="120" style="width:100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                  <input value="{{ complement }}" sc-camel-on-change="{{ onComplement }}" placeholder="Complément (entreprise, étage…)" aria-label="Complément d’adresse" maxlength="80" style="width:100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Créneau</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="4">
+                      <button sc-camel-on-click="{{ sl.pick }}" style="background:{{ sl.bg }};color:{{ sl.fg }};opacity:{{ sl.op }};text-decoration:{{ sl.deco }};cursor:{{ sl.cur }};appearance:none;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ sl.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;padding-top:30px;border-top:1.5px dashed #c9c3b4">
+            <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
+              <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">{{ coordNum }}</span>Vos coordonnées</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <input value="{{ prenom }}" sc-camel-on-change="{{ onPrenom }}" placeholder="Prénom" aria-label="Prénom" autocomplete="given-name" maxlength="18" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                <input value="{{ nom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom" aria-label="Nom" autocomplete="family-name" maxlength="30" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ payLabel }}</span>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ pays }}" as="py" hint-placeholder-count="3">
+                    <button sc-camel-on-click="{{ py.pick }}" style="background:{{ py.bg }};color:{{ py.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ py.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:0 0 auto;align-self:{{ tkAlign }}">
+          <div style="position:{{ tkPos }};top:96px;zoom:{{ trayZoom }}">
+            <div ref="{{ cmdRef }}" style="position:relative;width:420px;padding:0 30px 20px">
+              <div style="transform:{{ breadT }};opacity:{{ breadO }};position:absolute;right:-6px;bottom:150px;z-index:1;width:150px;height:96px;transition:transform .55s cubic-bezier(.3,1.35,.5,1),opacity .25s ease">
+                <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:50% 50% 46% 46% / 62% 62% 38% 38%;box-shadow:inset 0 -14px 0 rgba(32,40,32,.07),0 16px 20px -14px rgba(32,40,32,.45);overflow:hidden">
+                  <span style="position:absolute;left:30px;top:30px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span><span style="position:absolute;left:62px;top:24px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span><span style="position:absolute;left:94px;top:30px;width:34px;height:14px;border-top:1.5px solid #202820;border-radius:50% 50% 0 0;transform:rotate(-28deg)"></span>
+                </div>
+              </div>
+              <sc-if value="{{ qtyMany }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:-16px;top:60px;z-index:3;width:58px;height:58px;border-radius:50%;background:#202820;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-weight:400;font-size:20px;line-height:1;transform:rotate(-12deg);box-shadow:0 10px 14px -8px rgba(32,40,32,.5)">{{ qtyX }}</div>
+              </sc-if>
+              <div style="opacity:{{ lo }};transform:{{ ly }};transition:{{ lt }};position:relative;z-index:2;width:360px;margin:26px auto 0;transform-origin:50% 0%">
+                <div style="position:absolute;left:50%;top:-14px;z-index:5;width:34px;height:34px;margin-left:-17px;pointer-events:none">
+                  <span style="position:absolute;left:12px;top:20px;width:18px;height:10px;border-radius:50%;background:rgba(32,40,32,.28);filter:blur(2px)"></span>
+                  <span style="position:absolute;inset:0;border-radius:50%;background:#8D1D2C;border:1.5px solid #202820;box-shadow:inset -4px -5px 0 rgba(32,40,32,.22)"></span>
+                  <span style="position:absolute;left:8px;top:7px;width:9px;height:6px;border-radius:50%;background:rgba(244,240,229,.75);transform:rotate(-30deg)"></span>
+                </div>
+                <div style="position:relative;background:#fbf9f3;color:#202820;border:1.5px solid #202820;border-radius:6px;box-shadow:0 2px 0 rgba(32,40,32,.08),0 22px 30px -18px rgba(32,40,32,.45);padding:30px 22px 20px;display:flex;flex-direction:column">
+                  <span style="opacity:{{ stO }};transform:{{ stT }};position:absolute;top:-18px;right:-22px;z-index:3;background:#f4f0e5;white-space:nowrap;border:2.5px solid #8D1D2C;color:#8D1D2C;border-radius:8px;padding:3px 10px 5px;font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1;transition:opacity .2s,transform .35s cubic-bezier(.2,.9,.25,1.3)">Commandé</span>
+                  <div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase"><span>Casa Rosa · Aurillac</span><span>{{ lMode }}</span></div>
+                  <div style="margin-top:10px;font-family:'Titan One',sans-serif;font-weight:400;font-size:28px;line-height:1">{{ lTitle }}</div>
+                  <div style="margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">{{ lSub }}</div>
+                  <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
+                  <div style="display:flex;flex-direction:column;gap:10px;max-height:{{ tkMax }};overflow:auto">
+                    <sc-for list="{{ lLines }}" as="l" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:flex-start;gap:10px">
+                        <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px">
+                          <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">{{ l.k }}</span>
+                          <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;text-wrap:balance">{{ l.v }}</span>
+                        </div>
+                        <button sc-camel-on-click="{{ l.rm }}" aria-label="Retirer ce menu" style="display:{{ l.rmD }};flex:0 0 auto;appearance:none;cursor:pointer;width:30px;height:30px;border-radius:50%;border:1.5px solid #202820;background:transparent;color:#202820;font-size:15px;line-height:1;align-items:center;justify-content:center;padding:0" style-hover="background:#202820;color:#f4f0e5">×</button>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px">
+                    <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">Pour</span><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:20px;line-height:1.05;color:#8D1D2C;overflow-wrap:anywhere">{{ lName }}</span></div>
+                    <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">{{ lWhen }}</span><span style="font-size:15px;font-weight:700;line-height:1.3">{{ lDate }}</span></div>
+                  </div>
+                  <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
+                  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px">
+                    <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">{{ mealsLabel }}</span>
+                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:.9;white-space:nowrap">{{ total }}</span>
+                  </div>
+                  <button sc-camel-on-click="{{ order }}" style="margin-top:16px;appearance:none;cursor:pointer;height:54px;padding:0 22px;border-radius:999px;border:0;background:#8D1D2C;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;white-space:nowrap" style-hover="background:#202820">{{ orderLabel }}</button>
+                  <sc-if value="{{ msg }}" hint-placeholder-val="{{ false }}">
+                    <p role="alert" style="margin:10px 0 0;font-size:14px;font-weight:700;line-height:1.45;color:{{ msgColor }}">{{ msg }}</p>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <sc-if value="{{ barOn }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:#114232;color:#f4f0e5;border-radius:999px;padding:6px 6px 6px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 14px 28px -10px rgba(32,40,32,.55)">
+        <span style="font-weight:700;font-size:15px;white-space:nowrap">{{ mealsLabel }} · {{ total }}</span>
+        <button sc-camel-on-click="{{ goTicket }}" style="appearance:none;cursor:pointer;height:44px;padding:0 18px;border-radius:999px;border:0;background:#f4f0e5;color:#114232;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap">Voir ma commande ↓</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ doneOn }}" hint-placeholder-val="{{ false }}">
+      <div role="dialog" aria-modal="true" aria-label="Commande envoyée" sc-camel-on-click="{{ closeDone }}" style="position:fixed;inset:0;z-index:70;background:rgba(32,40,32,.6);display:flex;align-items:center;justify-content:center;padding:20px">
+        <div sc-camel-on-click="{{ keepOpen }}" style="position:relative;width:100%;max-width:460px;max-height:calc(100vh - 40px);overflow:auto;background:#fbf9f3;color:#202820;border:1.5px solid #202820;border-radius:10px;padding:48px 28px 26px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)">
+          <span style="position:absolute;top:14px;right:16px;background:#f4f0e5;border:2.5px solid #8D1D2C;color:#8D1D2C;border-radius:8px;padding:3px 10px 5px;font-family:'Titan One',sans-serif;font-size:20px;line-height:1;transform:rotate(-9deg)">Commandé</span>
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">{{ dId }}</p>
+          <h3 style="margin:10px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:1.02">C’est noté, <span style="white-space:nowrap">{{ dName }} !</span></h3>
+          <p style="margin:14px 0 0;font-size:16px;line-height:1.5">{{ dWhen }}</p>
+          <div style="border-top:1.5px dashed #9a9c94;margin:16px 0"></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ dLines }}" as="dl" hint-placeholder-count="2">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                <div style="min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:14px">{{ dl.k }}</span><span style="font-size:14px;line-height:1.4">{{ dl.v }}</span></div>
+                <span style="font-family:'Titan One',sans-serif;font-size:16px;white-space:nowrap">{{ dl.p }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1.5px dashed #9a9c94;margin:16px 0"></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px"><span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">{{ dPay }}</span><span style="font-family:'Titan One',sans-serif;font-size:30px;line-height:.9">{{ dTotal }}</span></div>
+          <p style="margin:18px 0 0;padding:12px 14px;border-radius:12px;background:#ECE3CF;font-size:15px;line-height:1.5">Vous recevez un e-mail récapitulatif. Céline valide ensuite votre commande et vous le confirme par e-mail.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+            <button sc-camel-on-click="{{ closeDone }}" style="flex:1 1 140px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:0;background:#114232;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820">Parfait, merci</button>
+            <button sc-camel-on-click="{{ newOrder }}" style="flex:1 1 160px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820;color:#f4f0e5">Nouvelle commande</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
   </section>
 
   <section id="engagements" data-screen-label="Engagements" style="position:relative;background:#ECE3CF;color:#202820;padding:clamp(48px,7vh,72px) clamp(20px,5vw,64px);min-height:{{ sectionMinH }};display:flex;align-items:center;overflow:hidden;scroll-margin-top:80px">
@@ -879,8 +942,21 @@ class Component extends DCLogic {
   rootRef = React.createRef();
   celBotRef = React.createRef();
   onResize = () => this.setState({ h: window.innerHeight });
+  // Mobile order bar: shown while the order steps are on screen but the ticket is not
+  onCmdScroll = () => {
+    const sec = document.getElementById('commander'), tk = this.cmdRef.current;
+    let on = false;
+    if (sec && tk && this.state.w < 1040) {
+      const s = sec.getBoundingClientRect(), t = tk.getBoundingClientRect(), H = window.innerHeight;
+      on = s.top < H * 0.5 && s.bottom > H && t.top > H - 60;
+    }
+    if (on !== !!this.cmd.bar) this.setCmd({ bar: on });
+  };
+  onKey = e => { if (e.key === 'Escape' && this.cmd.done) this.setCmd({ done: null }); };
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
+    window.addEventListener('scroll', this.onCmdScroll, { passive: true });
+    window.addEventListener('keydown', this.onKey);
     const el = this.rootRef.current;
     if (!el) return;
     this.ro = new ResizeObserver(([e]) => this.setState({ w: e.contentRect.width }));
@@ -890,7 +966,7 @@ class Component extends DCLogic {
     this.watchReveal();
     this.startMarquee();
   }
-  componentWillUnmount() { this.ro && this.ro.disconnect(); this.io && this.io.disconnect(); clearTimeout(this.dealT); clearTimeout(this.wkT); clearTimeout(this.swapT); cancelAnimationFrame(this.mraf); this.io3 && this.io3.disconnect && this.io3.disconnect(); this.stopAuto(); clearTimeout(this.ledT); this.io2 && this.io2.disconnect && this.io2.disconnect(); window.removeEventListener('resize', this.onResize); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); this.io && this.io.disconnect(); clearTimeout(this.dealT); clearTimeout(this.wkT); clearTimeout(this.swapT); cancelAnimationFrame(this.mraf); this.io3 && this.io3.disconnect && this.io3.disconnect(); this.stopAuto(); clearTimeout(this.ledT); this.io2 && this.io2.disconnect && this.io2.disconnect(); window.removeEventListener('resize', this.onResize); window.removeEventListener('scroll', this.onCmdScroll); window.removeEventListener('keydown', this.onKey); }
   fanRef = React.createRef();
   componentDidUpdate() { if (!this.measured) { this.measured = true; requestAnimationFrame(() => this.forceUpdate()); } this.watchFan(); this.watchCmd(); this.watchReveal(); }
   watchFan() {
@@ -924,7 +1000,7 @@ class Component extends DCLogic {
   // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
   ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
-  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: '', pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
+  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: '', pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', done: null, bar: false };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   watchCmd() {
     const el = this.cmdRef.current;
@@ -959,7 +1035,7 @@ class Component extends DCLogic {
     const dSel = dates[Math.min(c.dateIdx, dates.length - 1)];
     const long = dSel.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
     const ymd = dSel.getFullYear() + '-' + String(dSel.getMonth() + 1).padStart(2, '0') + '-' + String(dSel.getDate()).padStart(2, '0');
-    const reset = { stamped: false, msg: '', truckGo: false };
+    const reset = { stamped: false, msg: '', hint: '', truckGo: false };
     const sel = on => ({ bg: on ? '#202820' : 'transparent', fg: on ? '#f4f0e5' : '#202820' });
     const wd = dSel.getDay() - 1;
     const dayOpts = col => {
@@ -1011,12 +1087,15 @@ class Component extends DCLogic {
     const address = [c.rue.trim(), c.complement.trim(), COMMUNES[c.commune]].filter(Boolean).join(', ');
 
     // Ticket
+    const noRm = { rmD: 'none', rm: () => {} };
     const tLines = c.cart.length
-      ? c.cart.map(l => ({ k: lineName(l), v: lineText(l) }))
-      : OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] })).filter((l, i) => !isCarte || carte[i]);
-    if (!c.cart.length && c.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal' });
-    if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (c.slot ? ' · ' + c.slot : '') });
-    tLines.push({ k: 'Paiement', v: PAYS[c.pay] });
+      ? c.cart.map((l, i) => ({ k: lineName(l), v: lineText(l), rmD: 'flex',
+          rm: () => this.setCmd({ cart: c.cart.filter((_, n) => n !== i), ...reset }) }))
+      : OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]], ...noRm })).filter((l, i) => !isCarte || carte[i]);
+    if (!c.cart.length && c.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
+    if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (c.slot ? ' · ' + c.slot : ''), ...noRm });
+    tLines.push({ k: 'Paiement', v: PAYS[c.pay], ...noRm });
+    const dn = c.done;
 
     return {
       cmdRef: this.cmdRef,
@@ -1041,20 +1120,16 @@ class Component extends DCLogic {
       qtyPlus: () => this.setCmd({ qty: Math.min(50, c.qty + 1), ...reset }),
       addLabel: 'Ajouter à ma commande · ' + fmt(lineTotal(current)),
       addLine: () => {
-        if (isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
-        this.setCmd({ cart: [...c.cart, current], qty: 1, ...reset, msg: 'Ajouté. Composez un autre menu, ou passez à la suite.' });
+        if (isCarte && !carte.some(Boolean)) { this.setCmd({ hint: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
+        this.setCmd({ cart: [...c.cart, current], qty: 1, ...reset, hint: 'Ajouté au ticket. Composez un autre menu, ou passez à la suite.' });
       },
-      hasCart: c.cart.length > 0,
-      cartLines: c.cart.map((l, i) => ({ name: lineName(l), text: lineText(l), price: fmt(lineTotal(l)),
-        remove: () => this.setCmd({ cart: c.cart.filter((_, n) => n !== i), ...reset }) })),
-      cartSum: meals + ' repas · ' + fmt(total),
       dates: dates.map((d, i) => ({
         short: d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }),
         ...sel(i === c.dateIdx),
         pick: () => {
           if (i === c.dateIdx) return;
-          const msg = c.cart.length ? 'Votre commande est gardée, avec les plats du jour choisi.' : '';
-          this.setCmd({ dateIdx: i, slot: '', ...reset, msg });
+          const hint = c.cart.length ? 'Votre commande est gardée, avec les plats du jour choisi.' : '';
+          this.setCmd({ dateIdx: i, slot: '', ...reset, hint });
         },
       })),
       prenom: c.prenom, onPrenom: e => this.setCmd({ prenom: e.target.value, ...reset }),
@@ -1082,10 +1157,14 @@ class Component extends DCLogic {
         if (!c.nom.trim()) { this.setCmd({ msg: 'Indiquez aussi votre nom.' }); return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim())) { this.setCmd({ msg: 'Indiquez une adresse e-mail valide.' }); return; }
         if (c.tel.replace(/\D/g, '').length < 10) { this.setCmd({ msg: 'Indiquez un numéro de téléphone.' }); return; }
-        const done = isLiv
-          ? 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + c.slot + ' : ' + address + '.'
-          : `C’est noté, ${p}. Retrait le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair.`;
-        if (!this.ORDER_API) { this.setCmd({ msg: done }); this.stick(true); return; } // demo mode, no script yet
+        // Confirmation window content, frozen at the moment of the order
+        const done = id => ({
+          id: id ? 'Commande n° ' + id : 'Commande (démo)', name: p,
+          when: isLiv ? `Livraison le ${long} à ${c.slot} : ${address}.` : `À retirer le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair à Aurillac.`,
+          lines: lines.map(l => ({ k: lineName(l), v: lineText(l), p: fmt(lineTotal(l)) })),
+          pay: 'Paiement : ' + PAYS[c.pay], total: fmt(total),
+        });
+        if (!this.ORDER_API) { this.setCmd({ msg: '', done: done('') }); this.stick(true); return; } // demo mode, no script yet
         if (c.sending) return;
         const payload = { date: ymd, mode: c.mode,
           lines: lines.map(l => { const [entree, plat, dessert] = itemsOf(l); return { formule: l.formule, entree, plat, dessert, pain: l.pain, qty: l.qty }; }),
@@ -1099,12 +1178,28 @@ class Component extends DCLogic {
           .then(res => {
             if (!res.ok) { this.setCmd({ sending: false, msg: res.error || 'La commande n’a pas pu être envoyée.' }); return; }
             delete this.dispo[ymd];
-            this.setCmd({ sending: false, msg: done + ' Commande n° ' + res.id + ' : Céline vous confirme par e-mail.' });
+            this.setCmd({ sending: false, msg: '', done: done(res.id) });
             this.stick(true);
           })
           .catch(() => this.setCmd({ sending: false, msg: 'La commande n’a pas pu être envoyée. Réessayez, ou appelez le 06 87 94 97 22.' }));
       },
-      total: fmt(total), msg: c.msg,
+      total: fmt(total), msg: c.msg, hint: c.hint,
+      msgColor: c.sending ? '#202820' : '#8D1D2C',
+      orderLabel: c.sending ? 'Envoi en cours…' : 'Commander · ' + fmt(total),
+      whenTitle: isLiv ? 'Quel jour livrer ?' : 'Quel jour venir ?',
+      coordNum: isLiv ? '5' : '4',
+      payLabel: 'Mode de paiement',
+      barOn: !!c.bar && !dn,
+      goTicket: () => { const el = this.cmdRef.current; if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); },
+      doneOn: !!dn,
+      dId: dn ? dn.id : '', dName: dn ? dn.name : '', dWhen: dn ? dn.when : '',
+      dLines: dn ? dn.lines : [], dPay: dn ? dn.pay : '', dTotal: dn ? dn.total : '',
+      closeDone: () => this.setCmd({ done: null }),
+      keepOpen: e => { if (e && e.stopPropagation) e.stopPropagation(); },
+      newOrder: () => {
+        this.setCmd({ done: null, cart: [], ch: [0, 0, 0], qty: isLiv ? 5 : 1, pain: false, slot: '', ...reset });
+        this.scrollToId('commander');
+      },
       lTitle: c.cart.length ? 'Ma commande' : isCarte ? 'À la carte' : 'Menu complet',
       lSub: c.cart.length ? 'Menus du jour' : isCarte ? 'Plats du jour' : 'Menu du jour',
       lLines: tLines,
@@ -1314,12 +1409,12 @@ class Component extends DCLogic {
       ...this.atVals(w, wide),
       ...this.avisVals(w, wide),
       ...this.ctVals(w, wide),
-      cGap: wide && this.state.h < 760 ? '12px' : '18px',
-      cH2: wide && this.state.h < 760 ? 'clamp(30px,3.4vw,40px)' : 'clamp(36px,4.4vw,58px)',
-      cIntro: wide && this.state.h < 760 ? 'none' : 'block',
-      cHeadPad: wide && this.state.h < 760 ? '9px 16px' : '12px 16px',
-      leftZoom: (() => { const H = this.state.h; if (!wide) return '1'; const pv = Math.min(64, Math.max(40, H * 0.06)); const need = H < 760 ? 510 : 660; return Math.max(0.7, Math.min(1, (H - 80 - 2 * pv - 8) / need)).toFixed(3); })(),
-      trayZoom: (() => { const H = this.state.h, pv = Math.min(64, Math.max(40, H * 0.06)), ph = Math.min(64, Math.max(20, w * 0.05)); return Math.max(0.5, Math.min(1, wide ? (w - 2 * ph - 340 - 56) / 420 : (w - 40) / 420, wide ? (H - 80 - 2 * pv - 8) / 600 : 1)).toFixed(3); })(),
+      // Order section: steps on the left, ticket following the screen on the right (one column under 1040px)
+      cDir: w >= 1040 ? 'row' : 'column',
+      tkAlign: w >= 1040 ? 'stretch' : 'center',
+      tkPos: w >= 1040 ? 'sticky' : 'relative',
+      tkMax: w >= 1040 ? 'max(140px, calc(100vh - 480px))' : 'none',
+      trayZoom: w >= 1040 ? '1' : Math.max(0.6, Math.min(1, (w - 2 * Math.min(64, Math.max(20, w * 0.05))) / 420)).toFixed(3),
       rootRef: this.rootRef,
       wide, narrow: !wide,
       // header 80px + texte/marges ~330px ; la scène (arche + pastille) fait 574px
