@@ -329,6 +329,19 @@
             <button sc-camel-on-click="{{ qtyPlus }}" aria-label="Ajouter un repas" style="appearance:none;cursor:pointer;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#202820;font-size:22px;line-height:1;font-family:'Bricolage Grotesque',sans-serif" style-hover="background:#202820;color:#f4f0e5">+</button>
           </div>
         </div>
+        <button sc-camel-on-click="{{ addLine }}" style="appearance:none;cursor:pointer;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px dashed #114232;background:transparent;color:#114232;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px" style-hover="background:#114232;color:#f4f0e5">+ {{ addLabel }}</button>
+        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:14px;background:#fbf9f3;border:1.5px solid #202820">
+            <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#114232">Ma commande · {{ cartSum }}</span>
+            <sc-for list="{{ cartLines }}" as="cl" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:10px;border-top:1px dashed #c9c3b4;padding-top:8px">
+                <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:14px">{{ cl.name }}</span><span style="font-size:13px;line-height:1.35">{{ cl.text }}</span></div>
+                <span style="font-family:'Titan One',sans-serif;font-size:16px;white-space:nowrap">{{ cl.price }}</span>
+                <button sc-camel-on-click="{{ cl.remove }}" aria-label="Retirer cette ligne" style="appearance:none;cursor:pointer;width:32px;height:32px;border-radius:50%;border:1.5px solid #202820;background:transparent;color:#202820;font-size:16px;line-height:1">×</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
           <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">{{ whenLabel }}</span>
           <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -339,6 +352,15 @@
         </div>
         <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Commune</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ communes }}" as="cm" hint-placeholder-count="2">
+                <button sc-camel-on-click="{{ cm.pick }}" style="background:{{ cm.bg }};color:{{ cm.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:40px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ cm.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ showZones }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
             <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Zone</span>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
               <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
@@ -346,6 +368,7 @@
               </sc-for>
             </div>
           </div>
+          </sc-if>
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
             <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">Créneau</span>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -369,7 +392,8 @@
           <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="60" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 150px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
-            <input value="{{ adresse }}" sc-camel-on-change="{{ onAdresse }}" placeholder="Adresse de livraison" aria-label="Adresse de livraison" autocomplete="street-address" maxlength="120" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+            <input value="{{ complement }}" sc-camel-on-change="{{ onComplement }}" placeholder="Complément (entreprise, étage…)" aria-label="Complément d’adresse" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+            <input value="{{ rue }}" sc-camel-on-change="{{ onRue }}" placeholder="N° et rue de livraison" aria-label="N° et rue de livraison" autocomplete="address-line1" maxlength="120" style="order:-1;flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           </sc-if>
           <button sc-camel-on-click="{{ order }}" style="appearance:none;cursor:pointer;height:54px;padding:0 26px;border-radius:999px;border:0;background:#8D1D2C;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;flex:1 0 auto" style-hover="background:#202820">Commander · {{ total }}</button>
         </div>
@@ -414,7 +438,7 @@
                 </div>
                 <div style="border-top:1.5px dashed #9a9c94;margin:12px 0"></div>
                 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px">
-                  <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">{{ qtyLabel }}</span>
+                  <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">{{ mealsLabel }}</span>
                   <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:.9;white-space:nowrap">{{ total }}</span>
                 </div>
               </div>
@@ -897,7 +921,7 @@ class Component extends DCLogic {
   // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
   ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
-  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: -1, pay: 0, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
+  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: '', pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   watchCmd() {
     const el = this.cmdRef.current;
@@ -925,14 +949,13 @@ class Component extends DCLogic {
   cmdVals() {
     const c = this.cmd;
     const fmt = n => (n % 1 ? n.toFixed(2).replace('.', ',') : String(n)) + ' €';
-    // Céline's prices: full menu 17 €, or à la carte (starter / main / dessert)
+    // Céline's prices: full menu 17 €, or à la carte (starter / main / dessert), bread 1 €
     const PRICES = [3.5, 11.5, 4.5];
     const isCarte = c.formule === 'carte', carte = c.carte;
-    const unit = isCarte ? PRICES.reduce((sum, p, i) => sum + (carte[i] ? p : 0), 0) : 17;
-    const total = c.qty * (unit + (c.pain ? 1 : 0));
     const dates = this.getDates();
     const dSel = dates[Math.min(c.dateIdx, dates.length - 1)];
     const long = dSel.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+    const ymd = dSel.getFullYear() + '-' + String(dSel.getMonth() + 1).padStart(2, '0') + '-' + String(dSel.getDate()).padStart(2, '0');
     const reset = { stamped: false, msg: '', truckGo: false };
     const sel = on => ({ bg: on ? '#202820' : 'transparent', fg: on ? '#f4f0e5' : '#202820' });
     const wd = dSel.getDay() - 1;
@@ -953,91 +976,117 @@ class Component extends DCLogic {
           pick: () => { const ch = c.ch.slice(); ch[i] = n; this.setCmd({ ch, ...reset }); } })),
       };
     });
-    // Delivery: 3 zones (zone 2 and 3 prices to come), slots from 11h30 to 13h15
+
+    // Basket: each line is one composition × a quantity. Without a basket, the current composition is the order.
+    const current = { formule: c.formule, items: OPTS.map(([, list], i) => (!isCarte || carte[i]) ? list[c.ch[i]] : ''), pain: c.pain, qty: c.qty };
+    const lineTotal = l => l.qty * ((l.formule === 'carte' ? l.items.reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : 17) + (l.pain ? 1 : 0));
+    const lineText = l => l.items.filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
+    const lineName = l => l.qty + ' × ' + (l.formule === 'carte' ? 'À la carte' : 'Menu complet');
+    const lines = c.cart.length ? c.cart : [current];
+    const total = lines.reduce((s, l) => s + lineTotal(l), 0);
+    const meals = lines.reduce((s, l) => s + l.qty, 0);
+    const menus = lines.filter(l => l.formule === 'menu').reduce((s, l) => s + l.qty, 0);
+
+    // Delivery: communes, zones and slots (slots and taken slots come from the order script)
     const isLiv = c.mode === 'livraison';
-    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
-    const SLOTS = ['11h30', '12h00', '12h30', '13h00'];
-    const ymd = dSel.getFullYear() + '-' + String(dSel.getMonth() + 1).padStart(2, '0') + '-' + String(dSel.getDate()).padStart(2, '0');
-    // Taken slots come from the order script; without it, one sample slot is shown as taken
-    if (this.ORDER_API && isLiv && !(ymd in this.dispo)) {
+    const dd = this.dispo[ymd];
+    if (this.ORDER_API && !(ymd in this.dispo)) {
       this.dispo[ymd] = null;
       fetch(this.ORDER_API + '?action=dispo&date=' + ymd).then(r => r.json())
         .then(d => { this.dispo[ymd] = d.ok ? d : { creneauxComplets: [] }; this.forceUpdate(); })
         .catch(() => { delete this.dispo[ymd]; });
     }
-    const taken = this.dispo[ymd] ? this.dispo[ymd].creneauxComplets : [];
-    const full = i => this.ORDER_API ? taken.includes(SLOTS[i]) : i === 1 + (c.dateIdx % 3);
+    const SLOTS = (dd && dd.creneaux) || ['11h30', '12h00', '12h30', '13h00'];
+    const COMMUNES = (dd && dd.communes) || ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)'];
+    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
+    const zoneIdx = c.commune === 1 ? 2 : Math.min(c.zone, 1); // Arpajon is its own zone
+    const taken = dd ? dd.creneauxComplets || [] : [];
+    const full = sl => this.ORDER_API ? taken.includes(sl) : sl === SLOTS[1 + (c.dateIdx % 3)];
     const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
-    const lines = OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] })).filter((l, i) => !isCarte || carte[i]);
-    if (c.pain) lines.push({ k: 'En plus', v: 'Pain artisanal' });
-    if (isLiv) lines.push({ k: 'Livraison', v: ZONES[c.zone][0] + (c.slot >= 0 ? ' · ' + SLOTS[c.slot] : '') });
-    lines.push({ k: 'Paiement', v: PAYS[c.pay] });
+    const address = [c.rue.trim(), c.complement.trim(), COMMUNES[c.commune]].filter(Boolean).join(', ');
+
+    // Ticket
+    const tLines = c.cart.length
+      ? c.cart.map(l => ({ k: lineName(l), v: lineText(l) }))
+      : OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] })).filter((l, i) => !isCarte || carte[i]);
+    if (!c.cart.length && c.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal' });
+    if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (c.slot ? ' · ' + c.slot : '') });
+    tLines.push({ k: 'Paiement', v: PAYS[c.pay] });
+
     return {
       cmdRef: this.cmdRef,
-      menuBg: sel(c.formule === 'menu').bg, menuFg: sel(c.formule === 'menu').fg, menuRot: c.formule === 'menu' ? 'rotate(-1.5deg)' : 'rotate(0deg)',
+      menuBg: sel(c.formule === 'menu').bg, menuFg: sel(c.formule === 'menu').fg,
       menuOn: String(!isCarte), carteOn: String(isCarte),
       carteBg: sel(isCarte).bg, carteFg: sel(isCarte).fg,
       pickmenu: () => this.setCmd({ formule: 'menu', ...reset }),
       pickcarte: () => this.setCmd({ formule: 'carte', ...reset }),
-      modeHint: isLiv ? 'Livraison de 11h30 à 13h15, à Aurillac et Arpajon · à partir de 5 menus complets' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30',
-      zones: ZONES.map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === c.zone), pick: () => this.setCmd({ zone: i, ...reset }) })),
-      slots: SLOTS.map((label, i) => ({ label: full(i) ? label + ' · complet' : label, ...sel(i === c.slot),
-        op: full(i) ? 0.45 : 1, deco: full(i) ? 'line-through' : 'none', cur: full(i) ? 'not-allowed' : 'pointer',
-        pick: () => { if (!full(i)) this.setCmd({ slot: i, ...reset }); } })),
+      modeHint: isLiv ? 'Livraison de 11h30 à 13h15, à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30',
+      communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => this.setCmd({ commune: i, ...reset }) })),
+      showZones: c.commune === 0,
+      zones: ZONES.slice(0, 2).map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === zoneIdx), pick: () => this.setCmd({ zone: i, ...reset }) })),
+      slots: SLOTS.map(label => ({ label: full(label) ? label + ' · complet' : label, ...sel(label === c.slot),
+        op: full(label) ? 0.45 : 1, deco: full(label) ? 'line-through' : 'none', cur: full(label) ? 'not-allowed' : 'pointer',
+        pick: () => { if (!full(label)) this.setCmd({ slot: label, ...reset }); } })),
       pays: PAYS.map((label, i) => ({ label, ...sel(i === c.pay), pick: () => this.setCmd({ pay: i, ...reset }) })),
       painBg: c.pain ? '#202820' : 'transparent', painFg: c.pain ? '#f4f0e5' : '#202820',
       painDot: c.pain ? '#8D1D2C' : 'transparent', painMark: c.pain ? '✓' : '',
       togglePain: () => this.setCmd({ pain: !c.pain, ...reset }),
-      qtyLabel: c.qty + (c.qty > 1 ? ' repas' : ' repas'),
+      qtyLabel: c.qty + ' repas',
       qtyMinus: () => this.setCmd({ qty: Math.max(1, c.qty - 1), ...reset }),
       qtyPlus: () => this.setCmd({ qty: Math.min(50, c.qty + 1), ...reset }),
+      addLabel: 'Ajouter à ma commande · ' + fmt(lineTotal(current)),
+      addLine: () => {
+        if (isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
+        this.setCmd({ cart: [...c.cart, current], qty: 1, ...reset, msg: 'Ajouté. Composez un autre menu, ou passez à la suite.' });
+      },
+      hasCart: c.cart.length > 0,
+      cartLines: c.cart.map((l, i) => ({ name: lineName(l), text: lineText(l), price: fmt(lineTotal(l)),
+        remove: () => this.setCmd({ cart: c.cart.filter((_, n) => n !== i), ...reset }) })),
+      cartSum: meals + ' repas · ' + fmt(total),
       dates: dates.map((d, i) => ({
         short: d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }),
         ...sel(i === c.dateIdx),
-        pick: () => this.setCmd({ dateIdx: i, ch: [0, 0, 0], slot: -1, ...reset }),
+        pick: () => {
+          if (i === c.dateIdx) return;
+          const msg = c.cart.length ? 'Le menu change selon le jour : votre commande a été vidée.' : '';
+          this.setCmd({ dateIdx: i, ch: [0, 0, 0], slot: '', cart: [], ...reset, msg });
+        },
       })),
-      prenom: c.prenom,
-      onPrenom: e => this.setCmd({ prenom: e.target.value, ...reset }),
-      nom: c.nom,
-      onNom: e => this.setCmd({ nom: e.target.value, ...reset }),
-      email: c.email,
-      onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
-      tel: c.tel,
-      onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
+      prenom: c.prenom, onPrenom: e => this.setCmd({ prenom: e.target.value, ...reset }),
+      nom: c.nom, onNom: e => this.setCmd({ nom: e.target.value, ...reset }),
+      email: c.email, onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
+      tel: c.tel, onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
+      rue: c.rue, onRue: e => this.setCmd({ rue: e.target.value, ...reset }),
+      complement: c.complement, onComplement: e => this.setCmd({ complement: e.target.value, ...reset }),
       isLiv,
-      collectOn: String(c.mode === 'collect'), livOn: String(c.mode === 'livraison'),
-      collectBg: sel(c.mode === 'collect').bg, collectFg: sel(c.mode === 'collect').fg,
-      livBg: sel(c.mode === 'livraison').bg, livFg: sel(c.mode === 'livraison').fg,
+      collectOn: String(!isLiv), livOn: String(isLiv),
+      collectBg: sel(!isLiv).bg, collectFg: sel(!isLiv).fg,
+      livBg: sel(isLiv).bg, livFg: sel(isLiv).fg,
       pickCollect: () => this.setCmd({ mode: 'collect', ...reset }),
-      pickLiv: () => this.setCmd({ mode: 'livraison', formule: 'menu', qty: Math.max(5, c.qty), ...reset }),
-      adresse: c.adresse,
-      onAdresse: e => this.setCmd({ adresse: e.target.value, ...reset }),
-      whenLabel: c.mode === 'livraison' ? 'Livraison le' : 'Retrait le',
-      lMode: c.mode === 'livraison' ? 'Livraison' : 'À emporter',
-      lWhen: c.mode === 'livraison' ? 'Livraison' : 'Retrait',
-      truckT: c.truckGo ? 'translateX(1800px)' : 'translateX(0px)',
-      truckTr: c.truckGo ? 'transform 1.9s cubic-bezier(.55,0,.85,.4)' : 'none',
-      wheelT: c.truckGo ? 'rotate(2160deg)' : 'rotate(0deg)',
+      pickLiv: () => this.setCmd({ mode: 'livraison', ...(c.cart.length ? {} : { formule: 'menu', qty: Math.max(5, c.qty) }), ...reset }),
+      whenLabel: isLiv ? 'Livraison le' : 'Retrait le',
+      lMode: isLiv ? 'Livraison' : 'À emporter',
+      lWhen: isLiv ? 'Livraison' : 'Retrait',
       order: () => {
         const p = c.prenom.trim();
+        if (!c.cart.length && isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
+        if (isLiv && menus < 5) { this.setCmd({ msg: 'La livraison est possible à partir de 5 menus complets (vous en avez ' + menus + ').' }); return; }
+        if (isLiv && !c.slot) { this.setCmd({ msg: 'Choisissez un créneau de livraison.' }); return; }
+        if (isLiv && !c.rue.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
         if (!p) { this.setCmd({ msg: 'Indiquez votre prénom : il sera écrit sur l’étiquette.' }); return; }
         if (!c.nom.trim()) { this.setCmd({ msg: 'Indiquez aussi votre nom.' }); return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim())) { this.setCmd({ msg: 'Indiquez une adresse e-mail valide.' }); return; }
-        if (isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
-        if (isLiv && (isCarte || c.qty < 5)) { this.setCmd({ msg: 'La livraison est possible à partir de 5 menus complets.' }); return; }
-        if (isLiv && c.slot < 0) { this.setCmd({ msg: 'Choisissez un créneau de livraison.' }); return; }
-        if (isLiv && !c.adresse.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
         if (c.tel.replace(/\D/g, '').length < 10) { this.setCmd({ msg: 'Indiquez un numéro de téléphone.' }); return; }
         const done = isLiv
-          ? 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + SLOTS[c.slot] + ' : ' + c.adresse.trim() + '.'
+          ? 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + c.slot + ' : ' + address + '.'
           : `C’est noté, ${p}. Retrait le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair.`;
         if (!this.ORDER_API) { this.setCmd({ msg: done }); this.stick(true); return; } // demo mode, no script yet
         if (c.sending) return;
-        const dish = i => (!isCarte || carte[i]) ? OPTS[i][1][c.ch[i]] : '';
-        const payload = { date: ymd, mode: c.mode, formule: c.formule, entree: dish(0), plat: dish(1), dessert: dish(2),
-          pain: c.pain, qty: c.qty, zone: isLiv ? ZONES[c.zone][0] : '', slot: isLiv ? SLOTS[c.slot] : '',
-          adresse: isLiv ? c.adresse.trim() : '', paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(),
-          email: c.email.trim(), tel: c.tel.trim(), website: '' };
+        const payload = { date: ymd, mode: c.mode,
+          lines: lines.map(l => ({ formule: l.formule, entree: l.items[0], plat: l.items[1], dessert: l.items[2], pain: l.pain, qty: l.qty })),
+          zone: isLiv ? ZONES[zoneIdx][0] : '', slot: isLiv ? c.slot : '',
+          rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
+          paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), website: '' };
         this.setCmd({ sending: true, msg: 'Envoi de votre commande…' });
         // text/plain body: no CORS preflight, which Apps Script does not answer
         fetch(this.ORDER_API, { method: 'POST', body: JSON.stringify(payload) })
@@ -1051,15 +1100,16 @@ class Component extends DCLogic {
           .catch(() => this.setCmd({ sending: false, msg: 'La commande n’a pas pu être envoyée. Réessayez, ou appelez le 06 87 94 97 22.' }));
       },
       total: fmt(total), msg: c.msg,
-      lTitle: isCarte ? 'À la carte' : 'Menu complet',
-      lSub: isCarte ? 'Plats du jour' : 'Menu du jour',
-      lLines: lines,
+      lTitle: c.cart.length ? 'Ma commande' : isCarte ? 'À la carte' : 'Menu complet',
+      lSub: c.cart.length ? 'Menus du jour' : isCarte ? 'Plats du jour' : 'Menu du jour',
+      lLines: tLines,
       lName: c.prenom.trim() || '______',
       lDate: long,
+      mealsLabel: meals + ' repas',
       ly: c.ly, lt: c.lt, lo: c.lo,
-      isMenu: c.formule === 'menu', courses,
+      courses,
       breadT: c.pain ? 'translate(54px, 0) rotate(-14deg)' : 'translate(-60px, 10px) rotate(0deg)', breadO: c.pain ? 1 : 0,
-      qtyMany: c.qty > 1, qtyX: '× ' + c.qty,
+      qtyMany: meals > 1, qtyX: '× ' + meals,
       stO: c.stamped ? 1 : 0, stT: c.stamped ? 'rotate(-9deg) scale(1)' : 'rotate(-9deg) scale(1.6)',
     };
   }
