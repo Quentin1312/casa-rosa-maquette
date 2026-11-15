@@ -376,7 +376,7 @@
           <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
             <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
               <div>
-                <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">3</span>Vos plats</h3>
+                <h3 id="cmd-plats" style="scroll-margin-top:100px;margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">3</span>Vos plats</h3>
                 <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Touchez les plats que vous voulez, puis validez le menu.</p>
               </div>
               <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
@@ -1320,11 +1320,12 @@ class Component extends DCLogic {
         if (!curOk) { this.setCmd({ hint: curStarted ? 'Il manque encore : ' + missing() + '.' : 'Choisissez d’abord les plats de ce menu.' }); return; }
         this.setCmd({ cart: saveCurrent(), ...emptyMenu, qty: 1, composing: false, ...reset,
           hint: `✓ Menu du ${shortDay(ymd)} ajouté à votre commande. Ajoutez-en un autre, ou passez à l’étape suivante.` });
+        this.toPlats();
       },
       validateLabel: curOk ? '✓ Valider ce menu · ' + fmt(lineTotal(current)) : 'Valider ce menu',
       valBg: curOk ? '#114232' : 'transparent', valFg: curOk ? '#f4f0e5' : '#114232',
       composeOn: composing, moreOn: !composing,
-      cancelCompose: () => this.setCmd({ composing: false, ...emptyMenu, ...reset }),
+      cancelCompose: () => { this.setCmd({ composing: false, ...emptyMenu, ...reset }); this.toPlats(); },
       // Then two ways to go on: another menu the same day, or a menu for another day
       addSame: () => {
         if (composing && !curOk) { this.setCmd({ hint: curStarted ? 'Il manque encore : ' + missing() + '.' : 'Choisissez d’abord les plats de ce menu.' }); return; }
@@ -1436,6 +1437,13 @@ class Component extends DCLogic {
       qtyMany: meals > 1, qtyX: '× ' + meals,
       stO: c.stamped ? 1 : 0, stT: c.stamped ? 'rotate(-9deg) scale(1)' : 'rotate(-9deg) scale(1.6)',
     };
+  }
+  // After the menu form closes, the page gets shorter: bring "Vos plats" back to the top of the screen
+  toPlats() {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('cmd-plats');
+      if (el && el.getBoundingClientRect().top < 90) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    });
   }
   // Bring the menu being composed into view when its title sits above the screen
   toCurrent() {
