@@ -367,6 +367,7 @@
           <input value="{{ prenom }}" sc-camel-on-change="{{ onPrenom }}" placeholder="Prénom" aria-label="Prénom" autocomplete="given-name" maxlength="18" style="flex:1 1 140px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           <input value="{{ nom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom" aria-label="Nom" autocomplete="family-name" maxlength="30" style="flex:1 1 140px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="60" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+          <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 150px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
             <input value="{{ adresse }}" sc-camel-on-change="{{ onAdresse }}" placeholder="Adresse de livraison" aria-label="Adresse de livraison" autocomplete="street-address" maxlength="120" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
           </sc-if>
@@ -893,7 +894,10 @@ class Component extends DCLogic {
     return out;
   }
   cmdRef = React.createRef();
-  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: -1, pay: 0, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
+  // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
+  ORDER_API = '';
+  dispo = {};
+  cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: -1, pay: 0, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   watchCmd() {
     const el = this.cmdRef.current;
@@ -953,7 +957,16 @@ class Component extends DCLogic {
     const isLiv = c.mode === 'livraison';
     const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
     const SLOTS = ['11h30', '12h00', '12h30', '13h00'];
-    const full = i => i === 1 + (c.dateIdx % 3); // sample taken slot, until real bookings fill them
+    const ymd = dSel.getFullYear() + '-' + String(dSel.getMonth() + 1).padStart(2, '0') + '-' + String(dSel.getDate()).padStart(2, '0');
+    // Taken slots come from the order script; without it, one sample slot is shown as taken
+    if (this.ORDER_API && isLiv && !(ymd in this.dispo)) {
+      this.dispo[ymd] = null;
+      fetch(this.ORDER_API + '?action=dispo&date=' + ymd).then(r => r.json())
+        .then(d => { this.dispo[ymd] = d.ok ? d : { creneauxComplets: [] }; this.forceUpdate(); })
+        .catch(() => { delete this.dispo[ymd]; });
+    }
+    const taken = this.dispo[ymd] ? this.dispo[ymd].creneauxComplets : [];
+    const full = i => this.ORDER_API ? taken.includes(SLOTS[i]) : i === 1 + (c.dateIdx % 3);
     const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
     const lines = OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]] })).filter((l, i) => !isCarte || carte[i]);
     if (c.pain) lines.push({ k: 'En plus', v: 'Pain artisanal' });
@@ -989,6 +1002,8 @@ class Component extends DCLogic {
       onNom: e => this.setCmd({ nom: e.target.value, ...reset }),
       email: c.email,
       onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
+      tel: c.tel,
+      onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
       isLiv,
       collectOn: String(c.mode === 'collect'), livOn: String(c.mode === 'livraison'),
       collectBg: sel(c.mode === 'collect').bg, collectFg: sel(c.mode === 'collect').fg,
@@ -1012,13 +1027,28 @@ class Component extends DCLogic {
         if (isLiv && (isCarte || c.qty < 5)) { this.setCmd({ msg: 'La livraison est possible à partir de 5 menus complets.' }); return; }
         if (isLiv && c.slot < 0) { this.setCmd({ msg: 'Choisissez un créneau de livraison.' }); return; }
         if (isLiv && !c.adresse.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
-        if (isLiv) {
-          this.setCmd({ msg: 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + SLOTS[c.slot] + ' : ' + c.adresse.trim() + '.' });
-          this.stick(true);
-          return;
-        }
-        this.setCmd({ msg: `C’est noté, ${p}. Retrait le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair.` });
-        this.stick(true);
+        if (c.tel.replace(/\D/g, '').length < 10) { this.setCmd({ msg: 'Indiquez un numéro de téléphone.' }); return; }
+        const done = isLiv
+          ? 'C’est noté, ' + p + '. Livraison le ' + long + ' à ' + SLOTS[c.slot] + ' : ' + c.adresse.trim() + '.'
+          : `C’est noté, ${p}. Retrait le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair.`;
+        if (!this.ORDER_API) { this.setCmd({ msg: done }); this.stick(true); return; } // demo mode, no script yet
+        if (c.sending) return;
+        const dish = i => (!isCarte || carte[i]) ? OPTS[i][1][c.ch[i]] : '';
+        const payload = { date: ymd, mode: c.mode, formule: c.formule, entree: dish(0), plat: dish(1), dessert: dish(2),
+          pain: c.pain, qty: c.qty, zone: isLiv ? ZONES[c.zone][0] : '', slot: isLiv ? SLOTS[c.slot] : '',
+          adresse: isLiv ? c.adresse.trim() : '', paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(),
+          email: c.email.trim(), tel: c.tel.trim(), website: '' };
+        this.setCmd({ sending: true, msg: 'Envoi de votre commande…' });
+        // text/plain body: no CORS preflight, which Apps Script does not answer
+        fetch(this.ORDER_API, { method: 'POST', body: JSON.stringify(payload) })
+          .then(r => r.json())
+          .then(res => {
+            if (!res.ok) { this.setCmd({ sending: false, msg: res.error || 'La commande n’a pas pu être envoyée.' }); return; }
+            delete this.dispo[ymd];
+            this.setCmd({ sending: false, msg: done + ' Commande n° ' + res.id + ' : Céline vous confirme par e-mail.' });
+            this.stick(true);
+          })
+          .catch(() => this.setCmd({ sending: false, msg: 'La commande n’a pas pu être envoyée. Réessayez, ou appelez le 06 87 94 97 22.' }));
       },
       total: fmt(total), msg: c.msg,
       lTitle: isCarte ? 'À la carte' : 'Menu complet',
