@@ -222,57 +222,44 @@
       </div>
       </sc-if>
       <sc-if value="{{ isNoel }}" hint-placeholder-val="{{ false }}">
-        <div style="position:relative;z-index:1;width:100%;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
-          <div style="position:relative;width:100%;background:#fbf9f3;color:#202820;border-radius:10px;padding:{{ noelPad }};box-shadow:0 30px 40px -22px rgba(0,0,0,.6)">
-            <div style="position:relative;border:1.5px solid #B08D57;border-radius:6px;padding:5px">
-              <div style="position:relative;border:1px solid #B08D57;border-radius:3px;padding:{{ noelInPad }}">
-                <svg aria-hidden="true" sc-camel-view-box="0 0 70 60" width="{{ noelSprig }}" height="{{ noelSprigH }}" style="position:absolute;left:6px;top:6px;overflow:visible"><path d="M2 30 Q16 10 36 20 Q20 40 2 30Z" fill="#1f5a44"></path><path d="M30 4 Q50 14 44 34 Q26 26 30 4Z" fill="#114232"></path><path d="M34 22 Q20 26 8 30" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><path d="M38 26 Q40 16 34 8" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><circle cx="38" cy="32" r="5.5" fill="#8D1D2C"></circle><circle cx="47" cy="27" r="5" fill="#a5293a"></circle><circle cx="45" cy="38" r="4.5" fill="#8D1D2C"></circle><circle cx="36.5" cy="30.5" r="1.5" fill="#f4f0e5" opacity=".7"></circle></svg>
-                <svg aria-hidden="true" sc-camel-view-box="0 0 70 60" width="{{ noelSprig }}" height="{{ noelSprigH }}" style="position:absolute;right:6px;bottom:6px;transform:rotate(180deg);overflow:visible"><path d="M2 30 Q16 10 36 20 Q20 40 2 30Z" fill="#1f5a44"></path><path d="M30 4 Q50 14 44 34 Q26 26 30 4Z" fill="#114232"></path><path d="M34 22 Q20 26 8 30" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><path d="M38 26 Q40 16 34 8" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><circle cx="38" cy="32" r="5.5" fill="#8D1D2C"></circle><circle cx="47" cy="27" r="5" fill="#a5293a"></circle><circle cx="45" cy="38" r="4.5" fill="#8D1D2C"></circle><circle cx="36.5" cy="30.5" r="1.5" fill="#f4f0e5" opacity=".7"></circle></svg>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:{{ noelHeadGap }}">
-                  <svg aria-hidden="true" sc-camel-view-box="0 0 24 24" width="20" height="20"><path d="M12 1 L14.2 9.8 L23 12 L14.2 14.2 L12 23 L9.8 14.2 L1 12 L9.8 9.8Z" fill="#B08D57"></path></svg>
-                  <span style="font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#114232">Casa Rosa · cuisine de saison</span>
-                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ noelTitle }};line-height:1;color:#8D1D2C">Menu de Noël</span>
-                  <span style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700"><span style="width:34px;border-top:1.5px solid #B08D57"></span>Une entrée, un plat, un dessert<span style="width:34px;border-top:1.5px solid #B08D57"></span></span>
+        <div style="position:relative;z-index:1;width:100%;max-width:1040px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center">
+          <div style="display:flex;justify-content:center;align-items:flex-start;gap:36px;width:100%">
+            <sc-for list="{{ noelStations }}" as="ns" hint-placeholder-count="3">
+              <div style="width:300px;display:flex;flex-direction:column;align-items:center;gap:16px">
+                <span style="transform:{{ ns.nap }};background:#f4f0e5;color:#8D1D2C;border:1.5px solid #202820;border-radius:4px;padding:8px 18px;font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1;white-space:nowrap;box-shadow:0 6px 0 rgba(32,40,32,.25)">{{ ns.tag }}</span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="position:relative;width:16px;height:150px;flex:0 0 auto"><span style="position:absolute;left:1px;top:0;width:3px;height:36px;border-radius:2px;background:#B08D57"></span><span style="position:absolute;left:6.5px;top:0;width:3px;height:36px;border-radius:2px;background:#B08D57"></span><span style="position:absolute;left:12px;top:0;width:3px;height:36px;border-radius:2px;background:#B08D57"></span><span style="position:absolute;left:0;top:32px;width:16px;height:14px;border-radius:2px 2px 8px 8px;background:#B08D57"></span><span style="position:absolute;left:4px;top:44px;width:8px;height:106px;border-radius:4px;background:#B08D57"></span></div>
+                  <div style="position:relative;width:180px;height:180px;flex:0 0 auto;transition:transform .3s cubic-bezier(.3,1.4,.5,1)" style-hover="transform:translateY(-8px) rotate(-3deg)">
+                    <div style="position:absolute;inset:0;border-radius:50%;background:#fbf9f3;border:1.5px solid #202820;box-shadow:0 18px 22px -14px rgba(10,20,14,.6)"></div>
+                    <div style="position:absolute;inset:17px;border-radius:50%;border:1.5px solid #B08D57"></div>
+                    <div style="position:absolute;inset:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;color:#202820"><span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Au choix</span><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.05;color:#8D1D2C">{{ ns.word }}</span></div>
+                  </div>
+                  <div style="position:relative;width:16px;height:150px;flex:0 0 auto"><span style="position:absolute;left:2px;top:0;width:12px;height:64px;border-radius:2px 12px 2px 2px;background:#B08D57"></span><span style="position:absolute;left:3px;top:62px;width:10px;height:88px;border-radius:5px;background:#B08D57"></span></div>
                 </div>
-                <div style="display:grid;grid-template-columns:{{ noelCols }};gap:30px 28px">
-                  <sc-for list="{{ noelCourses }}" as="nc" hint-placeholder-count="3">
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0">
-                      <div style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px">
-                        <span style="flex:1 1 0;max-width:56px;border-top:1.5px solid #B08D57"></span>
-                        <span style="font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#114232;white-space:nowrap">{{ nc.title }}</span>
-                        <span style="flex:1 1 0;max-width:56px;border-top:1.5px solid #B08D57"></span>
-                      </div>
-                      <sc-for list="{{ nc.items }}" as="ni" hint-placeholder-count="3">
-                        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;max-width:300px">
-                          <span style="display:{{ ni.orD }};font-family:'Titan One',sans-serif;font-weight:400;font-size:15px;line-height:1;color:#8D1D2C;margin:0 0 8px">ou</span>
-                          <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.15;text-wrap:balance">{{ ni.n }}</span>
-                          <span style="display:{{ ni.suppD }};padding:3px 10px 4px;border-radius:999px;background:#8D1D2C;color:#fbf9f3;font-weight:800;font-size:12px;line-height:1">{{ ni.supp }}</span>
-                          <span style="font-size:14px;line-height:1.45;text-wrap:balance">{{ ni.d }}</span>
-                          <span style="display:{{ ni.vegD }};font-size:12px;font-weight:800;letter-spacing:.04em;color:#114232">✿ Option végétarienne</span>
-                        </div>
-                      </sc-for>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+                  <sc-for list="{{ ns.items }}" as="it" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                      <span style="font-size:16px;font-weight:700;line-height:1.3;text-wrap:balance">{{ it.n }}</span>
+                      <span style="display:{{ it.tagD }};font-size:12px;font-weight:800;letter-spacing:.06em;color:#E0C38F">{{ it.tag }}</span>
                     </div>
                   </sc-for>
                 </div>
-                <div style="margin:30px auto 0;max-width:620px;padding:14px 18px;border-radius:12px;background:#ECE3CF;display:flex;flex-direction:column;align-items:center;gap:4px">
-                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:15px;color:#8D1D2C">Avec les trois plats</span>
-                  <span style="font-size:14px;line-height:1.5;text-wrap:balance">{{ noelSide }}</span>
-                </div>
-                <div style="margin:26px auto 4px;max-width:360px;background:#8D1D2C;color:#fbf9f3;border-radius:6px;padding:5px;box-shadow:0 14px 20px -12px rgba(141,29,44,.6)">
-                  <div style="border:1.5px solid #B08D57;border-radius:3px;padding:14px 18px 16px;display:flex;flex-direction:column;align-items:center;gap:2px">
-                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1.1">Formule complète</span>
-                    <span style="font-size:14px;font-weight:700">Entrée + plat + dessert</span>
-                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:42px;line-height:1;margin-top:4px">32 €</span>
-                  </div>
-                </div>
               </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-width:640px">
+            <div style="display:inline-flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:4px 12px;background:#8D1D2C;color:#fbf9f3;border:1.5px solid #B08D57;border-radius:999px;padding:10px 24px">
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.1">Formule complète</span>
+              <span style="font-size:14px;font-weight:700">entrée + plat + dessert</span>
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:26px;line-height:1">32 €</span>
             </div>
+            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : écrasé de pommes de terre au beurre demi-sel et à l’ail noir, flan de légumes de saison aux châtaignes.</p>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
+            </div>
+            <button sc-camel-on-click="{{ askNoel }}" style="margin-top:4px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
           </div>
-          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
-            <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
-            <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
-          </div>
-          <button sc-camel-on-click="{{ askNoel }}" style="appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
         </div>
       </sc-if>
     </sc-if>
@@ -315,57 +302,46 @@
       </sc-if>
       <sc-if value="{{ isNoel }}" hint-placeholder-val="{{ false }}">
         <div style="margin-top:22px;width:100%">
-        <div style="position:relative;z-index:1;width:100%;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
-          <div style="position:relative;width:100%;background:#fbf9f3;color:#202820;border-radius:10px;padding:{{ noelPad }};box-shadow:0 30px 40px -22px rgba(0,0,0,.6)">
-            <div style="position:relative;border:1.5px solid #B08D57;border-radius:6px;padding:5px">
-              <div style="position:relative;border:1px solid #B08D57;border-radius:3px;padding:{{ noelInPad }}">
-                <svg aria-hidden="true" sc-camel-view-box="0 0 70 60" width="{{ noelSprig }}" height="{{ noelSprigH }}" style="position:absolute;left:6px;top:6px;overflow:visible"><path d="M2 30 Q16 10 36 20 Q20 40 2 30Z" fill="#1f5a44"></path><path d="M30 4 Q50 14 44 34 Q26 26 30 4Z" fill="#114232"></path><path d="M34 22 Q20 26 8 30" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><path d="M38 26 Q40 16 34 8" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><circle cx="38" cy="32" r="5.5" fill="#8D1D2C"></circle><circle cx="47" cy="27" r="5" fill="#a5293a"></circle><circle cx="45" cy="38" r="4.5" fill="#8D1D2C"></circle><circle cx="36.5" cy="30.5" r="1.5" fill="#f4f0e5" opacity=".7"></circle></svg>
-                <svg aria-hidden="true" sc-camel-view-box="0 0 70 60" width="{{ noelSprig }}" height="{{ noelSprigH }}" style="position:absolute;right:6px;bottom:6px;transform:rotate(180deg);overflow:visible"><path d="M2 30 Q16 10 36 20 Q20 40 2 30Z" fill="#1f5a44"></path><path d="M30 4 Q50 14 44 34 Q26 26 30 4Z" fill="#114232"></path><path d="M34 22 Q20 26 8 30" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><path d="M38 26 Q40 16 34 8" stroke="#0b2c21" stroke-width="1.2" fill="none"></path><circle cx="38" cy="32" r="5.5" fill="#8D1D2C"></circle><circle cx="47" cy="27" r="5" fill="#a5293a"></circle><circle cx="45" cy="38" r="4.5" fill="#8D1D2C"></circle><circle cx="36.5" cy="30.5" r="1.5" fill="#f4f0e5" opacity=".7"></circle></svg>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:{{ noelHeadGap }}">
-                  <svg aria-hidden="true" sc-camel-view-box="0 0 24 24" width="20" height="20"><path d="M12 1 L14.2 9.8 L23 12 L14.2 14.2 L12 23 L9.8 14.2 L1 12 L9.8 9.8Z" fill="#B08D57"></path></svg>
-                  <span style="font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#114232">Casa Rosa · cuisine de saison</span>
-                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ noelTitle }};line-height:1;color:#8D1D2C">Menu de Noël</span>
-                  <span style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700"><span style="width:34px;border-top:1.5px solid #B08D57"></span>Une entrée, un plat, un dessert<span style="width:34px;border-top:1.5px solid #B08D57"></span></span>
-                </div>
-                <div style="display:grid;grid-template-columns:{{ noelCols }};gap:30px 28px">
-                  <sc-for list="{{ noelCourses }}" as="nc" hint-placeholder-count="3">
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0">
-                      <div style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px">
-                        <span style="flex:1 1 0;max-width:56px;border-top:1.5px solid #B08D57"></span>
-                        <span style="font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#114232;white-space:nowrap">{{ nc.title }}</span>
-                        <span style="flex:1 1 0;max-width:56px;border-top:1.5px solid #B08D57"></span>
-                      </div>
-                      <sc-for list="{{ nc.items }}" as="ni" hint-placeholder-count="3">
-                        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;max-width:300px">
-                          <span style="display:{{ ni.orD }};font-family:'Titan One',sans-serif;font-weight:400;font-size:15px;line-height:1;color:#8D1D2C;margin:0 0 8px">ou</span>
-                          <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.15;text-wrap:balance">{{ ni.n }}</span>
-                          <span style="display:{{ ni.suppD }};padding:3px 10px 4px;border-radius:999px;background:#8D1D2C;color:#fbf9f3;font-weight:800;font-size:12px;line-height:1">{{ ni.supp }}</span>
-                          <span style="font-size:14px;line-height:1.45;text-wrap:balance">{{ ni.d }}</span>
-                          <span style="display:{{ ni.vegD }};font-size:12px;font-weight:800;letter-spacing:.04em;color:#114232">✿ Option végétarienne</span>
-                        </div>
-                      </sc-for>
-                    </div>
-                  </sc-for>
-                </div>
-                <div style="margin:30px auto 0;max-width:620px;padding:14px 18px;border-radius:12px;background:#ECE3CF;display:flex;flex-direction:column;align-items:center;gap:4px">
-                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:15px;color:#8D1D2C">Avec les trois plats</span>
-                  <span style="font-size:14px;line-height:1.5;text-wrap:balance">{{ noelSide }}</span>
-                </div>
-                <div style="margin:26px auto 4px;max-width:360px;background:#8D1D2C;color:#fbf9f3;border-radius:6px;padding:5px;box-shadow:0 14px 20px -12px rgba(141,29,44,.6)">
-                  <div style="border:1.5px solid #B08D57;border-radius:3px;padding:14px 18px 16px;display:flex;flex-direction:column;align-items:center;gap:2px">
-                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1.1">Formule complète</span>
-                    <span style="font-size:14px;font-weight:700">Entrée + plat + dessert</span>
-                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:42px;line-height:1;margin-top:4px">32 €</span>
-                  </div>
-                </div>
+        <div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
+          <div style="display:flex;gap:6px">
+            <sc-for list="{{ noelTabs }}" as="nt" hint-placeholder-count="3">
+              <button sc-camel-on-click="{{ nt.pick }}" style="background:{{ nt.bg }};color:{{ nt.fg }};appearance:none;cursor:pointer;height:36px;padding:0 14px;border-radius:999px;border:1.5px solid #f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;transition:background .2s,color .2s">{{ nt.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:clamp(12px,4vw,40px);width:100%">
+            <button sc-camel-on-click="{{ noelPrev }}" aria-label="Plat précédent" style="appearance:none;cursor:pointer;flex:0 0 auto;width:56px;height:56px;border-radius:50%;border:1.5px solid #ffffff;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0" style-hover="background:#8D1D2C;border-color:#8D1D2C;color:#ffffff">←</button>
+            <div style="position:relative;width:{{ plateSize }};aspect-ratio:1;flex:0 0 auto">
+              <div style="position:absolute;inset:0;border-radius:50%;background:#fbf9f3;border:1.5px solid #202820;box-shadow:0 26px 30px -18px rgba(10,20,14,.65)"></div>
+              <div style="position:absolute;inset:9%;border-radius:50%;border:1.5px solid #B08D57"></div>
+              <div style="position:absolute;inset:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:#202820">
+                <span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Au choix</span>
+                <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ dishSize }};line-height:1.05;color:#8D1D2C">{{ noelWord }}</span>
               </div>
+              <span style="transform:rotate(-6deg);position:absolute;left:2%;top:4%;background:#8D1D2C;color:#f4f0e5;border:1.5px solid #202820;border-radius:4px;padding:8px 14px;font-family:'Titan One',sans-serif;font-weight:400;font-size:18px;line-height:1;white-space:nowrap">Noël</span>
             </div>
+            <button sc-camel-on-click="{{ noelNext }}" aria-label="Plat suivant" style="appearance:none;cursor:pointer;flex:0 0 auto;width:56px;height:56px;border-radius:50%;border:1.5px solid #ffffff;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0" style-hover="background:#8D1D2C;border-color:#8D1D2C;color:#ffffff">→</button>
           </div>
-          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
-            <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
-            <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+            <sc-for list="{{ noelItems }}" as="it" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                <span style="font-size:17px;font-weight:700;line-height:1.3;text-wrap:balance">{{ it.n }}</span>
+                <span style="display:{{ it.tagD }};font-size:12px;font-weight:800;letter-spacing:.06em;color:#E0C38F">{{ it.tag }}</span>
+              </div>
+            </sc-for>
           </div>
-          <button sc-camel-on-click="{{ askNoel }}" style="appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-width:640px">
+            <div style="display:inline-flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:4px 12px;background:#8D1D2C;color:#fbf9f3;border:1.5px solid #B08D57;border-radius:999px;padding:10px 24px">
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.1">Formule complète</span>
+              <span style="font-size:14px;font-weight:700">entrée + plat + dessert</span>
+              <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:26px;line-height:1">32 €</span>
+            </div>
+            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : écrasé de pommes de terre au beurre demi-sel et à l’ail noir, flan de légumes de saison aux châtaignes.</p>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
+            </div>
+            <button sc-camel-on-click="{{ askNoel }}" style="margin-top:4px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
+          </div>
         </div>
         </div>
       </sc-if>
@@ -508,7 +484,7 @@
           <sc-if value="{{ isLiv }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
               <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
-                <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">4</span>Où et à quelle heure ?</h3>
+                <h3 id="cmd-where" style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">4</span>Où et à quelle heure ?</h3>
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Commune</span>
                   <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -550,7 +526,7 @@
 
           <div style="display:flex;padding-top:30px;border-top:1.5px dashed #c9c3b4">
             <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
-              <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">{{ coordNum }}</span>Vos coordonnées</h3>
+              <h3 id="cmd-coord" style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">{{ coordNum }}</span>Vos coordonnées</h3>
               <div style="display:flex;flex-wrap:wrap;gap:10px">
                 <input value="{{ prenom }}" sc-camel-on-change="{{ onPrenom }}" placeholder="Prénom" aria-label="Prénom" autocomplete="given-name" maxlength="18" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <input value="{{ nom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom" aria-label="Nom" autocomplete="family-name" maxlength="30" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
@@ -1131,7 +1107,9 @@ class Component extends DCLogic {
     let on = false;
     if (sec && tk && this.state.w < 1040) {
       const s = sec.getBoundingClientRect(), t = tk.getBoundingClientRect(), H = window.innerHeight;
-      on = s.top < H * 0.5 && s.bottom > H && t.top > H - 60;
+      // hidden from step 4 on, so it never covers the slots or the contact fields
+      const next = document.getElementById('cmd-where') || document.getElementById('cmd-coord');
+      on = s.top < H * 0.5 && s.bottom > H && t.top > H - 60 && !(next && next.getBoundingClientRect().top < H - 90);
     }
     if (on !== !!this.cmd.bar) this.setCmd({ bar: on });
   };
@@ -1548,6 +1526,10 @@ class Component extends DCLogic {
       this.scrollToId('commander');
     };
     const k = Math.min(this.wkI || 0, N - 1), cur = WEEK[k];
+    // Noël tab: dishes per course, with their supplement or vegetarian mention; phone shows one course at a time
+    const NC = this.NOEL.courses, nk = Math.min(this.noelI || 0, NC.length - 1);
+    const noelItemsOf = list => list.map(([n, sp, , veg]) => { const tag = [sp ? '+' + sp + ' €' : '', veg ? 'végétarien' : ''].filter(Boolean).join(' · '); return { n, tag, tagD: tag ? 'block' : 'none' }; });
+    const goNoel = i => () => { this.noelI = (i + NC.length) % NC.length; this.forceUpdate(); };
     const go = d => () => {
       clearTimeout(this.wkT); this.wkFade = true; this.wkDir = d; this.forceUpdate();
       this.wkT = setTimeout(() => { this.wkI = ((this.wkI || 0) + d + N) % N; this.wkFade = false; this.forceUpdate(); }, 180);
@@ -1564,12 +1546,9 @@ class Component extends DCLogic {
         if (idx >= 0) this.setCmd({ dateIdx: idx, ch: [-1, -1, -1], pain: false, composing: true, stamped: false, msg: '', hint: '' });
         this.scrollToId(idx >= 0 ? 'commander' : 'contact');
       },
-      noelCourses: this.NOEL.courses.map(([k, list]) => ({ title: { Entrée: 'Les entrées', Plat: 'Les plats', Dessert: 'Les desserts' }[k],
-        items: list.map(([n, sp, d, veg], j) => ({ n, d, orD: j ? 'block' : 'none', supp: sp ? '+' + sp + ' €' : '', suppD: sp ? 'inline-block' : 'none', vegD: veg ? 'block' : 'none' })) })),
-      noelSide: this.NOEL.side,
-      noelCols: wide ? 'repeat(3,minmax(0,1fr))' : 'minmax(0,1fr)',
-      noelPad: wide ? '14px' : '8px', noelInPad: wide ? '40px 48px 32px' : '30px 16px 22px',
-      noelTitle: wide ? '56px' : '40px', noelHeadGap: wide ? '34px' : '26px', noelSprig: wide ? '78' : '50', noelSprigH: wide ? '66' : '43',
+      noelStations: NC.map(([k, list], i) => ({ tag: ['Les entrées', 'Les plats', 'Les desserts'][i], word: k, nap: `rotate(${[-6, 4, -5][i]}deg)`, items: noelItemsOf(list) })),
+      noelTabs: NC.map((_, i) => ({ label: ['Entrées', 'Plats', 'Desserts'][i], bg: i === nk ? '#ffffff' : 'transparent', fg: i === nk ? '#202820' : '#f4f0e5', pick: goNoel(i) })),
+      noelPrev: goNoel(nk - 1), noelNext: goNoel(nk + 1), noelWord: NC[nk][0], noelItems: noelItemsOf(NC[nk][1]),
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
       wkOrderLabel: 'Commander pour ' + cur[0].toLowerCase(),
       wkDay: cur[0], wkDayLower: cur[0].toLowerCase(), wkEntree: cur[1], wkPlat: cur[2], wkDessert: cur[3],
