@@ -160,18 +160,6 @@
           <p style="margin:0;font-size:17px;line-height:1.5">Chaque jour, un repas de saison cuisiné avec des légumes du Cantal, bio dès que possible, à emporter ou livré. <strong style="font-weight:800">Menu complet 17 €.</strong></p>
           <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a href="#commander" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:0;background:#8D1D2C;color:#f4f0e5" style-hover="background:#202820;color:#f4f0e5">Commander mon repas</a><a href="#menu-semaine" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:1.5px solid #202820;background:transparent;color:#202820" style-hover="background:#202820;color:#f4f0e5">Le menu de la semaine</a></div>
           <span style="font-size:13px">Du lundi au vendredi · commande la veille avant 13h · à emporter ou livré</span>
-          <div style="display:flex;justify-content:center;align-items:flex-start;gap:16px;margin-top:14px">
-          <div style="position:relative;width:136px;background:#fbf9f3;border:1.5px solid #202820;border-radius:3px;padding:12px 12px 14px;transform:rotate(-4deg);box-shadow:0 16px 20px -14px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:10px">
-            <span style="position:absolute;left:50%;top:-12px;width:78px;height:22px;margin-left:-39px;background:#8D1D2C;opacity:.85;transform:rotate(6deg)"></span>
-            <div style="position:relative;width:110px;height:138px;border:1.5px solid #202820;background:#e9e3d3;overflow:hidden"><img src="assets/celine-bras.jpg" alt="Céline, bras croisés, un fouet à la main" style="display:block;width:100%;height:100%;object-fit:cover"></div>
-            <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:13px;line-height:1.1;text-align:center">Céline</span>
-          </div>
-          <div style="position:relative;width:168px;background:#fbf9f3;border:1.5px solid #202820;border-radius:3px;padding:12px 12px 14px;transform:rotate(3.5deg);box-shadow:0 16px 20px -14px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:10px">
-            <span style="position:absolute;left:50%;top:-12px;width:78px;height:22px;margin-left:-39px;background:#114232;opacity:.85;transform:rotate(-5.25deg)"></span>
-            <div style="position:relative;width:142px;height:97px;border:1.5px solid #202820;background:#e9e3d3;overflow:hidden"><img src="assets/celine-farine.jpg" alt="Céline lance une pincée de farine" style="display:block;width:100%;height:100%;object-fit:cover"></div>
-            <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:13px;line-height:1.1;text-align:center">Une pincée de farine</span>
-          </div>
-          </div>
         </div>
       </sc-if>
 </section>
@@ -320,8 +308,24 @@
             <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
               <div>
                 <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">3</span>Vos plats</h3>
-                <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Pour plusieurs menus différents, composez-en un, ajoutez-le, puis passez au suivant.</p>
+                <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Choisissez vos plats. Pour des menus différents, ajoutez un autre menu en dessous.</p>
               </div>
+              <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ saved }}" as="sv" hint-placeholder-count="1">
+                    <div style="display:flex;align-items:center;gap:12px;padding:10px 10px 10px 12px;border-radius:14px;background:#ECE3CF;border:1.5px solid #202820">
+                      <span aria-hidden="true" style="flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;line-height:1">✓</span>
+                      <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:14px">{{ sv.name }}</span><span style="font-size:13px;line-height:1.35">{{ sv.text }}</span></div>
+                      <span style="font-family:'Titan One',sans-serif;font-size:16px;white-space:nowrap">{{ sv.price }}</span>
+                      <button sc-camel-on-click="{{ sv.remove }}" aria-label="Retirer ce menu" style="flex:0 0 auto;appearance:none;cursor:pointer;width:30px;height:30px;border-radius:50%;border:1.5px solid #202820;background:transparent;color:#202820;font-size:15px;line-height:1;padding:0" style-hover="background:#202820;color:#f4f0e5">×</button>
+                    </div>
+                  </sc-for>
+                </div>
+                <div id="cmd-current" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 -6px;scroll-margin-top:100px">
+                  <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:20px;line-height:1.1">{{ curTitle }}</span>
+                  <button sc-camel-on-click="{{ dropCurrent }}" style="appearance:none;cursor:pointer;background:none;border:0;padding:6px 0;color:#8D1D2C;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px">{{ dropLabel }}</button>
+                </div>
+              </sc-if>
               <div style="display:flex;flex-direction:column;border:1.5px solid #202820;border-radius:16px;overflow:hidden">
                 <div style="display:flex">
                   <button sc-camel-on-click="{{ pickmenu }}" aria-pressed="{{ menuOn }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:12px 16px;flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
@@ -424,7 +428,7 @@
         </div>
 
         <div style="flex:0 0 auto;align-self:{{ tkAlign }}">
-          <div style="position:{{ tkPos }};top:96px;zoom:{{ trayZoom }}">
+          <div style="position:{{ tkPos }};top:{{ tkTop }};zoom:{{ trayZoom }}">
             <div ref="{{ cmdRef }}" style="position:relative;width:420px;padding:0 30px 20px">
               <div style="transform:{{ breadT }};opacity:{{ breadO }};position:absolute;right:-6px;bottom:150px;z-index:1;width:150px;height:96px;transition:transform .55s cubic-bezier(.3,1.35,.5,1),opacity .25s ease">
                 <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:50% 50% 46% 46% / 62% 62% 38% 38%;box-shadow:inset 0 -14px 0 rgba(32,40,32,.07),0 16px 20px -14px rgba(32,40,32,.45);overflow:hidden">
@@ -480,7 +484,7 @@
     </div>
 
     <sc-if value="{{ barOn }}" hint-placeholder-val="{{ false }}">
-      <div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:#114232;color:#f4f0e5;border-radius:999px;padding:6px 6px 6px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 14px 28px -10px rgba(32,40,32,.55)">
+      <div style="position:fixed;left:10px;right:10px;bottom:6px;z-index:40;background:#114232;color:#f4f0e5;border-radius:999px;padding:5px 5px 5px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 14px 28px -10px rgba(32,40,32,.55)">
         <span style="font-weight:700;font-size:15px;white-space:nowrap">{{ mealsLabel }} · {{ total }}</span>
         <button sc-camel-on-click="{{ goTicket }}" style="appearance:none;cursor:pointer;height:44px;padding:0 18px;border-radius:999px;border:0;background:#f4f0e5;color:#114232;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;white-space:nowrap">Voir ma commande ↓</button>
       </div>
@@ -1056,14 +1060,23 @@ class Component extends DCLogic {
       };
     });
 
-    // Basket: each line is one composition × a quantity. Without a basket, the current composition is the order.
-    // Lines keep the chosen positions, so changing the day follows that day's menu
+    // Order = saved menus + the menu on screen: what the customer sees is always counted.
+    // Each menu is one composition × a quantity. Lines keep the chosen positions, so changing the day follows that day's menu
     const current = { formule: c.formule, sel: c.ch.slice(), on: isCarte ? carte.slice() : [true, true, true], pain: c.pain, qty: c.qty };
     const itemsOf = l => OPTS.map(([, list], i) => l.on[i] ? list[Math.min(l.sel[i], list.length - 1)] : '');
     const lineTotal = l => l.qty * ((l.formule === 'carte' ? itemsOf(l).reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : 17) + (l.pain ? 1 : 0));
     const lineText = l => itemsOf(l).filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
     const lineName = l => l.qty + ' × ' + (l.formule === 'carte' ? 'À la carte' : 'Menu complet');
-    const lines = c.cart.length ? c.cart : [current];
+    const menuName = (l, i) => 'Menu ' + (i + 1) + (l.formule === 'carte' ? ' · à la carte' : '') + ' · ' + l.qty + ' repas';
+    const lines = [...c.cart, current];
+    const many = lines.length > 1;
+    const curNum = c.cart.length + 1;
+    // Removing the menu on screen brings the previous saved menu back on screen
+    const dropCurrent = () => {
+      const last = c.cart[c.cart.length - 1];
+      if (!last) return;
+      this.setCmd({ cart: c.cart.slice(0, -1), formule: last.formule, ch: last.sel.slice(), carte: last.formule === 'carte' ? last.on.slice() : [false, true, false], pain: last.pain, qty: last.qty, ...reset });
+    };
     const total = lines.reduce((s, l) => s + lineTotal(l), 0);
     const meals = lines.reduce((s, l) => s + l.qty, 0);
     const menus = lines.filter(l => l.formule === 'menu').reduce((s, l) => s + l.qty, 0);
@@ -1088,11 +1101,12 @@ class Component extends DCLogic {
 
     // Ticket
     const noRm = { rmD: 'none', rm: () => {} };
-    const tLines = c.cart.length
-      ? c.cart.map((l, i) => ({ k: lineName(l), v: lineText(l), rmD: 'flex',
-          rm: () => this.setCmd({ cart: c.cart.filter((_, n) => n !== i), ...reset }) }))
+    const removeSaved = i => () => this.setCmd({ cart: c.cart.filter((_, n) => n !== i), ...reset });
+    const tLines = many
+      ? lines.map((l, i) => ({ k: menuName(l, i), v: lineText(l), rmD: 'flex',
+          rm: i < c.cart.length ? removeSaved(i) : dropCurrent }))
       : OPTS.map(([k, list], i) => ({ k, v: list[c.ch[i]], ...noRm })).filter((l, i) => !isCarte || carte[i]);
-    if (!c.cart.length && c.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
+    if (!many && c.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
     if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (c.slot ? ' · ' + c.slot : ''), ...noRm });
     tLines.push({ k: 'Paiement', v: PAYS[c.pay], ...noRm });
     const dn = c.done;
@@ -1118,17 +1132,28 @@ class Component extends DCLogic {
       qtyLabel: c.qty + ' repas',
       qtyMinus: () => this.setCmd({ qty: Math.max(1, c.qty - 1), ...reset }),
       qtyPlus: () => this.setCmd({ qty: Math.min(50, c.qty + 1), ...reset }),
-      addLabel: 'Ajouter à ma commande · ' + fmt(lineTotal(current)),
+      addLabel: 'Ajouter un autre menu (plats différents)',
       addLine: () => {
-        if (isCarte && !carte.some(Boolean)) { this.setCmd({ hint: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
-        this.setCmd({ cart: [...c.cart, current], qty: 1, ...reset, hint: 'Ajouté au ticket. Composez un autre menu, ou passez à la suite.' });
+        if (isCarte && !carte.some(Boolean)) { this.setCmd({ hint: 'Choisissez au moins une entrée, un plat ou un dessert pour ce menu.' }); return; }
+        this.setCmd({ cart: [...c.cart, current], formule: 'menu', ch: [0, 0, 0], carte: [false, true, false], pain: false, qty: 1, ...reset,
+          hint: `✓ Menu ${curNum} enregistré. Choisissez maintenant les plats du menu ${curNum + 1}, juste au-dessus.` });
+        // Bring the new menu's title into view when it sits above the screen
+        requestAnimationFrame(() => {
+          const el = document.getElementById('cmd-current');
+          if (el && el.getBoundingClientRect().top < 90) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+        });
       },
+      hasSaved: c.cart.length > 0,
+      saved: c.cart.map((l, i) => ({ name: menuName(l, i), text: lineText(l), price: fmt(lineTotal(l)), remove: removeSaved(i) })),
+      curTitle: 'Menu ' + curNum,
+      dropLabel: 'Retirer le menu ' + curNum,
+      dropCurrent,
       dates: dates.map((d, i) => ({
         short: d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }),
         ...sel(i === c.dateIdx),
         pick: () => {
           if (i === c.dateIdx) return;
-          const hint = c.cart.length ? 'Votre commande est gardée, avec les plats du jour choisi.' : '';
+          const hint = c.cart.length ? 'Vos menus sont gardés, avec les plats du jour choisi.' : '';
           this.setCmd({ dateIdx: i, slot: '', ...reset, hint });
         },
       })),
@@ -1149,7 +1174,7 @@ class Component extends DCLogic {
       lWhen: isLiv ? 'Livraison' : 'Retrait',
       order: () => {
         const p = c.prenom.trim();
-        if (!c.cart.length && isCarte && !carte.some(Boolean)) { this.setCmd({ msg: 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
+        if (isCarte && !carte.some(Boolean)) { this.setCmd({ msg: many ? `Le menu ${curNum} est vide : choisissez ses plats, ou retirez-le.` : 'Choisissez au moins une entrée, un plat ou un dessert.' }); return; }
         if (isLiv && menus < 5) { this.setCmd({ msg: 'La livraison est possible à partir de 5 menus complets (vous en avez ' + menus + ').' }); return; }
         if (isLiv && !c.slot) { this.setCmd({ msg: 'Choisissez un créneau de livraison.' }); return; }
         if (isLiv && !c.rue.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
@@ -1200,8 +1225,8 @@ class Component extends DCLogic {
         this.setCmd({ done: null, cart: [], ch: [0, 0, 0], qty: isLiv ? 5 : 1, pain: false, slot: '', ...reset });
         this.scrollToId('commander');
       },
-      lTitle: c.cart.length ? 'Ma commande' : isCarte ? 'À la carte' : 'Menu complet',
-      lSub: c.cart.length ? 'Menus du jour' : isCarte ? 'Plats du jour' : 'Menu du jour',
+      lTitle: many ? 'Ma commande' : isCarte ? 'À la carte' : 'Menu complet',
+      lSub: many ? lines.length + ' menus différents' : isCarte ? 'Plats du jour' : 'Menu du jour',
       lLines: tLines,
       lName: c.prenom.trim() || '______',
       lDate: long,
@@ -1413,6 +1438,7 @@ class Component extends DCLogic {
       cDir: w >= 1040 ? 'row' : 'column',
       tkAlign: w >= 1040 ? 'stretch' : 'center',
       tkPos: w >= 1040 ? 'sticky' : 'relative',
+      tkTop: w >= 1040 ? '96px' : '0',
       tkMax: w >= 1040 ? 'max(140px, calc(100vh - 480px))' : 'none',
       trayZoom: w >= 1040 ? '1' : Math.max(0.6, Math.min(1, (w - 2 * Math.min(64, Math.max(20, w * 0.05))) / 420)).toFixed(3),
       rootRef: this.rootRef,
