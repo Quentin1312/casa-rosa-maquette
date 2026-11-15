@@ -895,7 +895,7 @@ class Component extends DCLogic {
   }
   cmdRef = React.createRef();
   // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
-  ORDER_API = '';
+  ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
   cmd = { ch: [0, 0, 0], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, carte: [false, true, false], zone: 0, slot: -1, pay: 0, dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '' };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
