@@ -760,9 +760,9 @@
           <span style="width:32px;height:32px;flex:0 0 auto;border-radius:50%;background:#202820;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1">G</span>
           <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1">5,0</span>
           <span style="color:#8D1D2C;font-size:17px;letter-spacing:2px;line-height:1">★★★★★</span>
-          <span style="font-size:13px;font-weight:700;white-space:nowrap">38 avis Google</span>
+          <span style="font-size:13px;font-weight:700;white-space:nowrap">40 avis Google</span>
         </div>
-        <a href="#" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;appearance:none;flex:0 0 auto;border:0;background:#114232;color:#f4f0e5" style-hover="background:#8D1D2C;color:#f4f0e5">Laisser un avis sur Google</a>
+        <a href="https://www.google.fr/maps/place/Casarosa/@44.9294174,2.4422479,17z/data=!4m8!3m7!1s0x12ad55e99bbec397:0x3a1668fcaacaaad2!8m2!3d44.9294174!4d2.4422479!9m1!1b1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;appearance:none;flex:0 0 auto;border:0;background:#114232;color:#f4f0e5" style-hover="background:#8D1D2C;color:#f4f0e5">Voir et laisser un avis</a>
       </div>
     </div>
     <div ref="{{ avisRef }}" style="zoom:{{ avisZoom }};position:relative;width:100%;margin-top:clamp(20px,4vh,40px);padding-top:30px">
@@ -811,7 +811,7 @@
         <div style="border-top:1.5px dashed #9a9c94"></div>
         <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Céline</span><a href="tel:0687949722" style="font-family:'Titan One',sans-serif;font-weight:400;font-size:30px;line-height:1;color:#202820;text-decoration:none;white-space:nowrap" style-hover="color:#8D1D2C">06 87 94 97 22</a></div>
         <a href="mailto:casarosa15000@gmail.com" style="font-size:16px;font-weight:700;color:#202820;overflow-wrap:anywhere" style-hover="color:#8D1D2C">casarosa15000@gmail.com</a>
-        <span style="font-size:15px">Aurillac</span>
+        <span style="font-size:15px">6 rue Beauclair, 15000 Aurillac<br>Du lundi au samedi, 8h30–19h30</span>
       </div>
       <div style="flex:0 1 460px;min-width:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:6px;padding:24px 24px 22px;transform:rotate(1.5deg);box-shadow:0 22px 26px -18px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:12px">
         <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1">Laissez-moi un mot</span>
@@ -836,7 +836,7 @@
   <footer data-screen-label="Pied de page" style="background:#114232;color:#f4f0e5;padding:28px clamp(20px,5vw,64px)">
     <div style="max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 32px;font-size:14px">
       <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:22px;line-height:1">Casa Rosa</span>
-      <span>Traiteur fait maison · Aurillac</span>
+      <span>Traiteur fait maison · 6 rue Beauclair, Aurillac</span>
       <a href="tel:0687949722" style="color:#f4f0e5;font-weight:700;text-decoration:none">06 87 94 97 22</a>
       <a href="mailto:casarosa15000@gmail.com" style="color:#f4f0e5;font-weight:700">casarosa15000@gmail.com</a>
       <span><a href="https://www.facebook.com/profile.php?id=100082097553279" target="_blank" rel="noopener" style="color:#f4f0e5;font-weight:700">Facebook</a> · <a href="https://www.instagram.com/casarosaceline/" target="_blank" rel="noopener" style="color:#f4f0e5;font-weight:700">Instagram</a></span>
@@ -966,7 +966,7 @@ class Component extends DCLogic {
       carteBg: sel(isCarte).bg, carteFg: sel(isCarte).fg,
       pickmenu: () => this.setCmd({ formule: 'menu', ...reset }),
       pickcarte: () => this.setCmd({ formule: 'carte', ...reset }),
-      modeHint: isLiv ? 'Livraison de 11h30 à 13h15, à Aurillac et Arpajon · à partir de 5 menus complets' : 'Retrait sur place · adresse et horaires [à compléter]',
+      modeHint: isLiv ? 'Livraison de 11h30 à 13h15, à Aurillac et Arpajon · à partir de 5 menus complets' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30',
       zones: ZONES.map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === c.zone), pick: () => this.setCmd({ zone: i, ...reset }) })),
       slots: SLOTS.map((label, i) => ({ label: full(i) ? label + ' · complet' : label, ...sel(i === c.slot),
         op: full(i) ? 0.45 : 1, deco: full(i) ? 'line-through' : 'none', cur: full(i) ? 'not-allowed' : 'pointer',
@@ -1017,7 +1017,7 @@ class Component extends DCLogic {
           this.stick(true);
           return;
         }
-        this.setCmd({ msg: `C’est noté, ${p}. Retrait le ${long} à Aurillac.` });
+        this.setCmd({ msg: `C’est noté, ${p}. Retrait le ${long}, entre 8h30 et 19h30, au 6 rue Beauclair.` });
         this.stick(true);
       },
       total: fmt(total), msg: c.msg,
@@ -1169,12 +1169,13 @@ class Component extends DCLogic {
   avisVals(w, wide) {
     const { H, pv } = this.pads(w);
     const AV = [
-      ['Le chili de lentilles du lundi est devenu un rituel au bureau.', 'Sophie', 'Menu complet'],
-      ['Fait maison, ça se sent dès la première bouchée. Et Céline est adorable.', 'Marc', 'Menu complet'],
-      ['Enfin un traiteur qui pense au sans gluten sans que ce soit triste.', 'Julie', 'Salade fraîcheur'],
-      ["L'atelier anti-gaspi avec nos élèves : ils en parlent encore.", 'Claire', 'Atelier'],
-      ['Livré à vélo, à l’heure et encore chaud. Toute l’équipe a adopté.', 'Thomas', 'Livraison'],
-      ['Sa compote maison, je pourrais en manger tous les jours.', 'Nadia', 'Menu complet'],
+      // Real Google reviews (short excerpts, first name + initial)
+      ['La cuisine de Céline est créative, copieuse et pleine de saveurs. Un repas pour 25 personnes totalement réussi.', 'Guilhem V.', 'Repas pour 25'],
+      ['Nous avons fait confiance à Céline pour notre repas de réveillon de Noël et nous n’avons pas été déçus !', 'Sandra L.', 'Réveillon'],
+      ['Nous avons commandé à emporter et nous sommes régalés avec une cuisine saine et gourmande.', 'Ludivine J.', 'À emporter'],
+      ['Bouchées salées pour 10 personnes, excellentes, un véritable succès pour tout le monde.', 'Emilie S.', 'Bouchées salées'],
+      ['La cuisine était très bonne et le timing du service parfait.', 'Sylvain H.', 'Mariage'],
+      ['Première commande et première claque culinaire, je recommande vivement.', 'Yann B.', 'Plats du midi'],
     ];
     const rot = [-3, 2, -1.5, 3, -2.5, 1.5];
     const one = AV.map(([quote, sign, cmd], i) => ({ quote, sign, cmd, n: String(i + 1).padStart(2, '0'), t: `rotate(${rot[i]}deg)` }));
