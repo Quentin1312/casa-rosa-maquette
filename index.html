@@ -978,9 +978,11 @@ class Component extends DCLogic {
     });
 
     // Basket: each line is one composition × a quantity. Without a basket, the current composition is the order.
-    const current = { formule: c.formule, items: OPTS.map(([, list], i) => (!isCarte || carte[i]) ? list[c.ch[i]] : ''), pain: c.pain, qty: c.qty };
-    const lineTotal = l => l.qty * ((l.formule === 'carte' ? l.items.reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : 17) + (l.pain ? 1 : 0));
-    const lineText = l => l.items.filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
+    // Lines keep the chosen positions, so changing the day follows that day's menu
+    const current = { formule: c.formule, sel: c.ch.slice(), on: isCarte ? carte.slice() : [true, true, true], pain: c.pain, qty: c.qty };
+    const itemsOf = l => OPTS.map(([, list], i) => l.on[i] ? list[Math.min(l.sel[i], list.length - 1)] : '');
+    const lineTotal = l => l.qty * ((l.formule === 'carte' ? itemsOf(l).reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : 17) + (l.pain ? 1 : 0));
+    const lineText = l => itemsOf(l).filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
     const lineName = l => l.qty + ' × ' + (l.formule === 'carte' ? 'À la carte' : 'Menu complet');
     const lines = c.cart.length ? c.cart : [current];
     const total = lines.reduce((s, l) => s + lineTotal(l), 0);
@@ -1048,8 +1050,8 @@ class Component extends DCLogic {
         ...sel(i === c.dateIdx),
         pick: () => {
           if (i === c.dateIdx) return;
-          const msg = c.cart.length ? 'Le menu change selon le jour : votre commande a été vidée.' : '';
-          this.setCmd({ dateIdx: i, ch: [0, 0, 0], slot: '', cart: [], ...reset, msg });
+          const msg = c.cart.length ? 'Votre commande est gardée, avec les plats du jour choisi.' : '';
+          this.setCmd({ dateIdx: i, slot: '', ...reset, msg });
         },
       })),
       prenom: c.prenom, onPrenom: e => this.setCmd({ prenom: e.target.value, ...reset }),
@@ -1083,7 +1085,7 @@ class Component extends DCLogic {
         if (!this.ORDER_API) { this.setCmd({ msg: done }); this.stick(true); return; } // demo mode, no script yet
         if (c.sending) return;
         const payload = { date: ymd, mode: c.mode,
-          lines: lines.map(l => ({ formule: l.formule, entree: l.items[0], plat: l.items[1], dessert: l.items[2], pain: l.pain, qty: l.qty })),
+          lines: lines.map(l => { const [entree, plat, dessert] = itemsOf(l); return { formule: l.formule, entree, plat, dessert, pain: l.pain, qty: l.qty }; }),
           zone: isLiv ? ZONES[zoneIdx][0] : '', slot: isLiv ? c.slot : '',
           rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
           paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), website: '' };
