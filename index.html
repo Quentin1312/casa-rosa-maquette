@@ -560,6 +560,7 @@
                 <input value="{{ nom }}" sc-camel-on-change="{{ onNom }}" placeholder="Nom" aria-label="Nom" autocomplete="family-name" maxlength="30" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                <input value="{{ remarques }}" sc-camel-on-change="{{ onRemarques }}" placeholder="Allergie, menu végétarien… à signaler (facultatif)" aria-label="Allergie ou régime à signaler" maxlength="300" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
               </div>
               <div style="display:flex;flex-direction:column;gap:8px">
                 <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ payLabel }}</span>
@@ -1189,7 +1190,7 @@ class Component extends DCLogic {
   // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
   ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
-  cmd = { ch: [-1, -1, -1], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', sending: false, mode: 'collect', adresse: '', truckGo: false, zone: 0, slots: {}, pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', dayHint: '', done: null, bar: false, composing: true };
+  cmd = { ch: [-1, -1, -1], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', remarques: '', sending: false, mode: 'collect', adresse: '', truckGo: false, zone: 0, slots: {}, pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', dayHint: '', done: null, bar: false, composing: true };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   watchCmd() {
     const el = this.cmdRef.current;
@@ -1433,6 +1434,7 @@ class Component extends DCLogic {
       nom: c.nom, onNom: e => this.setCmd({ nom: e.target.value, ...reset }),
       email: c.email, onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
       tel: c.tel, onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
+      remarques: c.remarques, onRemarques: e => this.setCmd({ remarques: e.target.value, ...reset }),
       rue: c.rue, onRue: e => this.setCmd({ rue: e.target.value, ...reset }),
       complement: c.complement, onComplement: e => this.setCmd({ complement: e.target.value, ...reset }),
       isLiv, pickupOn,
@@ -1478,7 +1480,7 @@ class Component extends DCLogic {
           slots: Object.fromEntries(slotDays.map(y => [y, c.slots[y]])),
           zone: isLiv ? ZONES[zoneIdx][0] : '',
           rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
-          paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), website: '' };
+          paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), remarques: c.remarques.trim(), website: '' };
         this.setCmd({ sending: true, msg: 'Envoi de votre commande…' });
         // text/plain body: no CORS preflight, which Apps Script does not answer
         fetch(this.ORDER_API, { method: 'POST', body: JSON.stringify(payload) })
