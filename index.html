@@ -240,6 +240,7 @@
                   <sc-for list="{{ ns.items }}" as="it" hint-placeholder-count="3">
                     <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
                       <span style="font-size:16px;font-weight:700;line-height:1.3;text-wrap:balance">{{ it.n }}</span>
+                      <span style="font-size:14px;line-height:1.4;max-width:30ch;text-wrap:balance;opacity:.92">{{ it.d }}</span>
                       <span style="display:{{ it.tagD }};font-size:12px;font-weight:800;letter-spacing:.06em;color:#E0C38F">{{ it.tag }}</span>
                     </div>
                   </sc-for>
@@ -253,7 +254,7 @@
               <span style="font-size:14px;font-weight:700">entrée + plat + dessert</span>
               <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:26px;line-height:1">32 €</span>
             </div>
-            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : écrasé de pommes de terre au beurre demi-sel et à l’ail noir, flan de légumes de saison aux châtaignes.</p>
+            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : {{ noelSide }}</p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
               <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
               <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
@@ -325,7 +326,8 @@
             <sc-for list="{{ noelItems }}" as="it" hint-placeholder-count="3">
               <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
                 <span style="font-size:17px;font-weight:700;line-height:1.3;text-wrap:balance">{{ it.n }}</span>
-                <span style="display:{{ it.tagD }};font-size:12px;font-weight:800;letter-spacing:.06em;color:#E0C38F">{{ it.tag }}</span>
+                <span style="font-size:14px;line-height:1.4;max-width:30ch;text-wrap:balance;opacity:.92">{{ it.d }}</span>
+                      <span style="display:{{ it.tagD }};font-size:12px;font-weight:800;letter-spacing:.06em;color:#E0C38F">{{ it.tag }}</span>
               </div>
             </sc-for>
           </div>
@@ -335,7 +337,7 @@
               <span style="font-size:14px;font-weight:700">entrée + plat + dessert</span>
               <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:26px;line-height:1">32 €</span>
             </div>
-            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : écrasé de pommes de terre au beurre demi-sel et à l’ail noir, flan de légumes de saison aux châtaignes.</p>
+            <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : {{ noelSide }}</p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
               <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
               <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
@@ -651,8 +653,8 @@
         <p style="margin:22px 0 0;font-size:clamp(17px,1.5vw,19px);line-height:1.6;max-width:38ch;text-wrap:pretty">Mes quatre règles, écrites sur des fiches, mijotent dans ma cocotte.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px">
         <button sc-camel-on-click="{{ pick1 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb1 }};color:{{ pf1 }};transform:{{ pr1 }};transition:background .25s,color .25s,transform .3s">Fait maison</button>
-        <button sc-camel-on-click="{{ pick2 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb2 }};color:{{ pf2 }};transform:{{ pr2 }};transition:background .25s,color .25s,transform .3s">Équilibré</button>
-        <button sc-camel-on-click="{{ pick3 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb3 }};color:{{ pf3 }};transform:{{ pr3 }};transition:background .25s,color .25s,transform .3s">De saison</button>
+        <button sc-camel-on-click="{{ pick2 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb2 }};color:{{ pf2 }};transform:{{ pr2 }};transition:background .25s,color .25s,transform .3s">Équilibré et de saison</button>
+        <button sc-camel-on-click="{{ pick3 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb3 }};color:{{ pf3 }};transform:{{ pr3 }};transition:background .25s,color .25s,transform .3s">Terroir et qualité</button>
         <button sc-camel-on-click="{{ pick4 }}" style="appearance:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;border:1.5px solid #202820;min-height:44px;background:{{ pb4 }};color:{{ pf4 }};transform:{{ pr4 }};transition:background .25s,color .25s,transform .3s">Sur commande</button>
         </div>
         <p style="margin:22px 0 0;display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:#B08D57;box-shadow:0 0 0 2px #f4f0e5"></span>Choisissez une fiche, elle sort de la cocotte.</p>
@@ -678,10 +680,10 @@
           </div>
           <div style="position:absolute;left:30px;top:300px;width:420px;height:300px;z-index:{{ z2 }};transform:{{ t2 }};transition:transform .8s cubic-bezier(.2,.9,.25,1.08)">
             <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:4px;display:flex;flex-direction:column;padding:26px 28px 34px;color:#202820">
-              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Équilibré</div>
+              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:34px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Équilibré et de saison</div>
               <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#114232">Fiche n° 02 · Casa Rosa · Aurillac</div>
               <div style="border-top:1.5px dashed #B08D57;margin:14px 0 12px"></div>
-              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Des plats gourmands, souvent mijotés, avec le sucre et le sel modérés. On se fait plaisir, sans excès.</p>
+              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Des plats gourmands, souvent mijotés, avec le sucre et le sel modérés, qui suivent les saisons : légumes du Cantal, bio dès que possible.</p>
               <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px">
                 <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Sucre &amp; sel</span>
                 <span style="flex:1;border-bottom:2px dotted #9a9c94;transform:translateY(-3px)"></span>
@@ -691,14 +693,14 @@
           </div>
           <div style="position:absolute;left:30px;top:300px;width:420px;height:300px;z-index:{{ z3 }};transform:{{ t3 }};transition:transform .8s cubic-bezier(.2,.9,.25,1.08)">
             <div style="position:absolute;inset:0;background:#fbf9f3;border:1.5px solid #202820;border-radius:4px;display:flex;flex-direction:column;padding:26px 28px 34px;color:#202820">
-              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:42px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">De saison</div>
+              <div style="text-align:center;font-family:'Titan One',sans-serif;font-size:34px;font-weight:400;text-transform:none;letter-spacing:0;line-height:1">Terroir et qualité</div>
               <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#114232">Fiche n° 03 · Casa Rosa · Aurillac</div>
               <div style="border-top:1.5px dashed #B08D57;margin:14px 0 12px"></div>
-              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Le menu suit les saisons, avec des légumes du Cantal, bio dès que possible. On cuisine ce qui pousse au moment où on le mange.</p>
+              <p style="margin:0;font-size:16px;line-height:1.5;text-wrap:pretty">Je mets en avant notre terroir grâce aux artisans locaux.</p>
               <div style="display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px">
-                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Saison</span>
+                <span style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Artisans</span>
                 <span style="flex:1;border-bottom:2px dotted #9a9c94;transform:translateY(-3px)"></span>
-                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">En cours</span>
+                <span style="font-family:'Titan One',sans-serif;font-size:22px;font-weight:400;line-height:1;white-space:nowrap;color:#8D1D2C">Locaux</span>
               </div>
             </div>
           </div>
@@ -1184,11 +1186,11 @@ class Component extends DCLogic {
       ['2026-12-28', '2026-12-26'], ['2026-12-29', '2026-12-26'], ['2026-12-30', '2026-12-26']],
     price: 32,
     courses: [
-      ['Entrée', [['Feuilleté forestier', 0, 'Poireaux, champignons, quenelle et châtaignes', true], ['Crêpe truffée', 2, 'Jambon blanc, éclats de truffe, crème et Cantal'], ['Nage de fruits de mer et truite fumée', 0, 'Sauce au Chardonnay']]],
-      ['Plat', [['Mijoté de bœuf aux morilles', 5, 'Carottes et morilles'], ['Fricassée de filet de volaille', 0, 'Sauce crémeuse aux cèpes'], ['Galette de lentilles', 0, 'Panure croustillante au cumin, sauce crémeuse aux morilles', true]]],
-      ['Dessert', [['Strudel façon chausson', 0, 'Pommes, amandes, myrtilles et rhum'], ['Verrine façon tiramisu', 0, 'À la châtaigne et au café']]],
+      ['Entrée', [['Feuilleté forestier', 0, 'Feuilleté artisanal. Poireaux, champignons, quenelles et châtaignes', true], ['Crêpe truffée', 2, 'Œufs de ferme et farine bio de la Châtaigneraie. Jambon blanc, éclats de truffe, crème et Cantal'], ['Nage de fruits de mer et truite fumée', 0, 'Aux champignons frais, sauce au Chardonnay']]],
+      ['Plat', [['Mijoté de bœuf aux morilles', 5, 'Bœuf local et bio, carottes et morilles'], ['Fricassée de filet de volaille', 0, 'Volaille de petits producteurs locaux, sauce crémeuse aux cèpes'], ['Galette de lentilles', 0, 'Lentilles de la Planèze, panure croustillante au cumin, sauce crémeuse aux morilles', true]]],
+      ['Dessert', [['Strudel façon chausson', 0, 'Pommes des vergers de proximité, amandes, myrtilles et rhum de qualité bio'], ['Verrine façon tiramisu', 0, 'À la châtaigne et au café, avec des œufs de ferme']]],
     ],
-    side: 'Écrasé de pommes de terre au beurre demi-sel et à l’ail noir, petit flan de légumes de saison aux châtaignes, parsemé de graines de courge torréfiées.',
+    side: 'Écrasé de pommes de terre de petits producteurs locaux, au beurre demi-sel et à l’ail noir, et petit flan de légumes de saison aux châtaignes, agrémenté de graines de tournesol torréfiées.',
   };
   ymdOf(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   // Order days: the next 5 weekdays (from tomorrow, or the day after once 13h has passed), then the open Noël days
@@ -1528,7 +1530,7 @@ class Component extends DCLogic {
     const k = Math.min(this.wkI || 0, N - 1), cur = WEEK[k];
     // Noël tab: dishes per course, with their supplement or vegetarian mention; phone shows one course at a time
     const NC = this.NOEL.courses, nk = Math.min(this.noelI || 0, NC.length - 1);
-    const noelItemsOf = list => list.map(([n, sp, , veg]) => { const tag = [sp ? '+' + sp + ' €' : '', veg ? 'végétarien' : ''].filter(Boolean).join(' · '); return { n, tag, tagD: tag ? 'block' : 'none' }; });
+    const noelItemsOf = list => list.map(([n, sp, d, veg]) => { const tag = [sp ? '+' + sp + ' €' : '', veg ? 'végétarien' : ''].filter(Boolean).join(' · '); return { n, d, tag, tagD: tag ? 'block' : 'none' }; });
     const goNoel = i => () => { this.noelI = (i + NC.length) % NC.length; this.forceUpdate(); };
     const go = d => () => {
       clearTimeout(this.wkT); this.wkFade = true; this.wkDir = d; this.forceUpdate();
@@ -1548,6 +1550,7 @@ class Component extends DCLogic {
       },
       noelStations: NC.map(([k, list], i) => ({ tag: ['Les entrées', 'Les plats', 'Les desserts'][i], word: k, nap: `rotate(${[-6, 4, -5][i]}deg)`, items: noelItemsOf(list) })),
       noelTabs: NC.map((_, i) => ({ label: ['Entrées', 'Plats', 'Desserts'][i], bg: i === nk ? '#ffffff' : 'transparent', fg: i === nk ? '#202820' : '#f4f0e5', pick: goNoel(i) })),
+      noelSide: this.NOEL.side.charAt(0).toLowerCase() + this.NOEL.side.slice(1),
       noelPrev: goNoel(nk - 1), noelNext: goNoel(nk + 1), noelWord: NC[nk][0], noelItems: noelItemsOf(NC[nk][1]),
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
       wkOrderLabel: 'Commander pour ' + cur[0].toLowerCase(),
