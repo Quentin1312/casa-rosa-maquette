@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Espace Céline · Casa Rosa</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+@font-face { font-family: 'Bricolage Grotesque'; font-weight: 200 800; font-display: swap; src: url("assets/font-2.woff2") format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Bricolage Grotesque'; font-weight: 200 800; font-display: swap; src: url("assets/font-3.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Titan One'; font-weight: 400; font-display: swap; src: url("assets/font-4.woff2") format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Titan One'; font-weight: 400; font-display: swap; src: url("assets/font-5.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root { --ink: #202820; --green: #114232; --red: #8D1D2C; --brass: #B08D57; --cream: #f4f0e5; --card: #fbf9f3; --line: #d6d0c0; --muted: #575c54; --red-tint: #f6e4e2; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+a { color: var(--green); }
+a:hover { color: var(--red); }
+[hidden] { display: none !important; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+header { border-bottom: 1.5px dashed #b6b2a3; background: var(--card); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+.brand img { height: 46px; width: auto; display: block; }
+.brand span { font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.site-link { font-weight: 700; font-size: 15px; white-space: nowrap; }
+main { padding: 28px 0 120px; }
+h1 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-size: clamp(30px, 6vw, 46px); line-height: 1.02; color: var(--green); }
+h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-size: 22px; line-height: 1.1; }
+.lead { margin: 10px 0 0; font-size: 17px; max-width: 56ch; }
+.card { background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px; padding: 20px; }
+.step { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: var(--cream); font-weight: 800; font-size: 15px; margin-right: 10px; flex: 0 0 auto; }
+.step-head { display: flex; align-items: center; margin-bottom: 8px; }
+.muted { color: var(--muted); }
+.small { font-size: 15px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; border: 0; background: var(--red); color: var(--cream); font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer; text-decoration: none; transition: background .2s, color .2s, transform .1s; }
+.btn:hover { background: var(--ink); color: var(--cream); }
+.btn:active { transform: scale(.98); }
+.btn:disabled { opacity: .55; cursor: wait; }
+.btn.green { background: var(--green); }
+.btn.green:hover { background: var(--ink); }
+.btn.line { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn.line:hover { background: var(--ink); color: var(--cream); }
+.btn svg { width: 20px; height: 20px; flex: 0 0 auto; }
+:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+
+/* Login */
+.login { max-width: 420px; margin: 6vh auto 0; text-align: center; }
+.login .card { padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+.code { height: 64px; border-radius: 14px; border: 1.5px solid var(--ink); background: #fff; color: var(--ink); text-align: center; font-family: inherit; font-size: 30px; font-weight: 700; letter-spacing: .35em; padding: 0 0 0 .35em; outline: none; width: 100%; }
+.code:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(17, 66, 50, .18); }
+.err { margin: 0; color: var(--red); font-weight: 700; font-size: 15px; min-height: 22px; }
+
+/* Weeks */
+.weeks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 18px; }
+.week { appearance: none; text-align: left; cursor: pointer; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 14px; padding: 12px 14px; font-family: inherit; display: flex; flex-direction: column; gap: 3px; min-height: 92px; transition: background .2s, color .2s; }
+.week:hover { background: #fff; }
+.week[aria-pressed="true"] { background: var(--green); color: var(--cream); }
+.week .w1 { font-weight: 800; font-size: 15px; line-height: 1.2; }
+.week .w2 { font-size: 14px; }
+.pill { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px 3px 7px; border-radius: 999px; background: var(--cream); color: var(--ink); }
+.pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: block; }
+.pill.on i { background: #2e8a5a; }
+
+/* Dictation */
+.grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 18px; align-items: start; }
+textarea { width: 100%; min-height: 190px; resize: vertical; border-radius: 14px; border: 1.5px solid var(--ink); background: #fff; color: var(--ink); padding: 14px 16px; font-family: inherit; font-size: 16px; line-height: 1.5; outline: none; margin: 12px 0; }
+textarea:focus, .f input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(17, 66, 50, .18); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+.row .btn { flex: 1 1 auto; }
+#mic.rec { background: var(--red); color: var(--cream); border-color: var(--red); }
+#mic.rec .dot { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { #mic.rec .dot { animation: none; } }
+.note { margin: 12px 0 0; font-size: 15px; min-height: 22px; }
+.note.ok { color: var(--green); font-weight: 700; }
+.note.bad { color: var(--red); font-weight: 700; }
+details { margin-top: 14px; border-top: 1.5px dashed #b6b2a3; padding-top: 12px; }
+summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; display: flex; align-items: center; }
+.prompt { margin: 10px 0; padding: 12px 14px; border-radius: 12px; background: var(--cream); font-size: 14px; line-height: 1.5; white-space: pre-wrap; }
+
+/* Days */
+.days { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 14px; }
+.day { border: 1.5px solid var(--ink); border-radius: 14px; background: #fff; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.day.closed { background: var(--cream); }
+.day-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.day-name { font-family: 'Titan One', sans-serif; font-size: 19px; line-height: 1; color: var(--red); }
+.toggle { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 700; cursor: pointer; user-select: none; min-height: 36px; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--red); margin: 0; }
+.tag { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--green); color: var(--cream); }
+.f { display: flex; flex-direction: column; gap: 3px; }
+.f span { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.f input { height: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); padding: 0 12px; font-family: inherit; font-size: 16px; outline: none; min-width: 0; width: 100%; }
+.f input[aria-invalid="true"] { border-color: var(--red); background: var(--red-tint); }
+.day.closed .f { display: none; }
+.closed-text { margin: 0; font-size: 15px; color: var(--muted); }
+
+/* Publish bar */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1.5px solid var(--ink); z-index: 5; }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 76px; padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+.status { margin: 0; font-size: 15px; line-height: 1.3; min-width: 0; }
+.status b { display: block; }
+.out { margin-top: 26px; font-size: 15px; }
+.loading { text-align: center; padding: 60px 0; font-size: 17px; }
+
+@media (max-width: 820px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .weeks { gap: 8px; }
+  .week { padding: 10px; min-height: 96px; }
+  .week .w1 { font-size: 14px; }
+  .week .w2 { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .brand span { display: none; }
+  .card { padding: 16px; }
+  .bar .btn { padding: 0 18px; white-space: nowrap; flex: 0 0 auto; }
+  .status { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Casa Rosa, retour au site"><img src="assets/logo.png" alt="Casa Rosa"><span>Espace Céline</span></a>
+    <a class="site-link" href="./#menu-semaine">Voir le site</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="loading" id="loading">Un instant…</p>
+
+    <section class="login" id="login" hidden>
+      <h1>Bonjour Céline</h1>
+      <p class="lead" style="margin:10px auto 22px">Entre ton code à 6 chiffres pour modifier le menu de la semaine.</p>
+      <form class="card" id="loginForm">
+        <label for="code" class="muted small" style="font-weight:700">Code de l’espace</label>
+        <input class="code" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" required>
+        <p class="err" id="loginErr" role="alert"></p>
+        <button class="btn green" type="submit">Entrer</button>
+      </form>
+    </section>
+
+    <section id="app" hidden>
+      <h1>Le menu de la semaine</h1>
+      <p class="lead">Dicte ton menu, vérifie, publie : il est sur le site tout de suite, pour les commandes.</p>
+
+      <div class="weeks" id="weeks" role="group" aria-label="Choisir la semaine"></div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="step-head"><span class="step">1</span><h2>Dicte ou colle ton menu</h2></div>
+          <p class="muted small" style="margin:0">Dis le nom du jour, puis l’entrée, le plat et le dessert. Par exemple : « Lundi, en entrée velouté de saison, en plat chili sin carne, en dessert compote maison. Mardi… »</p>
+          <label for="texte" class="sr">Texte du menu</label>
+          <textarea id="texte" placeholder="Lundi, en entrée… en plat… en dessert…&#10;Mardi…"></textarea>
+          <div class="row">
+            <button class="btn line" type="button" id="mic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><circle class="dot" cx="12" cy="8.5" r="0" fill="currentColor"></circle></svg>
+              <span id="micLabel">Dicter</span>
+            </button>
+            <button class="btn green" type="button" id="remplir">Remplir le menu</button>
+          </div>
+          <p class="note" id="parseNote" role="status"></p>
+          <p class="muted small" id="micTip" hidden style="margin:8px 0 0">Astuce : le micro de ton clavier marche aussi pour dicter.</p>
+          <details>
+            <summary>Tu passes par ChatGPT ?</summary>
+            <p class="small" style="margin:8px 0 0">Donne-lui cette consigne avec ton menu, puis colle sa réponse ici.</p>
+            <div class="prompt" id="prompt">Remets mon menu de la semaine sous cette forme, sans rien ajouter :
+Lundi
+Entrée : …
+Plat : …
+Dessert : …
+Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un jour sans service.</div>
+            <button class="btn line" type="button" id="copy" style="min-height:44px">Copier la consigne</button>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="step-head"><span class="step">2</span><h2>Vérifie et corrige</h2></div>
+          <p class="muted small" style="margin:0">Tu peux modifier chaque plat à la main. « Fermé » : pas de commande ce jour-là.</p>
+          <div class="days" id="days"></div>
+        </div>
+      </div>
+
+      <p class="out"><a href="#" id="logout">Se déconnecter</a></p>
+    </section>
+  </div>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <div class="wrap">
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <button class="btn" type="button" id="publier">Publier sur le site</button>
+  </div>
+</div>
+
+<script src="assets/menu-texte.js"></script>
+<script>
+(function () {
+  // Same web app as ORDER_API in index.html (casa-rosa-outils/Code.gs)
+  var API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
+  var KEY = 'casa-espace-code';
+  var DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+  var MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { code: '', semaines: {}, bloques: {}, today: '', weeks: [], week: '', dirty: false, busy: false };
+
+  function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function read(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function addDays(ymd, n) { var d = new Date(ymd + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+  function mondayOf(ymd) { return addDays(ymd, -((new Date(ymd + 'T12:00:00Z').getUTCDay() + 6) % 7)); }
+  function dayNum(ymd) { return Number(ymd.slice(8, 10)); }
+  function monthOf(ymd) { return MONTHS[Number(ymd.slice(5, 7)) - 1]; }
+  function range(m) { var f = addDays(m, 4); return dayNum(m) + (monthOf(m) === monthOf(f) ? '' : ' ' + monthOf(m)) + ' – ' + dayNum(f) + ' ' + monthOf(f); }
+  function setStatus(title, color, sub) {
+    var st = $('status');
+    st.innerHTML = '<b></b><span class="muted"></span>';
+    st.firstChild.textContent = title;
+    if (color) st.firstChild.style.color = color;
+    st.lastChild.textContent = sub;
+  }
+
+  function post(body) {
+    // text/plain body: no CORS preflight, which Apps Script does not answer
+    return fetch(API, { method: 'POST', body: JSON.stringify(body) }).then(function (r) { return r.json(); });
+  }
+  function show(id) { ['loading', 'login', 'app'].forEach(function (x) { $(x).hidden = x !== id; }); $('bar').hidden = id !== 'app'; }
+
+  // ---------- Login ----------
+  function open(code, fromForm) {
+    show('loading');
+    post({ action: 'espace', code: code }).then(function (res) {
+      if (!res.ok) {
+        store(KEY, null);
+        show('login');
+        $('loginErr').textContent = fromForm ? res.error : '';
+        $('code').focus();
+        return;
+      }
+      state.code = code;
+      store(KEY, code);
+      load(res);
+      show('app');
+    }).catch(function () {
+      show('login');
+      $('loginErr').textContent = 'Pas de connexion. Vérifie Internet et réessaie.';
+    });
+  }
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var c = $('code').value.replace(/\D/g, '');
+    if (c.length !== 6) { $('loginErr').textContent = 'Le code fait 6 chiffres.'; return; }
+    open(c, true);
+  });
+  $('logout').addEventListener('click', function (e) {
+    e.preventDefault();
+    if (state.dirty && !confirm('Le menu n’est pas publié. Te déconnecter quand même ?')) return;
+    store(KEY, null);
+    state.code = '';
+    state.dirty = false;
+    $('code').value = '';
+    $('loginErr').textContent = '';
+    show('login');
+  });
+
+  // ---------- Weeks ----------
+  function load(res) {
+    state.semaines = res.semaines || {};
+    state.bloques = res.bloques || {};
+    state.today = res.aujourdhui;
+    // From this week (or next week at the weekend), three weeks
+    var wd = new Date(state.today + 'T12:00:00Z').getUTCDay();
+    var first = mondayOf(state.today);
+    if (wd === 6 || wd === 0) first = addDays(first, 7);
+    state.weeks = [first, addDays(first, 7), addDays(first, 14)];
+    if (!state.week || state.weeks.indexOf(state.week) < 0) {
+      state.week = state.weeks.slice(0, 2).filter(function (w) { return !state.semaines[w]; })[0] || state.weeks[0];
+    }
+    renderWeeks();
+    renderDays(state.semaines[state.week]);
+    status();
+  }
+  function weekLabel(i) {
+    var diff = Math.round((Date.parse(state.weeks[i]) - Date.parse(mondayOf(state.today))) / 604800000);
+    return diff === 0 ? 'Cette semaine' : diff === 1 ? 'Semaine prochaine' : 'Dans ' + diff + ' semaines';
+  }
+  function renderWeeks() {
+    $('weeks').innerHTML = '';
+    state.weeks.forEach(function (w, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'week';
+      b.setAttribute('aria-pressed', String(w === state.week));
+      var on = !!state.semaines[w];
+      b.innerHTML = '<span class="w1"></span><span class="w2"></span><span class="pill' + (on ? ' on' : '') + '"><i></i>' + (on ? 'En ligne' : 'À faire') + '</span>';
+      b.querySelector('.w1').textContent = weekLabel(i);
+      b.querySelector('.w2').textContent = range(w);
+      b.addEventListener('click', function () { pickWeek(w); });
+      $('weeks').appendChild(b);
+    });
+  }
+  function pickWeek(w) {
+    if (w === state.week) return;
+    if (state.dirty && !confirm('Le menu de cette semaine n’est pas publié. Changer de semaine quand même ?')) return;
+    state.week = w;
+    state.dirty = false;
+    renderWeeks();
+    renderDays(state.semaines[w]);
+    $('parseNote').textContent = '';
+    status();
+  }
+
+  // ---------- Days ----------
+  function renderDays(saved) {
+    var box = $('days');
+    box.innerHTML = '';
+    DAYS.forEach(function (name, i) {
+      var date = addDays(state.week, i);
+      var locked = state.bloques[date];
+      var s = (saved && saved[i]) || { e: '', p: '', d: '', ferme: false };
+      var el = document.createElement('div');
+      el.className = 'day' + (locked ? ' locked closed' : s.ferme ? ' closed' : '');
+      var head = '<div class="day-head"><span class="day-name">' + name + ' ' + dayNum(date) + '</span>'
+        + (locked ? '<span class="tag"></span>' : '<label class="toggle"><input type="checkbox" class="ferme"' + (s.ferme ? ' checked' : '') + '> Fermé</label>') + '</div>';
+      var field = function (k, label) {
+        return '<label class="f"><span>' + label + '</span><input type="text" class="' + k + '" maxlength="120" autocomplete="off" enterkeyhint="next"></label>';
+      };
+      el.innerHTML = head + field('e', 'Entrée') + field('p', 'Plat') + field('d', 'Dessert')
+        + '<p class="closed-text"' + (locked || s.ferme ? '' : ' hidden') + '></p>';
+      if (locked) el.querySelector('.tag').textContent = locked;
+      el.querySelector('.closed-text').textContent = locked === 'Menu de Noël' ? 'Ce jour-là, seul le menu de Noël est proposé.' : 'Pas de commande ce jour-là.';
+      ['e', 'p', 'd'].forEach(function (k) { el.querySelector('input.' + k).value = s[k] || ''; });
+      box.appendChild(el);
+    });
+  }
+  $('days').addEventListener('input', function (e) {
+    if (e.target.matches('input[type=text]')) { e.target.removeAttribute('aria-invalid'); touch(); }
+  });
+  $('days').addEventListener('change', function (e) {
+    if (!e.target.matches('.ferme')) return;
+    var day = e.target.closest('.day');
+    day.classList.toggle('closed', e.target.checked);
+    day.querySelector('.closed-text').hidden = !e.target.checked;
+    touch();
+  });
+  function touch() { state.dirty = true; status(); }
+  function readDays() {
+    return Array.prototype.map.call(document.querySelectorAll('.day'), function (el) {
+      var f = el.querySelector('.ferme');
+      return {
+        entree: el.querySelector('input.e').value.trim(), plat: el.querySelector('input.p').value.trim(), dessert: el.querySelector('input.d').value.trim(),
+        ferme: !!(f && f.checked), locked: el.classList.contains('locked'),
+      };
+    });
+  }
+  function status() {
+    var sub = 'Semaine du ' + range(state.week);
+    if (state.dirty) setStatus('Pas encore publié', '', sub);
+    else if (state.semaines[state.week]) setStatus('En ligne sur le site', 'var(--green)', sub);
+    else setStatus('Pas encore de menu', '', sub);
+  }
+
+  // ---------- Reading the dictated text ----------
+  $('remplir').addEventListener('click', fill);
+  function fill() {
+    var text = $('texte').value;
+    var note = $('parseNote');
+    if (!text.trim()) { note.className = 'note bad'; note.textContent = 'Dicte ou colle d’abord ton menu au-dessus.'; $('texte').focus(); return; }
+    var r = window.CasaMenu.parseMenu(text);
+    if (!r.trouves) {
+      note.className = 'note bad';
+      note.textContent = 'Je n’ai pas reconnu les jours. Commence chaque jour par son nom : « Lundi, en entrée… ».';
+      return;
+    }
+    // A week named in the text (« semaine du 23 novembre ») picks that week
+    var moved = '';
+    if (r.semaine) {
+      var hit = state.weeks.filter(function (w) {
+        for (var k = 0; k < 7; k++) {
+          var d = addDays(w, k);
+          if (dayNum(d) === r.semaine.jour && (!r.semaine.mois || Number(d.slice(5, 7)) === r.semaine.mois)) return true;
+        }
+        return false;
+      })[0];
+      if (hit && hit !== state.week) { state.week = hit; renderWeeks(); renderDays(state.semaines[hit]); moved = ' pour la semaine du ' + range(hit); }
+    }
+    var filled = 0;
+    document.querySelectorAll('.day').forEach(function (el, i) {
+      if (el.classList.contains('locked')) return;
+      var j = r.jours[i];
+      if (!j.entree && !j.plat && !j.dessert && !j.ferme) return;
+      filled++;
+      el.querySelector('.ferme').checked = j.ferme;
+      el.classList.toggle('closed', j.ferme);
+      el.querySelector('.closed-text').hidden = !j.ferme;
+      if (!j.ferme) {
+        el.querySelector('input.e').value = j.entree;
+        el.querySelector('input.p').value = j.plat;
+        el.querySelector('input.d').value = j.dessert;
+      }
+      el.querySelectorAll('input[type=text]').forEach(function (x) { x.removeAttribute('aria-invalid'); });
+    });
+    touch();
+    var open = readDays().filter(function (d) { return !d.locked; }).length;
+    var gaps = missing();
+    note.className = gaps.length ? 'note bad' : 'note ok';
+    var said = filled + ' jour' + (filled > 1 ? 's' : '') + ' rempli' + (filled > 1 ? 's' : '') + moved;
+    note.textContent = said + (/\.$/.test(said) ? ' ' : '. ')
+      + (gaps.length ? 'Il manque : ' + gaps.join(', ') + '.' : filled < open ? 'Vérifie les autres jours, puis publie.' : 'Vérifie, puis publie.');
+    if (window.innerWidth < 820) $('days').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function missing() {
+    var out = [];
+    readDays().forEach(function (d, i) {
+      if (d.locked || d.ferme) return;
+      var k = [['entree', 'entrée'], ['plat', 'plat'], ['dessert', 'dessert']].filter(function (x) { return !d[x[0]]; }).map(function (x) { return x[1]; });
+      if (k.length === 3) out.push(DAYS[i].toLowerCase());
+      else if (k.length) out.push(DAYS[i].toLowerCase() + ' (' + k.join(', ') + ')');
+    });
+    return out;
+  }
+
+  // ---------- Publishing ----------
+  $('publier').addEventListener('click', function () {
+    if (state.busy) return;
+    var days = readDays();
+    var firstBad = null;
+    document.querySelectorAll('.day').forEach(function (el, i) {
+      var d = days[i];
+      if (d.locked || d.ferme) return;
+      [['e', 'entree'], ['p', 'plat'], ['d', 'dessert']].forEach(function (x) {
+        var input = el.querySelector('input.' + x[0]);
+        if (!d[x[1]]) { input.setAttribute('aria-invalid', 'true'); firstBad = firstBad || input; }
+      });
+    });
+    var gaps = missing();
+    if (gaps.length) {
+      $('parseNote').className = 'note bad';
+      $('parseNote').textContent = 'Il manque : ' + gaps.join(', ') + '. Remplis-les, ou coche « Fermé ».';
+      setStatus('Il manque des plats', 'var(--red)', gaps.join(', '));
+      if (firstBad) { firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstBad.focus({ preventScroll: true }); }
+      return;
+    }
+    state.busy = true;
+    var btn = $('publier');
+    btn.disabled = true;
+    btn.textContent = 'Publication…';
+    post({ action: 'menu', code: state.code, semaine: state.week, jours: days.map(function (d) { return { entree: d.entree, plat: d.plat, dessert: d.dessert, ferme: d.ferme }; }) })
+      .then(function (res) {
+        if (!res.ok) {
+          if (/code|essais/i.test(res.error || '')) { store(KEY, null); show('login'); $('loginErr').textContent = res.error; return; }
+          setStatus('Pas publié', 'var(--red)', res.error || 'Réessaie dans un instant.');
+          return;
+        }
+        state.dirty = false;
+        load(res);
+        var t = new Date();
+        setStatus('C’est en ligne ✓', 'var(--green)', 'Publié à ' + t.getHours() + 'h' + String(t.getMinutes()).padStart(2, '0') + ', semaine du ' + range(state.week));
+        $('parseNote').textContent = '';
+      })
+      .catch(function () { setStatus('Pas publié', 'var(--red)', 'Pas de connexion : réessaie.'); })
+      .then(function () { state.busy = false; btn.disabled = false; btn.textContent = 'Publier sur le site'; });
+  });
+  window.addEventListener('beforeunload', function (e) { if (state.dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---------- Dictation (Chrome, Safari) ----------
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var rec = null;
+  if (!SR) { $('mic').hidden = true; $('micTip').hidden = false; }
+  $('mic').addEventListener('click', function () {
+    if (rec) { rec.stop(); return; }
+    var ta = $('texte');
+    var base = ta.value.trim() ? ta.value.replace(/\s*$/, '\n') : '';
+    rec = new SR();
+    rec.lang = 'fr-FR';
+    rec.continuous = true;
+    rec.interimResults = true;
+    rec.onresult = function (e) {
+      var t = '';
+      for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + ' ';
+      ta.value = base + t.trim();
+    };
+    rec.onerror = function (e) {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        $('parseNote').className = 'note bad';
+        $('parseNote').textContent = 'Le micro est bloqué : autorise-le pour ce site, ou utilise le micro de ton clavier.';
+      }
+    };
+    rec.onend = function () {
+      rec = null;
+      $('mic').classList.remove('rec');
+      $('micLabel').textContent = 'Dicter';
+      $('mic').querySelector('.dot').setAttribute('r', '0');
+      if ($('texte').value.trim()) fill();
+    };
+    rec.start();
+    $('mic').classList.add('rec');
+    $('micLabel').textContent = 'J’écoute… touche pour finir';
+    $('mic').querySelector('.dot').setAttribute('r', '2.2');
+  });
+
+  $('copy').addEventListener('click', function () {
+    var t = $('prompt').textContent;
+    var done = function () { $('copy').textContent = 'Consigne copiée ✓'; setTimeout(function () { $('copy').textContent = 'Copier la consigne'; }, 2500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {});
+  });
+
+  // ---------- Start ----------
+  var saved = read(KEY);
+  if (saved) open(saved, false); else show('login');
+})();
+</script>
+</body>
+</html>

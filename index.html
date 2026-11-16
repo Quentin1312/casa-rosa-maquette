@@ -561,6 +561,7 @@
                 <input value="{{ email }}" sc-camel-on-change="{{ onEmail }}" type="email" placeholder="Adresse e-mail" aria-label="Adresse e-mail" autocomplete="email" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <input value="{{ tel }}" sc-camel-on-change="{{ onTel }}" type="tel" placeholder="Téléphone" aria-label="Téléphone" autocomplete="tel" maxlength="20" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <input value="{{ remarques }}" sc-camel-on-change="{{ onRemarques }}" placeholder="Allergie, menu végétarien… à signaler (facultatif)" aria-label="Allergie ou régime à signaler" maxlength="300" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                <span style="flex:1 1 100%;font-size:13px;line-height:1.4;padding:0 6px">Vos coordonnées servent seulement à préparer et suivre votre commande. <a href="mentions-legales.html" style="font-weight:700">En savoir plus</a></span>
               </div>
               <div style="display:flex;flex-direction:column;gap:8px">
                 <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ payLabel }}</span>
@@ -1119,7 +1120,7 @@
       <a href="tel:0687949722" style="color:#f4f0e5;font-weight:700;text-decoration:none">06 87 94 97 22</a>
       <a href="mailto:casarosa15000@gmail.com" style="color:#f4f0e5;font-weight:700">casarosa15000@gmail.com</a>
       <span><a href="https://www.facebook.com/profile.php?id=100082097553279" target="_blank" rel="noopener" style="color:#f4f0e5;font-weight:700">Facebook</a> · <a href="https://www.instagram.com/casarosaceline/" target="_blank" rel="noopener" style="color:#f4f0e5;font-weight:700">Instagram</a></span>
-      <span>Mentions légales [à compléter]</span>
+      <span><a href="mentions-legales.html" style="color:#f4f0e5;font-weight:700">Mentions légales</a> · <a href="espace.html" rel="nofollow" style="color:#f4f0e5;font-weight:700">Espace Céline</a></span>
     </div>
   </footer>
 </div>
@@ -1155,6 +1156,7 @@ class Component extends DCLogic {
     this.watchCmd();
     this.watchReveal();
     this.startMarquee();
+    this.loadMenus();
   }
   componentWillUnmount() { this.ro && this.ro.disconnect(); this.io && this.io.disconnect(); clearTimeout(this.dealT); clearTimeout(this.wkT); clearTimeout(this.swapT); cancelAnimationFrame(this.mraf); this.io3 && this.io3.disconnect && this.io3.disconnect(); this.stopAuto(); clearTimeout(this.ledT); this.io2 && this.io2.disconnect && this.io2.disconnect(); window.removeEventListener('resize', this.onResize); window.removeEventListener('scroll', this.onCmdScroll); window.removeEventListener('keydown', this.onKey); }
   fanRef = React.createRef();
@@ -1238,12 +1240,14 @@ class Component extends DCLogic {
     const shut = new Set([...(this.closed || []), ...this.holidays(now.getFullYear()), ...this.holidays(now.getFullYear() + 1)]);
     const allNoel = this.NOEL.dates.map(([y]) => y);
     const noel = this.NOEL.dates.filter(([y, last]) => last >= today && !shut.has(y)).map(([y]) => y);
+    // Days Céline marked « Fermé » in the menu she published
+    const menuShut = (y, wd) => { const m = this.weekMenu(this.mondayOf(y)); return m.exact && m.rows[wd - 1][4]; };
     d.setHours(12, 0, 0, 0);
     d.setDate(d.getDate() + (now.getHours() < 13 ? 1 : 2));
     const out = [];
-    while (out.length < 5) {
+    for (let n = 0; out.length < 5 && n < 120; n++) {
       const wd = d.getDay(), y = this.ymdOf(d);
-      if (wd !== 0 && wd !== 6 && !allNoel.includes(y) && !shut.has(y)) out.push({ d: new Date(d), ymd: y, noel: false });
+      if (wd !== 0 && wd !== 6 && !allNoel.includes(y) && !shut.has(y) && !menuShut(y, wd)) out.push({ d: new Date(d), ymd: y, noel: false });
       d.setDate(d.getDate() + 1);
     }
     return out.concat(noel.map(y => ({ d: new Date(y + 'T12:00:00'), ymd: y, noel: true })));
@@ -1267,10 +1271,10 @@ class Component extends DCLogic {
     const optsFor = y => {
       const x = dayOf(y);
       if (x.noel) return N.courses.map(([k, list]) => [k, list.map(o => o[0])]);
-      const wd = x.d.getDay() - 1;
+      const wd = x.d.getDay() - 1, W = this.weekMenu(this.mondayOf(y)).rows;
       const dayOpts = col => {
-        const cur = this.WEEK[wd][col];
-        for (let n = 1; n < 5; n++) { const o = this.WEEK[(wd + n) % 5][col]; if (o !== cur) return [cur, o]; }
+        const cur = W[wd][col];
+        for (let n = 1; n < 5; n++) { const r = W[(wd + n) % 5]; if (!r[4] && r[col] && r[col] !== cur) return [cur, r[col]]; }
         return [cur];
       };
       return [['Entrée', dayOpts(1)], ['Plat', dayOpts(2)], ['Dessert', dayOpts(3)]];
@@ -1565,24 +1569,67 @@ class Component extends DCLogic {
     }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
     Object.entries(map).forEach(([k, el]) => { if (!el || el.dataset.rv || this.seen[k]) return; el.dataset.rv = k; this.io3.observe(el); });
   }
-  WEEK = [
+  // Example menu, shown until Céline publishes her own from espace.html
+  WEEK_DEMO = [
     ['Lundi', 'Velouté de saison', 'Chili sin carne', 'Compote maison'],
     ['Mardi', 'Taboulé de chou-fleur', 'La Patellà de Rosa', 'Riz au lait'],
     ['Mercredi', 'Velouté de saison', 'Tajine au blé fumé bio', 'Compote maison'],
     ['Jeudi', 'Taboulé de chou-fleur', 'Couscous au millet du Cantal', 'Riz au lait'],
     ['Vendredi', 'Carottes râpées au cumin', 'La Patellà de Rosa', 'Crumble de saison'],
   ];
+  DAY_NAMES = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+  // Menus published from Céline's space (sheet « Menus »): { monday: [5 × { e, p, d, ferme }] }.
+  // Read from the order script; the last answer is kept in the browser so the page opens with it.
+  menus = (() => { try { return JSON.parse(localStorage.getItem('casa-menus') || 'null'); } catch (e) { return null; } })();
+  loadMenus() {
+    if (!this.ORDER_API) return;
+    fetch(this.ORDER_API + '?action=menus').then(r => r.json()).then(d => {
+      if (!d || !d.ok || !d.semaines) return;
+      this.menus = d.semaines;
+      try { localStorage.setItem('casa-menus', JSON.stringify(d.semaines)); } catch (e) {}
+      this.forceUpdate();
+    }).catch(() => {});
+  }
+  mondayOf(y) { const d = new Date(y + 'T12:00:00'); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return this.ymdOf(d); }
+  plusDays(y, n) { const d = new Date(y + 'T12:00:00'); d.setDate(d.getDate() + n); return this.ymdOf(d); }
+  // A week's menu: rows [name, entrée, plat, dessert, closed]. The week Céline published (exact), else the last one before it
+  // (or the first one) with its closed days filled from another day, else the example.
+  weekMenu(monday) {
+    const M = this.menus, keys = M ? Object.keys(M).sort() : [];
+    const key = keys.includes(monday) ? monday : keys.filter(k => k < monday).pop() || keys[0];
+    const rows = key ? M[key].map((x, i) => [this.DAY_NAMES[i], x.e, x.p, x.d, !!x.ferme || !(x.e && x.p && x.d)]) : null;
+    if (!rows || rows.every(r => r[4])) return { exact: false, rows: this.WEEK_DEMO.map(r => [...r, false]) };
+    if (key === monday) return { exact: true, rows };
+    const open = rows.filter(r => !r[4]);
+    return { exact: false, rows: rows.map((r, i) => r[4] ? [r[0], ...open[i % open.length].slice(1, 4), false] : r) };
+  }
   // One menu for individuals and companies. The Noël tab shows NOEL (defined with the order code).
   MENUS = {
     semaine: { label: 'Menu de la semaine', title: 'Le menu de la semaine', kicker: 'Du lundi au vendredi · particuliers et entreprises' },
-    noel: { label: 'Noël', title: 'Le menu de Noël', kicker: 'Les 23, 24, 26, 28, 29 et 30 décembre', soon: true },
+    noel: { label: 'Noël', title: 'Le menu de Noël', kicker: 'Les 23, 24, 28, 29 et 30 décembre', soon: true },
   };
   weekVals(w, wide) {
     const period = this.wkPeriod || 'semaine', M = this.MENUS[period];
-    const WEEK = this.WEEK, N = WEEK.length;
     const { H, pv, ph } = this.pads(w), s = this.seen.menu;
-    const goOrder = i => {
-      const idx = this.getDates().findIndex(x => !x.noel && x.d.getDay() === i + 1);
+    // Week shown: the one of the first order day, or the next one when most order days fall in it and its menu is published
+    const mons = this.getDates().filter(x => !x.noel).map(x => this.mondayOf(x.ymd));
+    const first = mons[0] || this.mondayOf(this.ymdOf(new Date()));
+    const later = mons.filter(m => m !== first);
+    const showM = later.length > mons.length / 2 && this.weekMenu(later[0]).exact ? later[0] : first;
+    const WM = this.weekMenu(showM);
+    const yr = Number(showM.slice(0, 4));
+    const shut = new Set([...(this.closed || []), ...this.holidays(yr), ...this.holidays(yr + 1), ...this.NOEL.dates.map(([y]) => y)]);
+    const all = WM.rows.map(([name, e, p, d, closed], i) => ({ name, e, p, d, closed, y: this.plusDays(showM, i) }));
+    let WEEK = all.filter(x => !x.closed && !shut.has(x.y));
+    if (!WEEK.length) WEEK = all.filter(x => !x.closed).length ? all.filter(x => !x.closed) : all;
+    const N = WEEK.length;
+    const monthName = y => new Date(y + 'T12:00:00').toLocaleDateString('fr-FR', { month: 'long' });
+    const fri = this.plusDays(showM, 4);
+    const weekKicker = 'Semaine du ' + Number(showM.slice(8)) + (monthName(showM) === monthName(fri) ? '' : ' ' + monthName(showM)) + ' au ' + Number(fri.slice(8)) + ' ' + monthName(fri);
+    const goOrder = y => {
+      const ds = this.getDates();
+      let idx = ds.findIndex(x => x.ymd === y);
+      if (idx < 0) idx = ds.findIndex(x => !x.noel && x.d.getDay() === new Date(y + 'T12:00:00').getDay());
       if (idx >= 0) this.setCmd({ dateIdx: idx, formule: 'menu', ch: [0, 0, 0], composing: true, stamped: false, msg: '', hint: '' });
       this.scrollToId('commander');
     };
@@ -1601,7 +1648,7 @@ class Component extends DCLogic {
       wkPeriods: Object.entries(this.MENUS).map(([key, m]) => ({ label: m.label, on: String(key === period),
         bg: key === period ? '#ffffff' : 'transparent', fg: key === period ? '#202820' : '#f4f0e5',
         pick: () => { if (key === period) return; this.wkPeriod = key; this.wkI = 0; this.forceUpdate(); } })),
-      wkTitle: M.title, wkKicker: M.kicker, isNoel: period === 'noel', hasMenu: !M.soon,
+      wkTitle: M.title, wkKicker: period === 'semaine' && WM.exact ? weekKicker : M.kicker, isNoel: period === 'noel', hasMenu: !M.soon,
       askNoel: () => {
         const idx = this.getDates().findIndex(x => x.noel);
         if (idx >= 0) this.setCmd({ dateIdx: idx, mode: 'collect', ch: [-1, -1, -1], pain: false, composing: true, stamped: false, msg: '', hint: '' });
@@ -1613,20 +1660,20 @@ class Component extends DCLogic {
       noelPickup: (NS => 'À retirer au 6 rue Beauclair, entre ' + NS[0] + ' et ' + NS[NS.length - 1] + ', à l’heure de votre choix.')(this.noelSlots || this.NOEL.slots),
       noelPrev: goNoel(nk - 1), noelNext: goNoel(nk + 1), noelWord: NC[nk][0], noelItems: noelItemsOf(NC[nk][1]),
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
-      wkOrderLabel: 'Commander pour ' + cur[0].toLowerCase(),
-      wkDay: cur[0], wkDayLower: cur[0].toLowerCase(), wkEntree: cur[1], wkPlat: cur[2], wkDessert: cur[3],
-      wkPrev: go(-1), wkNext: go(1), wkOrder: () => goOrder(k),
-      wkTabs: WEEK.map(([name], i) => ({ short: name.slice(0, 3), bg: i === k ? '#ffffff' : 'transparent', fg: i === k ? '#202820' : '#f4f0e5',
+      wkOrderLabel: 'Commander pour ' + cur.name.toLowerCase(),
+      wkDay: cur.name, wkDayLower: cur.name.toLowerCase(), wkEntree: cur.e, wkPlat: cur.p, wkDessert: cur.d,
+      wkPrev: go(-1), wkNext: go(1), wkOrder: () => goOrder(cur.y),
+      wkTabs: WEEK.map(({ name }, i) => ({ short: name.slice(0, 3), bg: i === k ? '#ffffff' : 'transparent', fg: i === k ? '#202820' : '#f4f0e5',
         pick: () => { if (i === k) return; clearTimeout(this.wkT); this.wkFade = true; this.forceUpdate(); this.wkT = setTimeout(() => { this.wkI = i; this.wkFade = false; this.forceUpdate(); }, 180); } })),
       wkO: this.wkFade ? 0 : 1, wkT: this.wkFade ? `translateX(${(this.wkDir || 1) * -24}px) rotate(${(this.wkDir || 1) * -6}deg)` : 'translateX(0px) rotate(0deg)',
       plateSize: plate + 'px', dishSize: Math.round(plate * 0.105) + 'px',
       wkZoom: '1',
       menuRef: this.menuRef,
-      week: WEEK.map(([name, e, p, d], i) => ({ name, e, p, d,
+      week: WEEK.map(({ name, e, p, d, y }, i) => ({ name, e, p, d,
         nap: `rotate(${[-7, 5, -4, 6, -6][i]}deg)`,
         t: this.seen.menu ? 'translateY(0px)' : 'translateY(36px)', o: this.seen.menu ? 1 : 0,
         tr: `transform .7s cubic-bezier(.2,.9,.25,1.1) ${i * 0.09}s, opacity .5s ease ${i * 0.09}s`,
-        order: () => goOrder(i) })),
+        order: () => goOrder(y) })),
       tableZoom: Math.max(0.5, Math.min(1, (w - 2 * ph) / 1160, (H - 80 - 2 * pv - 140) / 420)).toFixed(3),
       tblOv: wide ? 'visible' : 'auto',
     };
@@ -1702,7 +1749,7 @@ class Component extends DCLogic {
       avisZoom: (() => { if (!wide) return '0.800'; const hd = this.avisHeadRef.current; const hh = hd ? hd.offsetHeight : (H < 680 ? 150 : 210); const mt = Math.min(40, Math.max(20, H * 0.04)); return Math.max(0.4, Math.min(1, (H - 80 - 2 * pv - hh - mt - 6) / 352)).toFixed(3); })(),
     };
   }
-  ct = { prenom: '', contact: '', sujet: 0, message: '', msg: '' };
+  ct = { prenom: '', contact: '', sujet: 0, message: '', msg: '', sending: false };
   setCt(p) { this.ct = { ...this.ct, ...p }; this.forceUpdate(); }
   ctVals(w, wide) {
     const SUJ = ['Une commande', 'Une livraison', 'Un atelier', 'Autre chose'];
@@ -1714,9 +1761,20 @@ class Component extends DCLogic {
       onCtContact: ev => this.setCt({ contact: ev.target.value, msg: '' }),
       onCtMessage: ev => this.setCt({ message: ev.target.value, msg: '' }),
       sujets: SUJ.map((label, i) => ({ label, bg: c.sujet === i ? '#202820' : 'transparent', fg: c.sujet === i ? '#f4f0e5' : '#202820', pick: () => this.setCt({ sujet: i, msg: '' }) })),
+      // The message goes to Céline by e-mail, through the order script (action « contact »)
       sendCt: () => {
-        if (!c.prenom.trim() || !c.contact.trim()) { this.setCt({ msg: 'Il manque votre prénom ou un moyen de vous joindre.' }); return; }
-        this.setCt({ msg: `Merci ${c.prenom.trim()}, je vous réponds au plus vite.` });
+        const p = c.prenom.trim();
+        if (!p || !c.contact.trim()) { this.setCt({ msg: 'Il manque votre prénom ou un moyen de vous joindre.' }); return; }
+        if (c.sending) return;
+        if (!this.ORDER_API) { this.setCt({ msg: `Merci ${p}, je vous réponds au plus vite.` }); return; }
+        this.setCt({ sending: true, msg: 'Envoi de votre message…' });
+        fetch(this.ORDER_API, { method: 'POST', body: JSON.stringify({ action: 'contact', prenom: p, contact: c.contact.trim(), sujet: SUJ[c.sujet], message: c.message.trim(), website: '' }) })
+          .then(r => r.json())
+          .then(res => {
+            if (!res.ok) { this.setCt({ sending: false, msg: res.error || 'Le message n’est pas parti. Réessayez, ou appelez le 06 87 94 97 22.' }); return; }
+            this.setCt({ sending: false, message: '', msg: `Merci ${p}, votre message est bien parti. Je vous réponds au plus vite.` });
+          })
+          .catch(() => this.setCt({ sending: false, msg: 'Le message n’est pas parti. Réessayez, ou appelez le 06 87 94 97 22.' }));
       },
       ctW: wide ? '900px' : '100%',
       ctZoom: (wide ? Math.max(0.55, Math.min(1, (w - 2 * ph) / 900, (H - 80 - 2 * pv - 170) / 420)) : 1).toFixed(3),
