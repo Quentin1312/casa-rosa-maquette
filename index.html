@@ -131,7 +131,7 @@
           </div>
             <span style="justify-self:start;font-family:'Titan One',sans-serif;font-weight:400;font-size:104px;line-height:.95;color:#8D1D2C;transform:rotate(3deg)">maison</span>
           </div>
-          <p style="margin:0;text-align:center;font-size:19px;line-height:1.5;max-width:52ch;text-wrap:balance">Chaque jour, un repas de saison cuisiné avec des légumes du Cantal, bio dès que possible, à emporter ou livré. <strong style="font-weight:800">Menu complet 17 €.</strong></p>
+          <p style="margin:0;text-align:center;font-size:19px;line-height:1.5;max-width:52ch;text-wrap:balance">Chaque jour, un repas de saison cuisiné avec des légumes du Cantal, bio dès que possible, à emporter ou livré. <strong style="font-weight:800">Menu complet 17,50 €.</strong></p>
           <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a href="#commander" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:0;background:#8D1D2C;color:#f4f0e5" style-hover="background:#202820;color:#f4f0e5">Commander mon repas</a><a href="#menu-semaine" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:1.5px solid #202820;background:transparent;color:#202820" style-hover="background:#202820;color:#f4f0e5">Le menu de la semaine</a></div>
           <span style="font-size:13px">Du lundi au vendredi · commande la veille avant 13h · à emporter ou livré</span>
           <div style="position:absolute;left:-120px;top:-46px"><div style="position:relative;width:196px;background:#fbf9f3;border:1.5px solid #202820;border-radius:3px;padding:12px 12px 14px;transform:rotate(-5deg);box-shadow:0 16px 20px -14px rgba(32,40,32,.45);display:flex;flex-direction:column;gap:10px">
@@ -158,7 +158,7 @@
               <img src="assets/plat-detoure.webp" alt="Assiette de Céline : crudités, houmous et chips de patate douce" style="position:absolute;left:8%;top:8%;width:84%;height:84%;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(32,40,32,.22))">
             </div>
           </div></div>
-          <p style="margin:0;font-size:17px;line-height:1.5">Chaque jour, un repas de saison cuisiné avec des légumes du Cantal, bio dès que possible, à emporter ou livré. <strong style="font-weight:800">Menu complet 17 €.</strong></p>
+          <p style="margin:0;font-size:17px;line-height:1.5">Chaque jour, un repas de saison cuisiné avec des légumes du Cantal, bio dès que possible, à emporter ou livré. <strong style="font-weight:800">Menu complet 17,50 €.</strong></p>
           <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a href="#commander" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:0;background:#8D1D2C;color:#f4f0e5" style-hover="background:#202820;color:#f4f0e5">Commander mon repas</a><a href="#menu-semaine" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:999px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-decoration:none;white-space:nowrap;cursor:pointer;flex:0 0 auto;border:1.5px solid #202820;background:transparent;color:#202820" style-hover="background:#202820;color:#f4f0e5">Le menu de la semaine</a></div>
           <span style="font-size:13px">Du lundi au vendredi · commande la veille avant 13h · à emporter ou livré</span>
         </div>
@@ -433,8 +433,8 @@
                 <sc-if value="{{ notNoelDay }}" hint-placeholder-val="{{ true }}">
                 <div style="display:flex">
                   <button sc-camel-on-click="{{ pickmenu }}" aria-pressed="{{ menuOn }}" style="background:{{ menuBg }};color:{{ menuFg }};padding:12px 16px;flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
-                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Menu complet · 17 €</span>
-                    <span style="font-size:13px;line-height:1.35">Entrée, plat et dessert</span>
+                    <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.05">Menu complet</span>
+                    <span style="font-size:13px;line-height:1.35">17,50 € · entrée, plat et dessert</span>
                   </button>
                   <div style="width:0;border-left:1.5px solid #202820"></div>
                   <button sc-camel-on-click="{{ pickcarte }}" aria-pressed="{{ carteOn }}" style="background:{{ carteBg }};color:{{ carteFg }};padding:12px 16px;flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font-family:'Bricolage Grotesque',sans-serif;transition:background .2s,color .2s">
@@ -1251,7 +1251,7 @@ class Component extends DCLogic {
   cmdVals() {
     const c = this.cmd, N = this.NOEL;
     const fmt = n => (n % 1 ? n.toFixed(2).replace('.', ',') : String(n)) + ' €';
-    // Céline's prices: full menu 17 €, or à la carte (starter / main / dessert), bread 1 €; Noël 32 € + supplements
+    // Céline's prices: full menu 17,50 €, or à la carte (starter / main / dessert), bread 1 €; Noël 32 € + supplements
     const PRICES = [3.5, 11.5, 4.5];
     const dates = this.getDates();
     const di = Math.min(c.dateIdx, dates.length - 1);
@@ -1280,7 +1280,7 @@ class Component extends DCLogic {
     // Order = saved menus + the menu being composed once it is complete (an empty menu never counts).
     const itemsOf = l => optsFor(l.date).map(([, list], i) => l.sel[i] >= 0 ? list[Math.min(l.sel[i], list.length - 1)] : '');
     const supp = l => l.formule === 'noel' ? N.courses.reduce((s, [, list], i) => s + (l.sel[i] >= 0 ? list[l.sel[i]][1] : 0), 0) : 0;
-    const unit = l => l.formule === 'carte' ? itemsOf(l).reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : l.formule === 'noel' ? N.price + supp(l) : 17;
+    const unit = l => l.formule === 'carte' ? itemsOf(l).reduce((s, it, i) => s + (it ? PRICES[i] : 0), 0) : l.formule === 'noel' ? N.price + supp(l) : 17.5;
     const lineTotal = l => l.qty * (unit(l) + (l.pain ? 1 : 0));
     const filled = l => l.formule === 'carte' ? l.sel.some(v => v >= 0) : l.sel.every(v => v >= 0);
     const formLabel = f => f === 'carte' ? 'À la carte' : f === 'noel' ? 'Menu de Noël' : 'Menu complet';
