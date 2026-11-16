@@ -256,9 +256,10 @@
             </div>
             <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : {{ noelSide }}</p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
-              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
-              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23 et 24 déc.</strong> · à commander avant le vendredi&nbsp;18</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi&nbsp;26</span>
             </div>
+            <p style="margin:0;font-size:14px;line-height:1.45;opacity:.92;text-wrap:balance">{{ noelPickup }}</p>
             <button sc-camel-on-click="{{ askNoel }}" style="margin-top:4px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
           </div>
         </div>
@@ -339,9 +340,10 @@
             </div>
             <p style="margin:0;font-size:15px;line-height:1.5;text-wrap:balance">Avec chaque plat : {{ noelSide }}</p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
-              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23, 24 et 26 déc.</strong> · à commander avant le vendredi 18</span>
-              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi 26</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">23 et 24 déc.</strong> · à commander avant le vendredi&nbsp;18</span>
+              <span style="border:1.5px solid rgba(244,240,229,.7);border-radius:999px;padding:9px 16px;font-size:14px;line-height:1.35"><strong style="font-weight:800">28, 29 et 30 déc.</strong> · à commander avant le samedi&nbsp;26</span>
             </div>
+            <p style="margin:0;font-size:14px;line-height:1.45;opacity:.92;text-wrap:balance">{{ noelPickup }}</p>
             <button sc-camel-on-click="{{ askNoel }}" style="margin-top:4px;appearance:none;cursor:pointer;height:54px;padding:0 28px;border-radius:999px;border:0;background:#ffffff;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;transition:background .2s,color .2s" style-hover="background:#8D1D2C;color:#ffffff">Commander mon menu de Noël</button>
           </div>
         </div>
@@ -511,6 +513,30 @@
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Créneau</span>
+                  <sc-for list="{{ slotDays }}" as="sd" hint-placeholder-count="1">
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <span style="display:{{ sd.labelD }};font-size:14px;font-weight:800;color:#114232">{{ sd.label }}</span>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px">
+                        <sc-for list="{{ sd.slots }}" as="sl" hint-placeholder-count="4">
+                          <button sc-camel-on-click="{{ sl.pick }}" style="background:{{ sl.bg }};color:{{ sl.fg }};opacity:{{ sl.op }};text-decoration:{{ sl.deco }};cursor:{{ sl.cur }};appearance:none;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ sl.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ pickupOn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;padding:30px 0;border-top:1.5px dashed #c9c3b4">
+              <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
+                <div>
+                  <h3 id="cmd-where" style="margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">4</span>À quelle heure venir ?</h3>
+                  <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Votre menu de Noël vous attend au 6 rue Beauclair, à Aurillac.</p>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Heure de retrait</span>
                   <sc-for list="{{ slotDays }}" as="sd" hint-placeholder-count="1">
                     <div style="display:flex;flex-direction:column;gap:6px">
                       <span style="display:{{ sd.labelD }};font-size:14px;font-weight:800;color:#114232">{{ sd.label }}</span>
@@ -1180,10 +1206,12 @@ class Component extends DCLogic {
       this.ledT = setTimeout(() => this.setCmd({ stamped: !!stamp }), 520);
     }));
   }
-  // Menu de Noël (Céline, décembre 2026): service days with their last order day, dishes [name, supplement €, description, vegetarian]
+  // Menu de Noël (Céline, décembre 2026): pickup days with their last order day, pickup times, dishes [name, supplement €, description, vegetarian].
+  // Click and collect only. The order script sends the pickup times set in « Réglages »; these are the defaults.
   NOEL = {
-    dates: [['2026-12-23', '2026-12-18'], ['2026-12-24', '2026-12-18'], ['2026-12-26', '2026-12-18'],
+    dates: [['2026-12-23', '2026-12-18'], ['2026-12-24', '2026-12-18'],
       ['2026-12-28', '2026-12-26'], ['2026-12-29', '2026-12-26'], ['2026-12-30', '2026-12-26']],
+    slots: ['12h30', '13h00', '13h30', '14h00', '14h30', '15h00'],
     price: 32,
     courses: [
       ['Entrée', [['Feuilleté forestier', 0, 'Feuilleté artisanal. Poireaux, champignons, quenelles et châtaignes', true], ['Crêpe truffée', 2, 'Œufs de ferme et farine bio de la Châtaigneraie. Jambon blanc, éclats de truffe, crème et Cantal'], ['Nage de fruits de mer et truite fumée', 0, 'Aux champignons frais, sauce au Chardonnay']]],
@@ -1193,16 +1221,28 @@ class Component extends DCLogic {
     side: 'Écrasé de pommes de terre de petits producteurs locaux, au beurre demi-sel et à l’ail noir, et petit flan de légumes de saison aux châtaignes, agrémenté de graines de tournesol torréfiées.',
   };
   ymdOf(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-  // Order days: the next 5 weekdays (from tomorrow, or the day after once 13h has passed), then the open Noël days
+  // French public holidays of a year, as yyyy-mm-dd (Easter Monday and Ascension from the Easter date; same list in Code.gs)
+  holidays(year) {
+    const a = year % 19, b = Math.floor(year / 100), c = year % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25),
+      g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4,
+      l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451),
+      em = Math.floor((h + l - 7 * m + 114) / 31) - 1, ed = ((h + l - 7 * m + 114) % 31) + 1;
+    const iso = (mo, da) => new Date(Date.UTC(year, mo, da)).toISOString().slice(0, 10);
+    return [iso(0, 1), iso(em, ed + 1), iso(4, 1), iso(4, 8), iso(em, ed + 39), iso(6, 14), iso(7, 15), iso(10, 1), iso(10, 11), iso(11, 25)];
+  }
+  // Order days: the next 5 open weekdays (from tomorrow, or the day after once 13h has passed), then the open Noël days.
+  // Closed: public holidays and the « Jours fermés » of the order script (this.closed, sent with each availability answer).
   getDates() {
     const now = new Date(), d = new Date(now), today = this.ymdOf(now);
-    const noel = this.NOEL.dates.filter(([, last]) => last >= today).map(([y]) => y);
+    const shut = new Set([...(this.closed || []), ...this.holidays(now.getFullYear()), ...this.holidays(now.getFullYear() + 1)]);
+    const allNoel = this.NOEL.dates.map(([y]) => y);
+    const noel = this.NOEL.dates.filter(([y, last]) => last >= today && !shut.has(y)).map(([y]) => y);
     d.setHours(12, 0, 0, 0);
     d.setDate(d.getDate() + (now.getHours() < 13 ? 1 : 2));
     const out = [];
     while (out.length < 5) {
       const wd = d.getDay(), y = this.ymdOf(d);
-      if (wd !== 0 && wd !== 6 && !noel.includes(y)) out.push({ d: new Date(d), ymd: y, noel: false });
+      if (wd !== 0 && wd !== 6 && !allNoel.includes(y) && !shut.has(y)) out.push({ d: new Date(d), ymd: y, noel: false });
       d.setDate(d.getDate() + 1);
     }
     return out.concat(noel.map(y => ({ d: new Date(y + 'T12:00:00'), ymd: y, noel: true })));
@@ -1260,20 +1300,28 @@ class Component extends DCLogic {
       if (this.ORDER_API && !(y in this.dispo)) {
         this.dispo[y] = null;
         fetch(this.ORDER_API + '?action=dispo&date=' + y).then(r => r.json())
-          .then(d => { this.dispo[y] = d.ok ? d : { creneauxComplets: [] }; this.forceUpdate(); })
+          .then(d => {
+            this.dispo[y] = d.ok ? d : { creneauxComplets: [] };
+            if (d.ok && Array.isArray(d.fermes)) this.closed = d.fermes;
+            if (d.ok && d.creneaux && N.dates.some(([nd]) => nd === y)) this.noelSlots = d.creneaux;
+            this.forceUpdate();
+          })
           .catch(() => { delete this.dispo[y]; });
       }
       return this.dispo[y];
     };
     const dd = dispoOf(ymd);
-    const slotsOf = y => { const x = dispoOf(y); return (x && x.creneaux) || ['11h30', '12h00', '12h30', '13h00']; };
+    const isNoelY = y => dayOf(y).noel;
+    const slotsOf = y => { const x = dispoOf(y); return (x && x.creneaux) || (isNoelY(y) ? N.slots : ['11h30', '12h00', '12h30', '13h00']); };
     const COMMUNES = (dd && dd.communes) || ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)'];
     const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
     const zoneIdx = c.commune === 1 ? 2 : Math.min(c.zone, 1); // Arpajon is its own zone
     const full = (sl, y) => { const x = this.dispo[y]; return this.ORDER_API ? !!(x && (x.creneauxComplets || []).includes(sl)) : false; };
     const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
     const address = [c.rue.trim(), c.complement.trim(), COMMUNES[c.commune]].filter(Boolean).join(', ');
-    const slotDays = days.length ? days : [ymd];
+    const slotDays = (days.length ? days : [ymd]).filter(y => isLiv ? !isNoelY(y) : isNoelY(y));
+    const pickupOn = !isLiv && slotDays.length > 0;
+    const hasNoel = lines.some(l => l.formule === 'noel');
 
     // Ticket: a single menu shows course by course as it fills up; several menus show one line each
     const noRm = { rmD: 'none', rm: () => {} };
@@ -1291,6 +1339,7 @@ class Component extends DCLogic {
       if (current.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
     }
     if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (slotDays.some(y => c.slots[y]) ? ' · ' + slotDays.map(y => c.slots[y]).filter(Boolean).join(', ') : ''), ...noRm });
+    if (pickupOn && slotDays.some(y => c.slots[y])) tLines.push({ k: 'Heure de retrait', v: slotDays.map(y => c.slots[y]).filter(Boolean).join(', '), ...noRm });
     tLines.push({ k: 'Paiement', v: PAYS[c.pay], ...noRm });
     const dn = c.done;
 
@@ -1314,7 +1363,10 @@ class Component extends DCLogic {
       pickcarte: () => this.setCmd({ formule: 'carte', ...reset }),
       notNoelDay: !isNoelDay, isNoelDay,
       noelHead: 'Formule complète · ' + N.price + ' €',
-      modeHint: isLiv ? 'Livraison entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets par jour' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30',
+      modeHint: isNoelDay
+        ? (isLiv ? 'Le menu de Noël ne se livre pas : il se retire à la boutique. Choisissez « Click and collect ».'
+          : 'Menu de Noël : retrait au 6 rue Beauclair, Aurillac, entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à l’heure de votre choix')
+        : isLiv ? 'Livraison entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets par jour' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30',
       communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => this.setCmd({ commune: i, ...reset }) })),
       showZones: c.commune === 0,
       zones: ZONES.slice(0, 2).map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === zoneIdx), pick: () => this.setCmd({ zone: i, ...reset }) })),
@@ -1383,7 +1435,7 @@ class Component extends DCLogic {
       tel: c.tel, onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
       rue: c.rue, onRue: e => this.setCmd({ rue: e.target.value, ...reset }),
       complement: c.complement, onComplement: e => this.setCmd({ complement: e.target.value, ...reset }),
-      isLiv,
+      isLiv, pickupOn,
       collectOn: String(!isLiv), livOn: String(isLiv),
       collectBg: sel(!isLiv).bg, collectFg: sel(!isLiv).fg,
       livBg: sel(isLiv).bg, livFg: sel(isLiv).fg,
@@ -1395,6 +1447,11 @@ class Component extends DCLogic {
         const p = c.prenom.trim();
         if (curStarted && !curOk) { this.setCmd({ msg: `Le menu du ${shortDay(ymd)} est incomplet : choisissez ${missing()}, ou effacez-le.` }); return; }
         if (!lines.length) { this.setCmd({ msg: 'Choisissez vos plats à l’étape 3.' }); return; }
+        if (isLiv && hasNoel) { this.setCmd({ msg: 'Le menu de Noël se retire à la boutique : choisissez « Click and collect » à l’étape 1.' }); return; }
+        if (pickupOn) {
+          const noTime = slotDays.find(y => !slotsOf(y).includes(c.slots[y]) || full(c.slots[y], y));
+          if (noTime) { this.setCmd({ msg: 'Choisissez votre heure de retrait' + (slotDays.length > 1 ? ' (' + shortDay(noTime) + ')' : '') + ' à l’étape 4.' }); return; }
+        }
         if (isLiv) {
           const few = days.find(y => menusOn(y) < 5);
           if (few) { this.setCmd({ msg: `La livraison demande au moins 5 menus complets par jour (${shortDay(few)} : ${menusOn(few)}).` }); return; }
@@ -1410,7 +1467,7 @@ class Component extends DCLogic {
         const done = id => ({
           id: id ? 'Commande n° ' + id : 'Commande (démo)', name: p,
           when: isLiv ? `Livraison au ${address} : ${days.map(y => longDay(y) + ' à ' + c.slots[y]).join(' ; ')}.`
-            : `À retirer au 6 rue Beauclair à Aurillac, entre 8h30 et 19h30 : ${days.map(longDay).join(', ')}.`,
+            : `À retirer au 6 rue Beauclair à Aurillac : ${days.map(y => longDay(y) + (isNoelY(y) && c.slots[y] ? ' à ' + c.slots[y] : ', entre 8h30 et 19h30')).join(' ; ')}.`,
           lines: lines.map(l => ({ k: shortDay(l.date) + ' · ' + l.qty + ' × ' + formLabel(l.formule), v: lineText(l), p: fmt(lineTotal(l)) })),
           pay: 'Paiement : ' + PAYS[c.pay], total: fmt(total),
         });
@@ -1418,7 +1475,7 @@ class Component extends DCLogic {
         if (c.sending) return;
         const payload = { date: days[0], slot: isLiv ? c.slots[days[0]] : '', mode: c.mode,
           lines: lines.map(l => { const [entree, plat, dessert] = itemsOf(l); return { date: l.date, formule: l.formule, entree, plat, dessert, pain: l.pain, qty: l.qty }; }),
-          slots: isLiv ? Object.fromEntries(days.map(y => [y, c.slots[y]])) : {},
+          slots: Object.fromEntries(slotDays.map(y => [y, c.slots[y]])),
           zone: isLiv ? ZONES[zoneIdx][0] : '',
           rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
           paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), website: '' };
@@ -1438,7 +1495,7 @@ class Component extends DCLogic {
       msgColor: c.sending ? '#202820' : '#8D1D2C',
       orderLabel: c.sending ? 'Envoi en cours…' : total ? 'Commander · ' + fmt(total) : 'Commander',
       whenTitle: isLiv ? 'Quel jour livrer ?' : 'Quel jour venir ?',
-      coordNum: isLiv ? '5' : '4',
+      coordNum: isLiv || pickupOn ? '5' : '4',
       payLabel: 'Mode de paiement',
       barOn: !!c.bar && !dn && meals > 0,
       goTicket: () => { const el = this.cmdRef.current; if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); },
@@ -1545,12 +1602,13 @@ class Component extends DCLogic {
       wkTitle: M.title, wkKicker: M.kicker, isNoel: period === 'noel', hasMenu: !M.soon,
       askNoel: () => {
         const idx = this.getDates().findIndex(x => x.noel);
-        if (idx >= 0) this.setCmd({ dateIdx: idx, ch: [-1, -1, -1], pain: false, composing: true, stamped: false, msg: '', hint: '' });
+        if (idx >= 0) this.setCmd({ dateIdx: idx, mode: 'collect', ch: [-1, -1, -1], pain: false, composing: true, stamped: false, msg: '', hint: '' });
         this.scrollToId(idx >= 0 ? 'commander' : 'contact');
       },
       noelStations: NC.map(([k, list], i) => ({ tag: ['Les entrées', 'Les plats', 'Les desserts'][i], word: k, nap: `rotate(${[-6, 4, -5][i]}deg)`, items: noelItemsOf(list) })),
       noelTabs: NC.map((_, i) => ({ label: ['Entrées', 'Plats', 'Desserts'][i], bg: i === nk ? '#ffffff' : 'transparent', fg: i === nk ? '#202820' : '#f4f0e5', pick: goNoel(i) })),
       noelSide: this.NOEL.side.charAt(0).toLowerCase() + this.NOEL.side.slice(1),
+      noelPickup: (NS => 'À retirer au 6 rue Beauclair, entre ' + NS[0] + ' et ' + NS[NS.length - 1] + ', à l’heure de votre choix.')(this.noelSlots || this.NOEL.slots),
       noelPrev: goNoel(nk - 1), noelNext: goNoel(nk + 1), noelWord: NC[nk][0], noelItems: noelItemsOf(NC[nk][1]),
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
       wkOrderLabel: 'Commander pour ' + cur[0].toLowerCase(),
