@@ -54,6 +54,41 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 .code:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(17, 66, 50, .18); }
 .err { margin: 0; color: var(--red); font-weight: 700; font-size: 15px; min-height: 22px; }
 
+/* Tabs */
+.tabs { display: flex; gap: 6px; padding: 5px; margin: 0 0 26px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--card); max-width: 520px; }
+.tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer; white-space: nowrap; transition: background .2s, color .2s; }
+.tab:hover { background: #fff; }
+.tab[aria-selected="true"] { background: var(--green); color: var(--cream); }
+.count { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px; background: var(--red); color: var(--cream); font-size: 13px; font-weight: 800; }
+.count:empty { display: none; }
+
+/* Today's orders */
+.cmd-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.sum { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line); font-size: 15px; font-weight: 700; }
+.chip b { font-family: 'Titan One', sans-serif; font-weight: 400; font-size: 17px; color: var(--green); }
+.orders { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.order { border: 1.5px solid var(--ink); border-radius: 16px; background: #fff; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.order.done { background: var(--card); border-color: var(--line); }
+.o-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.when { display: inline-flex; padding: 5px 11px; border-radius: 999px; background: var(--cream); font-size: 13px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.order.liv .when { background: var(--green); color: var(--cream); }
+.o-num { font-size: 14px; color: var(--muted); font-weight: 700; }
+.o-name { margin: 2px 0 0; font-size: 20px; font-weight: 800; line-height: 1.2; }
+.o-tel { font-weight: 700; font-size: 16px; align-self: flex-start; min-height: 28px; display: inline-flex; align-items: center; }
+.o-lines { margin: 2px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.o-lines li { font-size: 15px; line-height: 1.35; }
+.o-lines li b { display: block; }
+.o-lines li span { color: var(--muted); }
+.o-rem { padding: 9px 12px; border-radius: 10px; background: var(--red-tint); border: 1.5px solid var(--red); font-size: 15px; }
+.o-rem b { color: var(--red); }
+.o-info { margin: 0; font-size: 15px; color: var(--muted); }
+.o-wait { align-self: flex-start; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: #f3e6c8; color: var(--ink); }
+.o-act { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
+.o-act .btn { flex: 1 1 auto; min-height: 50px; padding: 0 18px; }
+.o-done { margin: auto 0 0; padding-top: 6px; font-weight: 800; color: var(--green); font-size: 16px; }
+.empty { padding: 28px 20px; text-align: center; }
+
 /* Weeks */
 .weeks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 18px; }
 .week { appearance: none; text-align: left; cursor: pointer; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 14px; padding: 12px 14px; font-family: inherit; display: flex; flex-direction: column; gap: 3px; min-height: 92px; transition: background .2s, color .2s; }
@@ -115,6 +150,9 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
 }
 @media (max-width: 480px) {
   .brand span { display: none; }
+  .tab { font-size: 16px; padding: 0 10px; min-width: 0; }
+  .tab .long { display: none; }
+  .orders { grid-template-columns: minmax(0, 1fr); }
   .card { padding: 16px; }
   .bar .btn { padding: 0 18px; white-space: nowrap; flex: 0 0 auto; }
   .status { font-size: 14px; }
@@ -135,7 +173,7 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
 
     <section class="login" id="login" hidden>
       <h1>Bonjour Céline</h1>
-      <p class="lead" style="margin:10px auto 22px">Entre ton code à 6 chiffres pour modifier le menu de la semaine.</p>
+      <p class="lead" style="margin:10px auto 22px">Entre ton code à 6 chiffres pour voir tes commandes du jour et modifier le menu de la semaine.</p>
       <form class="card" id="loginForm">
         <label for="code" class="muted small" style="font-weight:700">Code de l’espace</label>
         <input class="code" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" required>
@@ -145,6 +183,26 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
     </section>
 
     <section id="app" hidden>
+      <div class="tabs" role="tablist" aria-label="Espace Céline">
+        <button class="tab" type="button" role="tab" id="tabCmd" aria-controls="paneCmd" aria-selected="true">Commandes<span class="long">&nbsp;du jour</span> <span class="count" id="cmdCount"></span></button>
+        <button class="tab" type="button" role="tab" id="tabMenu" aria-controls="paneMenu" aria-selected="false">Menu<span class="long">&nbsp;de la semaine</span></button>
+      </div>
+
+      <div id="paneCmd" role="tabpanel" aria-labelledby="tabCmd">
+        <div class="cmd-head">
+          <div>
+            <h1>Les commandes du jour</h1>
+            <p class="lead" id="cmdDate"></p>
+          </div>
+          <button class="btn line" type="button" id="refresh" style="min-height:46px">Actualiser</button>
+        </div>
+        <p class="muted small" style="margin:10px 0 0;max-width:62ch">Une commande à retirer est prête&nbsp;? Touche «&nbsp;Prête&nbsp;»&nbsp;: le client reçoit un e-mail pour venir la chercher.</p>
+        <div class="sum" id="cmdSum"></div>
+        <p class="note" id="cmdNote" role="status" style="margin:0 0 12px"></p>
+        <div class="orders" id="orders"></div>
+      </div>
+
+      <div id="paneMenu" role="tabpanel" aria-labelledby="tabMenu" hidden>
       <h1>Le menu de la semaine</h1>
       <p class="lead">Dicte ton menu, vérifie, publie : il est sur le site tout de suite, pour les commandes.</p>
 
@@ -184,6 +242,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
           <div class="days" id="days"></div>
         </div>
       </div>
+      </div>
 
       <p class="out"><a href="#" id="logout">Se déconnecter</a></p>
     </section>
@@ -206,7 +265,9 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   var DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
   var MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
   var $ = function (id) { return document.getElementById(id); };
-  var state = { code: '', semaines: {}, bloques: {}, today: '', weeks: [], week: '', dirty: false, busy: false };
+  var LONG_DAYS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  var LONG_MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  var state = { code: '', semaines: {}, bloques: {}, today: '', weeks: [], week: '', dirty: false, busy: false, tab: '', jour: null, armed: null, sending: null, lastLoad: 0 };
 
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
@@ -227,7 +288,14 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     // text/plain body: no CORS preflight, which Apps Script does not answer
     return fetch(API, { method: 'POST', body: JSON.stringify(body) }).then(function (r) { return r.json(); });
   }
-  function show(id) { ['loading', 'login', 'app'].forEach(function (x) { $(x).hidden = x !== id; }); $('bar').hidden = id !== 'app'; }
+  function show(id) { ['loading', 'login', 'app'].forEach(function (x) { $(x).hidden = x !== id; }); $('bar').hidden = !(id === 'app' && state.tab === 'menu'); }
+  function codeError(res) {
+    if (!/code|essais/i.test(res.error || '')) return false;
+    store(KEY, null);
+    show('login');
+    $('loginErr').textContent = res.error;
+    return true;
+  }
 
   // ---------- Login ----------
   function open(code, fromForm) {
@@ -243,6 +311,9 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       state.code = code;
       store(KEY, code);
       load(res);
+      // #commandes or #menu (links of the morning e-mail), otherwise the orders when there are some today
+      var h = location.hash.slice(1);
+      setTab(h === 'menu' || h === 'commandes' ? h : state.jour && state.jour.commandes.length ? 'commandes' : 'menu');
       show('app');
     }).catch(function () {
       show('login');
@@ -266,11 +337,171 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     show('login');
   });
 
+  // ---------- Tabs ----------
+  function setTab(t) {
+    state.tab = t;
+    $('tabCmd').setAttribute('aria-selected', String(t === 'commandes'));
+    $('tabMenu').setAttribute('aria-selected', String(t === 'menu'));
+    $('tabCmd').tabIndex = t === 'commandes' ? 0 : -1;
+    $('tabMenu').tabIndex = t === 'menu' ? 0 : -1;
+    $('paneCmd').hidden = t !== 'commandes';
+    $('paneMenu').hidden = t !== 'menu';
+    $('bar').hidden = $('app').hidden || t !== 'menu';
+    try { history.replaceState(null, '', '#' + t); } catch (e) {}
+    if (t === 'commandes' && state.code && Date.now() - state.lastLoad > 60000) refresh();
+  }
+  $('tabCmd').addEventListener('click', function () { setTab('commandes'); });
+  $('tabMenu').addEventListener('click', function () { setTab('menu'); });
+  document.querySelector('.tabs').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    setTab(state.tab === 'menu' ? 'commandes' : 'menu');
+    $(state.tab === 'menu' ? 'tabMenu' : 'tabCmd').focus();
+  });
+  window.addEventListener('hashchange', function () {
+    var h = location.hash.slice(1);
+    if (state.code && (h === 'menu' || h === 'commandes') && h !== state.tab) setTab(h);
+  });
+
+  // ---------- Today's orders ----------
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function longDate(ymd) {
+    var d = new Date(ymd + 'T12:00:00Z'), n = d.getUTCDate();
+    var s = LONG_DAYS[d.getUTCDay()] + ' ' + (n === 1 ? '1er' : n) + ' ' + LONG_MONTHS[d.getUTCMonth()];
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  function cmdNote(text, ok) { $('cmdNote').className = 'note ' + (ok ? 'ok' : 'bad'); $('cmdNote').textContent = text; }
+  function setJour(j) {
+    if (!j) return;
+    state.jour = j;
+    state.lastLoad = Date.now();
+    renderJour();
+  }
+  function renderJour() {
+    var box = $('orders'), j = state.jour;
+    box.innerHTML = '';
+    $('cmdSum').innerHTML = '';
+    if (!j) {
+      $('cmdDate').textContent = '';
+      $('cmdCount').textContent = '';
+      box.appendChild(el('p', 'card empty muted', 'Les commandes ne sont pas disponibles pour l’instant.'));
+      return;
+    }
+    var list = j.commandes;
+    var pickups = list.filter(function (c) { return !c.livraison; });
+    var todo = pickups.filter(function (c) { return !c.prete; }).length;
+    $('cmdDate').textContent = longDate(j.date);
+    $('cmdCount').textContent = todo ? String(todo) : '';
+    $('tabCmd').setAttribute('aria-label', 'Commandes du jour' + (todo ? ', ' + todo + ' à préparer' : ''));
+    if (!list.length) {
+      box.appendChild(el('p', 'card empty muted', 'Aucune commande pour aujourd’hui.'));
+      return;
+    }
+    var meals = 0;
+    list.forEach(function (c) { c.lignes.forEach(function (l) { meals += l.q; }); });
+    var chip = function (n, label) { var c = el('span', 'chip'); c.appendChild(el('b', '', String(n))); c.appendChild(document.createTextNode(label)); $('cmdSum').appendChild(c); };
+    chip(list.length, list.length > 1 ? ' commandes' : ' commande');
+    chip(meals, ' repas');
+    if (pickups.length) chip(pickups.length - todo, ' sur ' + pickups.length + (pickups.length > 1 ? ' retraits prévenus' : ' retrait prévenu'));
+
+    list.forEach(function (c) {
+      var a = el('article', 'order' + (c.livraison ? ' liv' : '') + (c.prete ? ' done' : ''));
+      var top = el('div', 'o-top');
+      top.appendChild(el('span', 'when', (c.creneau ? c.creneau + ' · ' : '') + (c.livraison ? 'Livraison' : 'Retrait')));
+      top.appendChild(el('span', 'o-num', 'n° ' + c.id));
+      a.appendChild(top);
+      a.appendChild(el('h3', 'o-name', (c.prenom + ' ' + c.nom).trim()));
+      if (c.tel) { var t = el('a', 'o-tel', c.tel); t.href = 'tel:' + c.tel.replace(/[^\d+]/g, ''); a.appendChild(t); }
+      var ul = el('ul', 'o-lines');
+      c.lignes.forEach(function (l) {
+        var li = el('li');
+        li.appendChild(el('b', '', l.q + ' × ' + l.formule));
+        li.appendChild(el('span', '', l.plats + (l.pain ? ' · pain' : '')));
+        ul.appendChild(li);
+      });
+      a.appendChild(ul);
+      if (c.remarques) { var r = el('div', 'o-rem'); r.appendChild(el('b', '', 'À signaler : ')); r.appendChild(document.createTextNode(c.remarques)); a.appendChild(r); }
+      if (c.livraison && c.adresse) a.appendChild(el('p', 'o-info', c.adresse));
+      if (c.paiement) a.appendChild(el('p', 'o-info', 'Paiement : ' + c.paiement.toLowerCase()));
+      if (c.statut === 'En attente') a.appendChild(el('span', 'o-wait', 'Pas encore validée'));
+      if (!c.livraison) {
+        if (c.prete) a.appendChild(el('p', 'o-done', '✓ E-mail envoyé à ' + c.prenom + ' · ' + c.prete));
+        else {
+          var act = el('div', 'o-act'), b;
+          if (state.sending === c.id) {
+            b = el('button', 'btn green', 'Envoi…'); b.disabled = true; act.appendChild(b);
+          } else if (state.armed === c.id) {
+            b = el('button', 'btn', 'Oui, prévenir ' + c.prenom); b.dataset.act = 'send'; b.dataset.id = c.id; act.appendChild(b);
+            b = el('button', 'btn line', 'Annuler'); b.dataset.act = 'cancel'; act.appendChild(b);
+          } else {
+            b = el('button', 'btn green', 'Prête · prévenir ' + c.prenom); b.dataset.act = 'arm'; b.dataset.id = c.id; act.appendChild(b);
+          }
+          act.querySelectorAll('button').forEach(function (x) { x.type = 'button'; });
+          a.appendChild(act);
+        }
+      }
+      box.appendChild(a);
+    });
+  }
+  // Two taps: « Prête », then « Oui, prévenir » (the e-mail cannot be taken back)
+  $('orders').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-act]');
+    if (!b || state.sending) return;
+    var id = Number(b.dataset.id), act = b.dataset.act;
+    if (act === 'arm') {
+      state.armed = id;
+      renderJour();
+      var yes = $('orders').querySelector('[data-act="send"]');
+      if (yes) yes.focus();
+      setTimeout(function () { if (state.armed === id) { state.armed = null; renderJour(); } }, 8000);
+    } else if (act === 'cancel') {
+      state.armed = null;
+      renderJour();
+    } else if (act === 'send') {
+      sendReady(id);
+    }
+  });
+  function sendReady(id) {
+    var c = state.jour.commandes.filter(function (x) { return x.id === id; })[0] || { prenom: '' };
+    state.armed = null;
+    state.sending = id;
+    renderJour();
+    post({ action: 'prete', code: state.code, id: id })
+      .then(function (res) {
+        state.sending = null;
+        if (!res.ok) { if (!codeError(res)) { cmdNote(res.error || 'Rien n’est parti : réessaie.', false); renderJour(); } return; }
+        setJour(res.jour);
+        cmdNote(res.deja ? 'L’e-mail avait déjà été envoyé à ' + c.prenom + '.' : 'C’est parti : ' + c.prenom + ' reçoit l’e-mail pour venir chercher sa commande.', true);
+      })
+      .catch(function () { state.sending = null; renderJour(); cmdNote('Pas de connexion : rien n’est parti. Réessaie.', false); });
+  }
+  function refresh() {
+    var btn = $('refresh');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Actualisation…';
+    post({ action: 'espace', code: state.code })
+      .then(function (res) {
+        if (!res.ok) { if (!codeError(res)) cmdNote(res.error || 'Réessaie dans un instant.', false); return; }
+        setJour(res.jour);
+        state.semaines = res.semaines || state.semaines;
+        renderWeeks();
+        $('cmdNote').textContent = '';
+      })
+      .catch(function () { cmdNote('Pas de connexion : réessaie.', false); })
+      .then(function () { btn.disabled = false; btn.textContent = 'Actualiser'; });
+  }
+  $('refresh').addEventListener('click', refresh);
+  // Back on the page after a while (phone in the pocket): fresh list
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && state.code && state.tab === 'commandes' && Date.now() - state.lastLoad > 60000) refresh();
+  });
+
   // ---------- Weeks ----------
   function load(res) {
     state.semaines = res.semaines || {};
     state.bloques = res.bloques || {};
     state.today = res.aujourdhui;
+    setJour(res.jour);
     // From this week (or next week at the weekend), three weeks
     var wd = new Date(state.today + 'T12:00:00Z').getUTCDay();
     var first = mondayOf(state.today);
@@ -451,7 +682,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     post({ action: 'menu', code: state.code, semaine: state.week, jours: days.map(function (d) { return { entree: d.entree, plat: d.plat, dessert: d.dessert, ferme: d.ferme }; }) })
       .then(function (res) {
         if (!res.ok) {
-          if (/code|essais/i.test(res.error || '')) { store(KEY, null); show('login'); $('loginErr').textContent = res.error; return; }
+          if (codeError(res)) return;
           setStatus('Pas publié', 'var(--red)', res.error || 'Réessaie dans un instant.');
           return;
         }
