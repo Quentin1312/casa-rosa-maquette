@@ -7,6 +7,13 @@
 <title>Espace Céline · Casa Rosa</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- Pinned to the home screen: opens like an app, with its own storage that keeps the code -->
+<link rel="manifest" href="espace.webmanifest">
+<meta name="theme-color" content="#fbf9f3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casa Rosa">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 @font-face { font-family: 'Bricolage Grotesque'; font-weight: 200 800; font-display: swap; src: url("assets/font-2.woff2") format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: 'Bricolage Grotesque'; font-weight: 200 800; font-display: swap; src: url("assets/font-3.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -53,6 +60,13 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 .code { height: 64px; border-radius: 14px; border: 1.5px solid var(--ink); background: #fff; color: var(--ink); text-align: center; font-family: inherit; font-size: 30px; font-weight: 700; letter-spacing: .35em; padding: 0 0 0 .35em; outline: none; width: 100%; }
 .code:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(17, 66, 50, .18); }
 .err { margin: 0; color: var(--red); font-weight: 700; font-size: 15px; min-height: 22px; }
+
+/* Home screen tip */
+.install { display: flex; align-items: center; justify-content: space-between; gap: 12px 18px; flex-wrap: wrap; margin: 0 0 20px; padding: 14px 16px; border-radius: 14px; background: var(--card); border: 1.5px solid var(--brass); }
+.install p { margin: 0; font-size: 15px; line-height: 1.45; flex: 1 1 280px; }
+.install p b { display: block; font-size: 16px; }
+.install .row { flex: 0 0 auto; }
+.install .btn { min-height: 44px; padding: 0 18px; font-size: 15px; }
 
 /* Tabs */
 .tabs { display: flex; gap: 6px; padding: 5px; margin: 0 0 26px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--card); max-width: 520px; }
@@ -183,6 +197,13 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
     </section>
 
     <section id="app" hidden>
+      <div class="install" id="install" hidden>
+        <p><b>Mets ton espace sur l’écran d’accueil</b><span id="installHow"></span></p>
+        <div class="row">
+          <button class="btn green" type="button" id="installBtn" hidden>Ajouter</button>
+          <button class="btn line" type="button" id="installOk">OK</button>
+        </div>
+      </div>
       <div class="tabs" role="tablist" aria-label="Espace Céline">
         <button class="tab" type="button" role="tab" id="tabCmd" aria-controls="paneCmd" aria-selected="true">Commandes<span class="long">&nbsp;du jour</span> <span class="count" id="cmdCount"></span></button>
         <button class="tab" type="button" role="tab" id="tabMenu" aria-controls="paneMenu" aria-selected="false">Menu<span class="long">&nbsp;de la semaine</span></button>
@@ -289,35 +310,73 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     return fetch(API, { method: 'POST', body: JSON.stringify(body) }).then(function (r) { return r.json(); });
   }
   function show(id) { ['loading', 'login', 'app'].forEach(function (x) { $(x).hidden = x !== id; }); $('bar').hidden = !(id === 'app' && state.tab === 'menu'); }
+  // Only a wrong code (changed in « Réglages ») forgets the saved one; no network, too many tries or a script error keep it
+  function badCode(err) { return /Code incorrect|Aucun code/i.test(err || ''); }
   function codeError(res) {
-    if (!/code|essais/i.test(res.error || '')) return false;
-    store(KEY, null);
+    if (badCode(res.error)) { store(KEY, null); $('code').value = ''; }
+    else if (/essais/i.test(res.error || '')) $('code').value = state.code;
+    else return false;
     show('login');
     $('loginErr').textContent = res.error;
     return true;
   }
+  // Ask the browser not to clear this page's storage (Android; home-screen apps on iPhone keep it anyway)
+  function keepStorage() { try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (e) {} }
+
+  // ---------- Home screen tip ----------
+  var TIP = 'casa-espace-astuce', installEvt = null;
+  function standalone() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
+  function installTip() {
+    var touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+    if (!state.code || standalone() || read(TIP) || !touch) { $('install').hidden = true; return; }
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    $('installHow').textContent = 'Il s’ouvre comme une appli et retient ton code. '
+      + (installEvt ? 'Touche « Ajouter ».' : ios ? 'Dans Safari : touche Partager (le carré avec la flèche), puis « Sur l’écran d’accueil ».' : 'Dans le menu ⋮ du navigateur : « Ajouter à l’écran d’accueil ».');
+    $('installBtn').hidden = !installEvt;
+    $('install').hidden = false;
+  }
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); installEvt = e; installTip(); });
+  window.addEventListener('appinstalled', function () { store(TIP, '1'); $('install').hidden = true; });
+  $('installBtn').addEventListener('click', function () {
+    if (!installEvt) return;
+    var ev = installEvt;
+    installEvt = null;
+    ev.prompt();
+    ev.userChoice.then(function (c) { if (c.outcome === 'accepted') store(TIP, '1'); installTip(); }, function () {});
+  });
+  $('installOk').addEventListener('click', function () { store(TIP, '1'); $('install').hidden = true; });
 
   // ---------- Login ----------
   function open(code, fromForm) {
     show('loading');
     post({ action: 'espace', code: code }).then(function (res) {
       if (!res.ok) {
-        store(KEY, null);
+        if (badCode(res.error)) {
+          store(KEY, null);
+          $('code').value = '';
+          $('loginErr').textContent = fromForm ? res.error : 'Ton code a changé : entre le nouveau.';
+        } else {
+          // Too many tries, script error: the code stays saved, « Entrer » tries again
+          $('code').value = code;
+          $('loginErr').textContent = res.error || 'Réessaie dans un instant.';
+        }
         show('login');
-        $('loginErr').textContent = fromForm ? res.error : '';
-        $('code').focus();
         return;
       }
       state.code = code;
       store(KEY, code);
+      keepStorage();
       load(res);
       // #commandes or #menu (links of the morning e-mail), otherwise the orders when there are some today
       var h = location.hash.slice(1);
       setTab(h === 'menu' || h === 'commandes' ? h : state.jour && state.jour.commandes.length ? 'commandes' : 'menu');
       show('app');
+      installTip();
     }).catch(function () {
+      // No network (phone in the kitchen): the code stays saved and filled in, one tap to retry
+      $('code').value = code;
       show('login');
-      $('loginErr').textContent = 'Pas de connexion. Vérifie Internet et réessaie.';
+      $('loginErr').textContent = 'Pas de connexion. Vérifie Internet, puis touche « Entrer ».';
     });
   }
   $('loginForm').addEventListener('submit', function (e) {
@@ -740,7 +799,15 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   });
 
   // ---------- Start ----------
-  var saved = read(KEY);
+  // Buttons of the morning e-mail carry the code (#commandes&code=123456), for when they open in another browser
+  // than the pinned app: it is saved, then removed from the address
+  var parts = location.hash.slice(1).split('&');
+  var fromLink = (parts.filter(function (p) { return /^code=\d{6}$/.test(p); })[0] || '').slice(5);
+  if (fromLink) {
+    var tabPart = parts.filter(function (p) { return p === 'menu' || p === 'commandes'; })[0];
+    try { history.replaceState(null, '', location.pathname + location.search + (tabPart ? '#' + tabPart : '')); } catch (e) {}
+  }
+  var saved = fromLink || read(KEY);
   if (saved) open(saved, false); else show('login');
 })();
 </script>
