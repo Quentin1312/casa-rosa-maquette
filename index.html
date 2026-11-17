@@ -1383,7 +1383,7 @@ class Component extends DCLogic {
       modeHint: isNoelDay
         ? (isLiv ? 'Le menu de Noël ne se livre pas : il se retire à la boutique. Choisissez « Click and collect ».'
           : 'Menu de Noël : retrait au 6 rue Beauclair, Aurillac, entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à l’heure de votre choix')
-        : isLiv ? 'Livraison entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets par jour' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 8h30 à 19h30 · un e-mail vous prévient dès que c’est prêt',
+        : isLiv ? 'Livraison entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets par jour' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 11h30 à 13h · un e-mail vous prévient dès que c’est prêt',
       communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => this.setCmd({ commune: i, ...reset }) })),
       showZones: c.commune === 0,
       zones: ZONES.slice(0, 2).map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === zoneIdx), pick: () => this.setCmd({ zone: i, ...reset }) })),
@@ -1485,7 +1485,7 @@ class Component extends DCLogic {
         const done = id => ({
           id: id ? 'Commande n° ' + id : 'Commande (démo)', name: p,
           when: isLiv ? `Livraison au ${address} : ${days.map(y => longDay(y) + ' à ' + c.slots[y]).join(' ; ')}.`
-            : `À retirer au 6 rue Beauclair à Aurillac : ${days.map(y => longDay(y) + (isNoelY(y) && c.slots[y] ? ' à ' + c.slots[y] : ', entre 8h30 et 19h30')).join(' ; ')}.`
+            : `À retirer au 6 rue Beauclair à Aurillac : ${days.map(y => longDay(y) + (isNoelY(y) && c.slots[y] ? ' à ' + c.slots[y] : ', entre 11h30 et 13h')).join(' ; ')}.`
               + (days.some(y => !isNoelY(y)) ? ' Un e-mail vous prévient dès que c’est prêt.' : ''),
           lines: lines.map(l => ({ k: shortDay(l.date) + ' · ' + l.qty + ' × ' + formLabel(l.formule), v: lineText(l), p: fmt(lineTotal(l)) })),
           pay: 'Paiement : ' + PAYS[c.pay], total: fmt(total),
