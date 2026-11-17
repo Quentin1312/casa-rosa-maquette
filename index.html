@@ -197,6 +197,13 @@
         </div>
         <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ wkKicker }}</p>
         <h2 style="margin:0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1;text-wrap:balance">{{ wkTitle }}</h2>
+        <sc-if value="{{ hasWeeks }}" hint-placeholder-val="{{ false }}">
+          <div role="group" aria-label="Semaine du menu" style="display:flex;gap:6px;margin-top:4px">
+            <sc-for list="{{ wkWeeks }}" as="wk" hint-placeholder-count="2">
+              <button sc-camel-on-click="{{ wk.pick }}" aria-pressed="{{ wk.on }}" style="background:{{ wk.bg }};color:{{ wk.fg }};appearance:none;cursor:pointer;height:38px;padding:0 16px;border-radius:999px;border:1.5px solid #f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;transition:background .2s,color .2s">{{ wk.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
       </div>
       <sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ true }}">
       <div ref="{{ menuRef }}" style="zoom:{{ tableZoom }};width:1160px;margin:0 auto;display:flex;justify-content:{{ wkJust }};gap:{{ wkGap }}">
@@ -208,7 +215,7 @@
               <div style="position:relative;width:180px;height:180px;flex:0 0 auto;transition:transform .3s cubic-bezier(.3,1.4,.5,1)" style-hover="transform:translateY(-8px) rotate(-3deg)">
                 <div style="position:absolute;inset:0;border-radius:50%;background:#fbf9f3;border:1.5px solid #202820;box-shadow:0 18px 22px -14px rgba(10,20,14,.6)"></div>
                 <div style="position:absolute;inset:17px;border-radius:50%;border:1.5px solid #B08D57"></div>
-                <div style="position:absolute;inset:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;color:#202820"><span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Plat</span><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:19px;line-height:1.08;text-wrap:balance">{{ d.p }}</span></div>
+                <div style="position:absolute;inset:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;color:#202820"><span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Plat</span><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ d.pSize }};line-height:1.08;text-wrap:balance">{{ d.p }}</span><span style="display:{{ d.sideD }};max-width:100px;font-size:12px;font-weight:600;line-height:1.25;color:#575c54;text-wrap:balance">{{ d.pSide }}</span></div>
               </div>
               <div style="position:relative;width:16px;height:150px;flex:0 0 auto"><span style="position:absolute;left:2px;top:0;width:12px;height:64px;border-radius:2px 12px 2px 2px;background:#B08D57"></span><span style="position:absolute;left:3px;top:62px;width:10px;height:88px;border-radius:5px;background:#B08D57"></span></div>
             </div>
@@ -276,6 +283,13 @@
       </div>
       <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ wkKicker }}</p>
       <h2 style="margin:12px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:clamp(34px,4.2vw,54px);line-height:1;text-wrap:balance">{{ wkTitle }}</h2>
+      <sc-if value="{{ hasWeeks }}" hint-placeholder-val="{{ false }}">
+        <div role="group" aria-label="Semaine du menu" style="display:flex;gap:6px;margin-top:14px">
+          <sc-for list="{{ wkWeeks }}" as="wk" hint-placeholder-count="2">
+            <button sc-camel-on-click="{{ wk.pick }}" aria-pressed="{{ wk.on }}" style="background:{{ wk.bg }};color:{{ wk.fg }};appearance:none;cursor:pointer;height:38px;padding:0 14px;border-radius:999px;border:1.5px solid #f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;transition:background .2s,color .2s">{{ wk.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
       <sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;gap:6px;margin-top:20px">
         <sc-for list="{{ wkTabs }}" as="t" hint-placeholder-count="5">
@@ -290,6 +304,7 @@
           <div style="opacity:{{ wkO }};transform:{{ wkT }};transition:opacity .25s ease,transform .35s cubic-bezier(.3,1.3,.5,1);position:absolute;inset:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#202820">
             <span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Plat</span>
             <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ dishSize }};line-height:1.05;text-wrap:balance">{{ wkPlat }}</span>
+            <span style="display:{{ wkSideD }};max-width:82%;margin-top:-4px;font-size:13px;font-weight:600;line-height:1.25;color:#575c54;text-wrap:balance">{{ wkPlatSide }}</span>
           </div>
           <span style="transform:rotate(-6deg);position:absolute;left:2%;top:4%;background:#8D1D2C;color:#f4f0e5;border:1.5px solid #202820;border-radius:4px;padding:8px 16px;font-family:'Titan One',sans-serif;font-weight:400;font-size:20px;line-height:1;white-space:nowrap">{{ wkDay }}</span>
         </div>
@@ -317,7 +332,7 @@
               <div style="position:absolute;inset:9%;border-radius:50%;border:1.5px solid #B08D57"></div>
               <div style="position:absolute;inset:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:#202820">
                 <span style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#114232">Au choix</span>
-                <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ dishSize }};line-height:1.05;color:#8D1D2C">{{ noelWord }}</span>
+                <span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:{{ noelSize }};line-height:1.05;color:#8D1D2C">{{ noelWord }}</span>
               </div>
               <span style="transform:rotate(-6deg);position:absolute;left:2%;top:4%;background:#8D1D2C;color:#f4f0e5;border:1.5px solid #202820;border-radius:4px;padding:8px 14px;font-family:'Titan One',sans-serif;font-weight:400;font-size:18px;line-height:1;white-space:nowrap">Noël</span>
             </div>
@@ -1592,10 +1607,18 @@ class Component extends DCLogic {
   plusDays(y, n) { const d = new Date(y + 'T12:00:00'); d.setDate(d.getDate() + n); return this.ymdOf(d); }
   // A week's menu: rows [name, entrée, plat, dessert, closed]. The week Céline published (exact), else the last one before it
   // (or the first one) with its closed days filled from another day, else the example.
+  // Dictated or typed dishes: « carottes ,riz » → « carottes, riz », no stray commas or double spaces
+  tidy(s) { return String(s || '').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').replace(/^(,\s*)+|(,\s*)+$/g, '').trim(); }
+  // On the plate: the dish name, and what comes with it (after the first comma) in smaller type when the whole is long
+  plateText(p) {
+    const i = p.indexOf(',');
+    const [t, side] = p.length > 24 && i > 0 ? [p.slice(0, i), p.slice(i + 1).trim()] : [p, ''];
+    return { t, side, k: t.length <= 18 ? 1 : t.length <= 28 ? 0.9 : t.length <= 40 ? 0.8 : 0.7 };
+  }
   weekMenu(monday) {
     const M = this.menus, keys = M ? Object.keys(M).sort() : [];
     const key = keys.includes(monday) ? monday : keys.filter(k => k < monday).pop() || keys[0];
-    const rows = key ? M[key].map((x, i) => [this.DAY_NAMES[i], x.e, x.p, x.d, !!x.ferme || !(x.e && x.p && x.d)]) : null;
+    const rows = key ? M[key].map((x, i) => [this.DAY_NAMES[i], this.tidy(x.e), this.tidy(x.p), this.tidy(x.d), !!x.ferme || !(x.e && x.p && x.d)]) : null;
     if (!rows || rows.every(r => r[4])) return { exact: false, rows: this.WEEK_DEMO.map(r => [...r, false]) };
     if (key === monday) return { exact: true, rows };
     const open = rows.filter(r => !r[4]);
@@ -1609,11 +1632,14 @@ class Component extends DCLogic {
   weekVals(w, wide) {
     const period = this.wkPeriod || 'semaine', M = this.MENUS[period];
     const { H, pv, ph } = this.pads(w), s = this.seen.menu;
-    // Week shown: the one of the first order day, or the next one when most order days fall in it and its menu is published
-    const mons = this.getDates().filter(x => !x.noel).map(x => this.mondayOf(x.ymd));
-    const first = mons[0] || this.mondayOf(this.ymdOf(new Date()));
-    const later = mons.filter(m => m !== first);
-    const showM = later.length > mons.length / 2 && this.weekMenu(later[0]).exact ? later[0] : first;
+    // Week shown: this week (next week at the weekend); next week's menu, once published, behind its own button
+    const now = new Date(), thisMon = this.mondayOf(this.ymdOf(now));
+    const baseM = now.getDay() === 0 || now.getDay() === 6 ? this.plusDays(thisMon, 7) : thisMon;
+    const nextM = this.plusDays(baseM, 7);
+    const hasNext = period === 'semaine' && this.weekMenu(nextM).exact;
+    const wkSel = hasNext && this.wkWeek === 1 ? 1 : 0;
+    const showM = wkSel ? nextM : baseM;
+    const relWeek = m => { const n = Math.round((Date.parse(m) - Date.parse(thisMon)) / 6048e5); return n === 0 ? 'Cette semaine' : n === 1 ? 'Semaine prochaine' : 'Dans ' + n + ' semaines'; };
     const WM = this.weekMenu(showM);
     const yr = Number(showM.slice(0, 4));
     const shut = new Set([...(this.closed || []), ...this.holidays(yr), ...this.holidays(yr + 1), ...this.NOEL.dates.map(([y]) => y)]);
@@ -1647,6 +1673,10 @@ class Component extends DCLogic {
         bg: key === period ? '#ffffff' : 'transparent', fg: key === period ? '#202820' : '#f4f0e5',
         pick: () => { if (key === period) return; this.wkPeriod = key; this.wkI = 0; this.forceUpdate(); } })),
       wkTitle: M.title, wkKicker: period === 'semaine' && WM.exact ? weekKicker : M.kicker, isNoel: period === 'noel', hasMenu: !M.soon,
+      hasWeeks: hasNext,
+      wkWeeks: [baseM, nextM].map((m, i) => ({ label: relWeek(m), on: String(i === wkSel),
+        bg: i === wkSel ? '#ffffff' : 'transparent', fg: i === wkSel ? '#202820' : '#f4f0e5',
+        pick: () => { if (i === wkSel) return; this.wkWeek = i; this.wkI = 0; this.forceUpdate(); } })),
       askNoel: () => {
         const idx = this.getDates().findIndex(x => x.noel);
         if (idx >= 0) this.setCmd({ dateIdx: idx, mode: 'collect', ch: [-1, -1, -1], pain: false, composing: true, stamped: false, msg: '', hint: '' });
@@ -1659,15 +1689,17 @@ class Component extends DCLogic {
       noelPrev: goNoel(nk - 1), noelNext: goNoel(nk + 1), noelWord: NC[nk][0], noelItems: noelItemsOf(NC[nk][1]),
       wkJust: N > 3 ? 'space-between' : 'center', wkGap: N > 3 ? '0px' : '96px',
       wkOrderLabel: 'Commander pour ' + cur.name.toLowerCase(),
-      wkDay: cur.name, wkDayLower: cur.name.toLowerCase(), wkEntree: cur.e, wkPlat: cur.p, wkDessert: cur.d,
+      wkDay: cur.name, wkDayLower: cur.name.toLowerCase(), wkEntree: cur.e, wkDessert: cur.d,
+      ...(pt => ({ wkPlat: pt.t, wkPlatSide: pt.side, wkSideD: pt.side ? 'block' : 'none', dishSize: Math.round(plate * 0.105 * pt.k) + 'px' }))(this.plateText(cur.p)),
       wkPrev: go(-1), wkNext: go(1), wkOrder: () => goOrder(cur.y),
       wkTabs: WEEK.map(({ name }, i) => ({ short: name.slice(0, 3), bg: i === k ? '#ffffff' : 'transparent', fg: i === k ? '#202820' : '#f4f0e5',
         pick: () => { if (i === k) return; clearTimeout(this.wkT); this.wkFade = true; this.forceUpdate(); this.wkT = setTimeout(() => { this.wkI = i; this.wkFade = false; this.forceUpdate(); }, 180); } })),
       wkO: this.wkFade ? 0 : 1, wkT: this.wkFade ? `translateX(${(this.wkDir || 1) * -24}px) rotate(${(this.wkDir || 1) * -6}deg)` : 'translateX(0px) rotate(0deg)',
-      plateSize: plate + 'px', dishSize: Math.round(plate * 0.105) + 'px',
+      plateSize: plate + 'px', noelSize: Math.round(plate * 0.105) + 'px',
       wkZoom: '1',
       menuRef: this.menuRef,
-      week: WEEK.map(({ name, e, p, d, y }, i) => ({ name, e, p, d,
+      week: WEEK.map(({ name, e, p, d, y }, i) => ({ name, e, d,
+        ...(pt => ({ p: pt.t, pSide: pt.side, sideD: pt.side ? 'block' : 'none', pSize: Math.round(19 * pt.k) + 'px' }))(this.plateText(p)),
         nap: `rotate(${[-7, 5, -4, 6, -6][i]}deg)`,
         t: this.seen.menu ? 'translateY(0px)' : 'translateY(36px)', o: this.seen.menu ? 1 : 0,
         tr: `transform .7s cubic-bezier(.2,.9,.25,1.1) ${i * 0.09}s, opacity .5s ease ${i * 0.09}s`,

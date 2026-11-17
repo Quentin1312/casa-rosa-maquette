@@ -146,7 +146,8 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
 .f span { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .f input { height: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); padding: 0 12px; font-family: inherit; font-size: 16px; outline: none; min-width: 0; width: 100%; }
 .f input[aria-invalid="true"] { border-color: var(--red); background: var(--red-tint); }
-.day.closed .f { display: none; }
+.day.closed .f, .day.closed .hint { display: none; }
+.hint { margin: -4px 0 0; font-size: 13px; line-height: 1.35; font-weight: 700; color: var(--red); }
 .closed-text { margin: 0; font-size: 15px; color: var(--muted); }
 
 /* Publish bar */
@@ -261,7 +262,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
 
         <div class="card">
           <div class="step-head"><span class="step">2</span><h2>Vérifie et corrige</h2></div>
-          <p class="muted small" style="margin:0">Tu peux modifier chaque plat à la main. « Fermé » : pas de commande ce jour-là.</p>
+          <p class="muted small" style="margin:0">Tu peux modifier chaque plat à la main. Pour le plat : son nom d’abord, puis l’accompagnement après une virgule (sur le site, il s’affiche en plus petit dans l’assiette). « Fermé » : pas de commande ce jour-là.</p>
           <div class="days" id="days"></div>
         </div>
       </div>
@@ -623,16 +624,25 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       var field = function (k, label) {
         return '<label class="f"><span>' + label + '</span><input type="text" class="' + k + '" maxlength="120" autocomplete="off" enterkeyhint="next"></label>';
       };
-      el.innerHTML = head + field('e', 'Entrée') + field('p', 'Plat') + field('d', 'Dessert')
+      el.innerHTML = head + field('e', 'Entrée') + field('p', 'Plat')
+        + '<p class="hint" hidden>Un peu long pour l’assiette du site : mets l’accompagnement après une virgule.</p>'
+        + field('d', 'Dessert')
         + '<p class="closed-text"' + (locked || s.ferme ? '' : ' hidden') + '></p>';
       if (locked) el.querySelector('.tag').textContent = locked;
       el.querySelector('.closed-text').textContent = locked === 'Menu de Noël' ? 'Ce jour-là, seul le menu de Noël est proposé.' : 'Pas de commande ce jour-là.';
+      el.querySelector('input.p').placeholder = 'Nom du plat, accompagnement';
       ['e', 'p', 'd'].forEach(function (k) { el.querySelector('input.' + k).value = s[k] || ''; });
+      platHint(el);
       box.appendChild(el);
     });
   }
+  // « carottes ,riz » → « carottes, riz » (same clean-up as the site)
+  function tidy(s) { return String(s || '').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').replace(/^(,\s*)+|(,\s*)+$/g, '').trim(); }
+  // The site writes the dish name (before the first comma) big on the plate: warn when it is too long for it
+  function platHint(el) { el.querySelector('.hint').hidden = tidy(el.querySelector('input.p').value).split(',')[0].length <= 32; }
   $('days').addEventListener('input', function (e) {
     if (e.target.matches('input[type=text]')) { e.target.removeAttribute('aria-invalid'); touch(); }
+    if (e.target.matches('input.p')) platHint(e.target.closest('.day'));
   });
   $('days').addEventListener('change', function (e) {
     if (!e.target.matches('.ferme')) return;
@@ -646,7 +656,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     return Array.prototype.map.call(document.querySelectorAll('.day'), function (el) {
       var f = el.querySelector('.ferme');
       return {
-        entree: el.querySelector('input.e').value.trim(), plat: el.querySelector('input.p').value.trim(), dessert: el.querySelector('input.d').value.trim(),
+        entree: tidy(el.querySelector('input.e').value), plat: tidy(el.querySelector('input.p').value), dessert: tidy(el.querySelector('input.d').value),
         ferme: !!(f && f.checked), locked: el.classList.contains('locked'),
       };
     });
@@ -696,6 +706,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
         el.querySelector('input.p').value = j.plat;
         el.querySelector('input.d').value = j.dessert;
       }
+      platHint(el);
       el.querySelectorAll('input[type=text]').forEach(function (x) { x.removeAttribute('aria-invalid'); });
     });
     touch();
