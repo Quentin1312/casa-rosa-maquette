@@ -1271,12 +1271,9 @@ class Component extends DCLogic {
     const optsFor = y => {
       const x = dayOf(y);
       if (x.noel) return N.courses.map(([k, list]) => [k, list.map(o => o[0])]);
+      // Only the dishes Céline cooks that day (one per course): the client taps the ones wanted
       const wd = x.d.getDay() - 1, W = this.weekMenu(this.mondayOf(y)).rows;
-      const dayOpts = col => {
-        const cur = W[wd][col];
-        for (let n = 1; n < 5; n++) { const r = W[(wd + n) % 5]; if (!r[4] && r[col] && r[col] !== cur) return [cur, r[col]]; }
-        return [cur];
-      };
+      const dayOpts = col => [W[wd][col]];
       return [['Entrée', dayOpts(1)], ['Plat', dayOpts(2)], ['Dessert', dayOpts(3)]];
     };
 
