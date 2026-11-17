@@ -79,8 +79,8 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 /* Today's orders */
 .cmd-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .sum { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
-.chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line); font-size: 15px; font-weight: 700; }
-.chip b { font-weight: 800; font-size: 17px; color: var(--green); font-variant-numeric: tabular-nums; }
+.chip { display: inline-flex; align-items: baseline; gap: 6px; line-height: 1.2; padding: 7px 13px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line); font-size: 15px; font-weight: 700; }
+.chip b { font-weight: 800; font-size: 16px; color: var(--green); font-variant-numeric: tabular-nums; }
 .chip.todo { border-color: var(--red); }
 .chip.todo b { color: var(--red); }
 .orders { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
@@ -326,11 +326,13 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   function keepStorage() { try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (e) {} }
 
   // ---------- Home screen tip ----------
+  // Off while the site is still the demo (Céline keeps her current site): set to true when it goes live on casarosa15.com
+  var SHOW_TIP = false;
   var TIP = 'casa-espace-astuce', installEvt = null;
   function standalone() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
   function installTip() {
     var touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
-    if (!state.code || standalone() || read(TIP) || !touch) { $('install').hidden = true; return; }
+    if (!SHOW_TIP || !state.code || standalone() || read(TIP) || !touch) { $('install').hidden = true; return; }
     var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     $('installHow').textContent = 'Il s’ouvre comme une appli et retient ton code. '
       + (installEvt ? 'Touche « Ajouter ».' : ios ? 'Dans Safari : touche Partager (le carré avec la flèche), puis « Sur l’écran d’accueil ».' : 'Dans le menu ⋮ du navigateur : « Ajouter à l’écran d’accueil ».');
