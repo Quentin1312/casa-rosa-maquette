@@ -80,7 +80,9 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 .cmd-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .sum { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
 .chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line); font-size: 15px; font-weight: 700; }
-.chip b { font-family: 'Titan One', sans-serif; font-weight: 400; font-size: 17px; color: var(--green); }
+.chip b { font-weight: 800; font-size: 17px; color: var(--green); font-variant-numeric: tabular-nums; }
+.chip.todo { border-color: var(--red); }
+.chip.todo b { color: var(--red); }
 .orders { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
 .order { border: 1.5px solid var(--ink); border-radius: 16px; background: #fff; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
 .order.done { background: var(--card); border-color: var(--line); }
@@ -457,10 +459,11 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     }
     var meals = 0;
     list.forEach(function (c) { c.lignes.forEach(function (l) { meals += l.q; }); });
-    var chip = function (n, label) { var c = el('span', 'chip'); c.appendChild(el('b', '', String(n))); c.appendChild(document.createTextNode(label)); $('cmdSum').appendChild(c); };
+    var chip = function (n, label, cls) { var c = el('span', 'chip' + (cls ? ' ' + cls : '')); c.appendChild(el('b', '', String(n))); c.appendChild(document.createTextNode(label)); $('cmdSum').appendChild(c); };
     chip(list.length, list.length > 1 ? ' commandes' : ' commande');
     chip(meals, ' repas');
-    if (pickups.length) chip(pickups.length - todo, ' sur ' + pickups.length + (pickups.length > 1 ? ' retraits prévenus' : ' retrait prévenu'));
+    if (todo) chip(todo, todo > 1 ? ' retraits à prévenir' : ' retrait à prévenir', 'todo');
+    else if (pickups.length) chip('✓', pickups.length > 1 ? ' tous les clients prévenus' : ' client prévenu');
 
     list.forEach(function (c) {
       var a = el('article', 'order' + (c.livraison ? ' liv' : '') + (c.prete ? ' done' : ''));
