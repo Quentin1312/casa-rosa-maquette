@@ -1172,6 +1172,12 @@ class Component extends DCLogic {
     this.watchReveal();
     this.startMarquee();
     this.loadMenus();
+    // Retour de Stripe après annulation : on le dit, et la commande non payée s'efface toute seule
+    if (/[?&]paiement=annule/.test(location.search)) {
+      try { history.replaceState(null, '', location.pathname + '#commander'); } catch (e) {}
+      this.setCmd({ msg: 'Paiement annulé : votre commande n’a pas été validée. Vous pouvez recommencer.' });
+      setTimeout(() => this.scrollToId('commander'), 400);
+    }
   }
   componentWillUnmount() { this.ro && this.ro.disconnect(); this.io && this.io.disconnect(); clearTimeout(this.dealT); clearTimeout(this.wkT); clearTimeout(this.swapT); cancelAnimationFrame(this.mraf); this.io3 && this.io3.disconnect && this.io3.disconnect(); this.stopAuto(); clearTimeout(this.ledT); this.io2 && this.io2.disconnect && this.io2.disconnect(); window.removeEventListener('resize', this.onResize); window.removeEventListener('scroll', this.onCmdScroll); window.removeEventListener('keydown', this.onKey); }
   fanRef = React.createRef();
@@ -1321,6 +1327,7 @@ class Component extends DCLogic {
             this.dispo[y] = d.ok ? d : { creneauxComplets: [] };
             if (d.ok && Array.isArray(d.fermes)) this.closed = d.fermes;
             if (d.ok && d.creneaux && N.dates.some(([nd]) => nd === y)) this.noelSlots = d.creneaux;
+            if (d.ok && typeof d.paiementEnLigne === 'boolean') this.payOnline = d.paiementEnLigne;
             this.forceUpdate();
           })
           .catch(() => { delete this.dispo[y]; });
@@ -1334,7 +1341,8 @@ class Component extends DCLogic {
     const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', '15 € HT'], ['Jusqu’à Arpajon', '20 € HT']];
     const zoneIdx = c.commune === 1 ? 2 : Math.min(c.zone, 1); // Arpajon is its own zone
     const full = (sl, y) => { const x = this.dispo[y]; return this.ORDER_API ? !!(x && (x.creneauxComplets || []).includes(sl)) : false; };
-    const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
+    // Paiement : si Stripe est activé (réponse du script), on propose « Carte en ligne » (paiement tout de suite) à la place du boîtier
+    const PAYS = this.payOnline ? ['Carte en ligne', 'Espèces', 'Virement'] : ['Carte bancaire', 'Espèces', 'Virement'];
     const address = [c.rue.trim(), c.complement.trim(), COMMUNES[c.commune]].filter(Boolean).join(', ');
     const slotDays = (days.length ? days : [ymd]).filter(y => isLiv ? !isNoelY(y) : isNoelY(y));
     const pickupOn = !isLiv && slotDays.length > 0;
@@ -1505,6 +1513,8 @@ class Component extends DCLogic {
           .then(res => {
             if (!res.ok) { this.setCmd({ sending: false, msg: res.error || 'La commande n’a pas pu être envoyée.' }); return; }
             days.forEach(y => { delete this.dispo[y]; });
+            // Paiement en ligne : Stripe renvoie l'adresse de la page de paiement, on y envoie le client
+            if (res.checkout) { this.setCmd({ msg: 'Redirection vers le paiement sécurisé…' }); window.location.href = res.checkout; return; }
             this.setCmd({ sending: false, msg: '', done: done(res.id) });
             this.stick(true);
           })
