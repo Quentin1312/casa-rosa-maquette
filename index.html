@@ -1331,7 +1331,7 @@ class Component extends DCLogic {
     const isNoelY = y => dayOf(y).noel;
     const slotsOf = y => { const x = dispoOf(y); return (x && x.creneaux) || (isNoelY(y) ? N.slots : ['11h30', '12h00', '12h30', '13h00']); };
     const COMMUNES = (dd && dd.communes) || ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)'];
-    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', 'tarif à venir'], ['Jusqu’à Arpajon', 'tarif à venir']];
+    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', '15 € HT'], ['Jusqu’à Arpajon', '20 € HT']];
     const zoneIdx = c.commune === 1 ? 2 : Math.min(c.zone, 1); // Arpajon is its own zone
     const full = (sl, y) => { const x = this.dispo[y]; return this.ORDER_API ? !!(x && (x.creneauxComplets || []).includes(sl)) : false; };
     const PAYS = ['Virement', 'Carte bancaire', 'Espèces'];
