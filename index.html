@@ -417,7 +417,7 @@
             <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:16px">
               <div>
                 <h3 id="cmd-plats" style="scroll-margin-top:100px;margin:0;display:flex;align-items:center;gap:12px;font-family:'Titan One',sans-serif;font-weight:400;font-size:24px;line-height:1.1"><span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#114232;color:#f4f0e5;display:flex;align-items:center;justify-content:center;font-family:'Titan One',sans-serif;font-size:17px;line-height:1">3</span>Vos plats</h3>
-                <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">Touchez les plats que vous voulez, puis validez le menu.</p>
+                <p style="margin:6px 0 0;font-size:15px;line-height:1.45;max-width:46ch">{{ platsHint }}</p>
               </div>
               <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-direction:column;gap:8px">
@@ -1302,6 +1302,8 @@ class Component extends DCLogic {
     const ymd = dates[di].ymd, isNoelDay = dates[di].noel;
     const formule = isNoelDay ? 'noel' : c.formule;
     const isCarte = formule === 'carte';
+    // Menu complet = entrée + plat + dessert du jour, tout inclus d'office (rien à choisir). On choisit seulement à la carte et à Noël.
+    const autoMenu = formule === 'menu';
     const reset = { stamped: false, msg: '', hint: '', dayHint: '', truckGo: false };
     const sel = on => ({ bg: on ? '#202820' : 'transparent', fg: on ? '#f4f0e5' : '#202820' });
     const dayOf = y => dates.find(x => x.ymd === y) || { d: new Date(y + 'T12:00:00'), ymd: y, noel: N.dates.some(([nd]) => nd === y) };
@@ -1326,7 +1328,7 @@ class Component extends DCLogic {
     const filled = l => l.formule === 'carte' ? l.sel.some(v => v >= 0) : l.sel.every(v => v >= 0);
     const formLabel = f => f === 'carte' ? 'À la carte' : f === 'noel' ? 'Menu de Noël' : 'Menu complet';
     const lineText = l => itemsOf(l).filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
-    const current = { date: ymd, formule, sel: c.ch.slice(), pain: !isNoelDay && c.pain, qty: c.qty };
+    const current = { date: ymd, formule, sel: autoMenu ? optsFor(ymd).map(() => 0) : c.ch.slice(), pain: !isNoelDay && c.pain, qty: c.qty };
     const curStarted = current.sel.some(v => v >= 0), curOk = filled(current);
     const lines = [...c.cart, ...(curOk ? [current] : [])];
     const days = [...new Set(lines.map(l => l.date))].sort();
@@ -1403,8 +1405,11 @@ class Component extends DCLogic {
       menuBg: sel(formule === 'menu').bg, menuFg: sel(formule === 'menu').fg,
       menuOn: String(formule === 'menu'), carteOn: String(isCarte),
       carteBg: sel(isCarte).bg, carteFg: sel(isCarte).fg,
+      platsHint: isNoelDay ? 'Choisissez votre entrée, votre plat et votre dessert, puis validez.'
+        : isCarte ? 'Touchez les plats que vous voulez, puis validez le menu.'
+        : 'Le menu du jour est déjà inclus : entrée, plat et dessert. Choisissez la quantité, puis validez.',
       pickmenu: () => this.setCmd({ formule: 'menu', ...reset }),
-      pickcarte: () => this.setCmd({ formule: 'carte', ...reset }),
+      pickcarte: () => this.setCmd({ formule: 'carte', ch: [-1, -1, -1], ...reset }),
       notNoelDay: !isNoelDay, isNoelDay,
       noelHead: 'Formule complète · ' + N.price + ' €',
       modeHint: isNoelDay
@@ -1431,9 +1436,9 @@ class Component extends DCLogic {
       courses: optsFor(ymd).map(([k, list], i) => ({
         label: isCarte ? k + ' · ' + fmt(PRICES[i]) : k,
         opts: list.map((v, n) => {
-          const on = c.ch[i] === n, x = isNoelDay ? N.courses[i][1][n] : null;
+          const on = autoMenu ? true : c.ch[i] === n, x = isNoelDay ? N.courses[i][1][n] : null;
           return { v: v + (x && x[1] ? ' · +' + x[1] + ' €' : '') + (x && x[3] ? ' · végé' : ''), ...sel(on),
-            pick: () => { const ch = c.ch.slice(); ch[i] = on ? -1 : n; this.setCmd({ ch, ...reset }); } };
+            pick: autoMenu ? () => {} : () => { const ch = c.ch.slice(); ch[i] = on ? -1 : n; this.setCmd({ ch, ...reset }); } };
         }),
       })),
       // Validate the menu on screen: it joins the order and the form closes
