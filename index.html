@@ -656,9 +656,9 @@
     <sc-if value="{{ doneOn }}" hint-placeholder-val="{{ false }}">
       <div role="dialog" aria-modal="true" aria-label="Commande envoyée" sc-camel-on-click="{{ closeDone }}" style="position:fixed;inset:0;z-index:70;background:rgba(32,40,32,.6);display:flex;align-items:center;justify-content:center;padding:20px">
         <div sc-camel-on-click="{{ keepOpen }}" style="position:relative;width:100%;max-width:460px;max-height:calc(100vh - 40px);overflow:auto;background:#fbf9f3;color:#202820;border:1.5px solid #202820;border-radius:10px;padding:48px 28px 26px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)">
-          <span style="position:absolute;top:14px;right:16px;background:#f4f0e5;border:2.5px solid #8D1D2C;color:#8D1D2C;border-radius:8px;padding:3px 10px 5px;font-family:'Titan One',sans-serif;font-size:20px;line-height:1;transform:rotate(-9deg)">Commandé</span>
+          <span style="position:absolute;top:14px;right:16px;background:#f4f0e5;border:2.5px solid #8D1D2C;color:#8D1D2C;border-radius:8px;padding:3px 10px 5px;font-family:'Titan One',sans-serif;font-size:20px;line-height:1;transform:rotate(-9deg)">{{ dStamp }}</span>
           <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">{{ dId }}</p>
-          <h3 style="margin:10px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:1.02">C’est noté, <span style="white-space:nowrap">{{ dName }} !</span></h3>
+          <h3 style="margin:10px 0 0;font-family:'Titan One',sans-serif;font-weight:400;font-size:34px;line-height:1.02">{{ dTitle }}</h3>
           <p style="margin:14px 0 0;font-size:16px;line-height:1.5">{{ dWhen }}</p>
           <div style="border-top:1.5px dashed #9a9c94;margin:16px 0"></div>
           <div style="display:flex;flex-direction:column;gap:10px">
@@ -671,11 +671,19 @@
           </div>
           <div style="border-top:1.5px dashed #9a9c94;margin:16px 0"></div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px"><span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">{{ dPay }}</span><span style="font-family:'Titan One',sans-serif;font-size:30px;line-height:.9">{{ dTotal }}</span></div>
-          <p style="margin:18px 0 0;padding:12px 14px;border-radius:12px;background:#ECE3CF;font-size:15px;line-height:1.5">Vous recevez un e-mail récapitulatif. Céline valide ensuite votre commande et vous le confirme par e-mail.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
-            <button sc-camel-on-click="{{ closeDone }}" style="flex:1 1 140px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:0;background:#114232;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820">Parfait, merci</button>
-            <button sc-camel-on-click="{{ newOrder }}" style="flex:1 1 160px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820;color:#f4f0e5">Nouvelle commande</button>
-          </div>
+          <p style="margin:18px 0 0;padding:12px 14px;border-radius:12px;background:#ECE3CF;font-size:15px;line-height:1.5">{{ dNote }}</p>
+          <sc-if value="{{ dPayOn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+              <button sc-camel-on-click="{{ payNow }}" style="flex:1 1 100%;appearance:none;cursor:pointer;height:54px;padding:0 20px;border-radius:999px;border:0;background:#8D1D2C;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px" style-hover="background:#202820">{{ dPayLabel }} →</button>
+              <button sc-camel-on-click="{{ closeDone }}" style="flex:1 1 100%;appearance:none;cursor:pointer;height:46px;padding:0 20px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px" style-hover="background:#202820;color:#f4f0e5">Modifier ma commande</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ dPayNot }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+              <button sc-camel-on-click="{{ closeDone }}" style="flex:1 1 140px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:0;background:#114232;color:#f4f0e5;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820">Parfait, merci</button>
+              <button sc-camel-on-click="{{ newOrder }}" style="flex:1 1 160px;appearance:none;cursor:pointer;height:50px;padding:0 20px;border-radius:999px;border:1.5px solid #202820;background:transparent;color:#202820;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px" style-hover="background:#202820;color:#f4f0e5">Nouvelle commande</button>
+            </div>
+          </sc-if>
         </div>
       </div>
     </sc-if>
@@ -1172,8 +1180,19 @@ class Component extends DCLogic {
     this.watchReveal();
     this.startMarquee();
     this.loadMenus();
-    // Retour de Stripe après annulation : on le dit, et la commande non payée s'efface toute seule
-    if (/[?&]paiement=annule/.test(location.search)) {
+    // Retour de Stripe
+    const sp = new URLSearchParams(location.search);
+    if (sp.get('paye') === '1') {
+      // Paiement réussi : on finalise côté script (vérif + e-mails) et on montre la confirmation
+      const id = sp.get('id'), token = sp.get('token'), session = sp.get('session');
+      try { history.replaceState(null, '', location.pathname + '#commander'); } catch (e) {}
+      if (this.ORDER_API && id && token && session) {
+        fetch(this.ORDER_API + '?action=paid&id=' + encodeURIComponent(id) + '&token=' + encodeURIComponent(token) + '&session=' + encodeURIComponent(session) + '&json=1').catch(() => {});
+      }
+      let paye = null; try { paye = JSON.parse(sessionStorage.getItem('casa-paye') || 'null'); sessionStorage.removeItem('casa-paye'); } catch (e) {}
+      if (!paye) paye = { id: id ? 'Commande n° ' + id : 'Votre commande', name: '', stamp: 'Payé', title: 'C’est payé !', note: 'Votre paiement est bien reçu. Céline valide votre commande et vous confirme par e-mail.', when: '', lines: [], pay: 'Carte en ligne', total: '' };
+      this.setCmd({ done: paye });
+    } else if (/[?&]paiement=annule/.test(location.search)) {
       try { history.replaceState(null, '', location.pathname + '#commander'); } catch (e) {}
       this.setCmd({ msg: 'Paiement annulé : votre commande n’a pas été validée. Vous pouvez recommencer.' });
       setTimeout(() => this.scrollToId('commander'), 400);
@@ -1492,6 +1511,8 @@ class Component extends DCLogic {
         // Confirmation window content, frozen at the moment of the order
         const done = id => ({
           id: id ? 'Commande n° ' + id : 'Commande (démo)', name: p,
+          stamp: 'Commandé', title: 'C’est noté, ' + p + ' !',
+          note: 'Vous recevez un e-mail récapitulatif. Céline valide ensuite votre commande et vous le confirme par e-mail.',
           when: isLiv ? `Livraison au ${address} : ${days.map(y => longDay(y) + ' à ' + c.slots[y]).join(' ; ')}.`
             : `À retirer au 6 rue Beauclair à Aurillac : ${days.map(y => longDay(y) + (isNoelY(y) && c.slots[y] ? ' à ' + c.slots[y] : ', entre 11h30 et 13h')).join(' ; ')}.`
               + (days.some(y => !isNoelY(y)) ? ' Un e-mail vous prévient dès que c’est prêt.' : ''),
@@ -1513,8 +1534,15 @@ class Component extends DCLogic {
           .then(res => {
             if (!res.ok) { this.setCmd({ sending: false, msg: res.error || 'La commande n’a pas pu être envoyée.' }); return; }
             days.forEach(y => { delete this.dispo[y]; });
-            // Paiement en ligne : Stripe renvoie l'adresse de la page de paiement, on y envoie le client
-            if (res.checkout) { this.setCmd({ msg: 'Redirection vers le paiement sécurisé…' }); window.location.href = res.checkout; return; }
+            // Paiement en ligne : on montre le récap avec un bouton « Payer » (pas de redirection brutale)
+            if (res.checkout) {
+              const base = done(res.id);
+              // Gardé pour l'affichage au retour de Stripe (après paiement)
+              try { sessionStorage.setItem('casa-paye', JSON.stringify({ ...base, stamp: 'Payé', title: 'C’est payé, ' + p + ' !', note: 'Votre paiement est bien reçu. Céline valide votre commande et vous confirme par e-mail.', paid: true })); } catch (e) {}
+              this.setCmd({ sending: false, msg: '', done: { ...base, stamp: 'À régler', title: 'Presque fini, ' + p + ' !', note: 'Votre commande est réservée 30 minutes. Payez par carte pour la valider.', payUrl: res.checkout } });
+              this.stick(true);
+              return;
+            }
             this.setCmd({ sending: false, msg: '', done: done(res.id) });
             this.stick(true);
           })
@@ -1531,6 +1559,9 @@ class Component extends DCLogic {
       doneOn: !!dn,
       dId: dn ? dn.id : '', dName: dn ? dn.name : '', dWhen: dn ? dn.when : '',
       dLines: dn ? dn.lines : [], dPay: dn ? dn.pay : '', dTotal: dn ? dn.total : '',
+      dStamp: dn ? (dn.stamp || 'Commandé') : '', dTitle: dn ? (dn.title || '') : '', dNote: dn ? (dn.note || '') : '',
+      dPayOn: !!(dn && dn.payUrl), dPayNot: !(dn && dn.payUrl), dPayLabel: dn && dn.total ? 'Payer ' + dn.total + ' en ligne' : 'Payer en ligne',
+      payNow: () => { const d = this.cmd.done; if (d && d.payUrl) { this.setCmd({ done: { ...d, note: 'Ouverture du paiement sécurisé…' } }); window.location.href = d.payUrl; } },
       closeDone: () => this.setCmd({ done: null }),
       keepOpen: e => { if (e && e.stopPropagation) e.stopPropagation(); },
       newOrder: () => {
