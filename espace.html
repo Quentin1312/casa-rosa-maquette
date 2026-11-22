@@ -141,6 +141,8 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
 .day-name { font-family: 'Titan One', sans-serif; font-size: 19px; line-height: 1; color: var(--red); }
 .toggle { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 700; cursor: pointer; user-select: none; min-height: 36px; }
 .toggle input { width: 20px; height: 20px; accent-color: var(--red); margin: 0; }
+.statut { font-size: 15px; font-weight: 700; color: var(--ink); border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); padding: 7px 10px; min-height: 36px; cursor: pointer; font-family: inherit; max-width: 62%; }
+.day.closed .statut { border-color: var(--red); color: var(--red); }
 .tag { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--green); color: var(--cream); }
 .f { display: flex; flex-direction: column; gap: 3px; }
 .f span { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -616,20 +618,24 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     DAYS.forEach(function (name, i) {
       var date = addDays(state.week, i);
       var locked = state.bloques[date];
-      var s = (saved && saved[i]) || { e: '', p: '', d: '', ferme: false };
+      var s = (saved && saved[i]) || { e: '', p: '', d: '', ferme: false, statut: '' };
+      var st = s.statut || (s.ferme ? 'ferme' : '');
+      var closed = !!st;
       var el = document.createElement('div');
-      el.className = 'day' + (locked ? ' locked closed' : s.ferme ? ' closed' : '');
+      el.className = 'day' + (locked ? ' locked closed' : closed ? ' closed' : '');
+      var opt = function (v, t) { return '<option value="' + v + '"' + (st === v ? ' selected' : '') + '>' + t + '</option>'; };
       var head = '<div class="day-head"><span class="day-name">' + name + ' ' + dayNum(date) + '</span>'
-        + (locked ? '<span class="tag"></span>' : '<label class="toggle"><input type="checkbox" class="ferme"' + (s.ferme ? ' checked' : '') + '> Fermé</label>') + '</div>';
+        + (locked ? '<span class="tag"></span>'
+          : '<select class="statut" aria-label="Statut du jour">' + opt('', 'Service normal') + opt('complet', 'Complet') + opt('prestation', 'Prestation extérieure') + opt('ferme', 'Fermé') + '</select>') + '</div>';
       var field = function (k, label) {
         return '<label class="f"><span>' + label + '</span><input type="text" class="' + k + '" maxlength="120" autocomplete="off" enterkeyhint="next"></label>';
       };
       el.innerHTML = head + field('e', 'Entrée') + field('p', 'Plat')
         + '<p class="hint" hidden>Un peu long pour l’assiette du site : mets l’accompagnement après une virgule.</p>'
         + field('d', 'Dessert')
-        + '<p class="closed-text"' + (locked || s.ferme ? '' : ' hidden') + '></p>';
+        + '<p class="closed-text"' + (locked || closed ? '' : ' hidden') + '></p>';
       if (locked) el.querySelector('.tag').textContent = locked;
-      el.querySelector('.closed-text').textContent = locked === 'Menu de Noël' ? 'Ce jour-là, seul le menu de Noël est proposé.' : 'Pas de commande ce jour-là.';
+      el.querySelector('.closed-text').textContent = locked === 'Menu de Noël' ? 'Ce jour-là, seul le menu de Noël est proposé.' : closedText(st);
       el.querySelector('input.p').placeholder = 'Nom du plat, accompagnement';
       ['e', 'p', 'd'].forEach(function (k) { el.querySelector('input.' + k).value = s[k] || ''; });
       platHint(el);
@@ -640,24 +646,29 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   function tidy(s) { return String(s || '').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').replace(/^(,\s*)+|(,\s*)+$/g, '').trim(); }
   // The site writes the dish name (before the first comma) big on the plate: warn when it is too long for it
   function platHint(el) { el.querySelector('.hint').hidden = tidy(el.querySelector('input.p').value).split(',')[0].length <= 32; }
+  // Texte affiché quand le jour n'a pas de service (selon le statut choisi)
+  function closedText(st) { return st === 'complet' ? 'Jour complet : pas de commande en ligne.' : st === 'prestation' ? 'Prestation extérieure : pas de commande ce jour-là.' : 'Pas de commande ce jour-là.'; }
   $('days').addEventListener('input', function (e) {
     if (e.target.matches('input[type=text]')) { e.target.removeAttribute('aria-invalid'); touch(); }
     if (e.target.matches('input.p')) platHint(e.target.closest('.day'));
   });
   $('days').addEventListener('change', function (e) {
-    if (!e.target.matches('.ferme')) return;
-    var day = e.target.closest('.day');
-    day.classList.toggle('closed', e.target.checked);
-    day.querySelector('.closed-text').hidden = !e.target.checked;
+    if (!e.target.matches('.statut')) return;
+    var day = e.target.closest('.day'), st = e.target.value, closed = !!st;
+    day.classList.toggle('closed', closed);
+    var ct = day.querySelector('.closed-text');
+    ct.hidden = !closed;
+    ct.textContent = closedText(st);
     touch();
   });
   function touch() { state.dirty = true; status(); }
   function readDays() {
     return Array.prototype.map.call(document.querySelectorAll('.day'), function (el) {
-      var f = el.querySelector('.ferme');
+      var sel = el.querySelector('.statut');
+      var statut = sel ? sel.value : '';
       return {
         entree: tidy(el.querySelector('input.e').value), plat: tidy(el.querySelector('input.p').value), dessert: tidy(el.querySelector('input.d').value),
-        ferme: !!(f && f.checked), locked: el.classList.contains('locked'),
+        statut: statut, ferme: !!statut, locked: el.classList.contains('locked'),
       };
     });
   }
@@ -698,9 +709,12 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       var j = r.jours[i];
       if (!j.entree && !j.plat && !j.dessert && !j.ferme) return;
       filled++;
-      el.querySelector('.ferme').checked = j.ferme;
-      el.classList.toggle('closed', j.ferme);
-      el.querySelector('.closed-text').hidden = !j.ferme;
+      var sel = el.querySelector('.statut');
+      if (sel) sel.value = j.ferme ? 'ferme' : '';
+      el.classList.toggle('closed', !!j.ferme);
+      var ct = el.querySelector('.closed-text');
+      ct.hidden = !j.ferme;
+      ct.textContent = closedText(j.ferme ? 'ferme' : '');
       if (!j.ferme) {
         el.querySelector('input.e').value = j.entree;
         el.querySelector('input.p').value = j.plat;
@@ -745,7 +759,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     var gaps = missing();
     if (gaps.length) {
       $('parseNote').className = 'note bad';
-      $('parseNote').textContent = 'Il manque : ' + gaps.join(', ') + '. Remplis-les, ou coche « Fermé ».';
+      $('parseNote').textContent = 'Il manque : ' + gaps.join(', ') + '. Remplis-les, ou choisis « Complet », « Prestation extérieure » ou « Fermé ».';
       setStatus('Il manque des plats', 'var(--red)', gaps.join(', '));
       if (firstBad) { firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstBad.focus({ preventScroll: true }); }
       return;
@@ -754,7 +768,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     var btn = $('publier');
     btn.disabled = true;
     btn.textContent = 'Publication…';
-    post({ action: 'menu', code: state.code, semaine: state.week, jours: days.map(function (d) { return { entree: d.entree, plat: d.plat, dessert: d.dessert, ferme: d.ferme }; }) })
+    post({ action: 'menu', code: state.code, semaine: state.week, jours: days.map(function (d) { return { entree: d.entree, plat: d.plat, dessert: d.dessert, statut: d.statut }; }) })
       .then(function (res) {
         if (!res.ok) {
           if (codeError(res)) return;
