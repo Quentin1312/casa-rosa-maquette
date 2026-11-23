@@ -512,20 +512,16 @@
                     </sc-for>
                   </div>
                 </div>
-                <sc-if value="{{ showZones }}" hint-placeholder-val="{{ true }}">
-                  <div style="display:flex;flex-direction:column;gap:8px">
-                    <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Zone</span>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px">
-                      <sc-for list="{{ zones }}" as="z" hint-placeholder-count="2">
-                        <button sc-camel-on-click="{{ z.pick }}" style="background:{{ z.bg }};color:{{ z.fg }};appearance:none;cursor:pointer;border:1.5px solid #202820;border-radius:999px;min-height:42px;padding:0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,color .2s">{{ z.label }}</button>
-                      </sc-for>
-                    </div>
-                  </div>
-                </sc-if>
                 <div style="display:flex;flex-direction:column;gap:10px">
                   <input value="{{ rue }}" sc-camel-on-change="{{ onRue }}" placeholder="N° et rue de livraison" aria-label="N° et rue de livraison" autocomplete="address-line1" maxlength="120" style="width:100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                   <input value="{{ complement }}" sc-camel-on-change="{{ onComplement }}" placeholder="Complément (entreprise, étage…)" aria-label="Complément d’adresse" maxlength="80" style="width:100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 </div>
+                <sc-if value="{{ livShow }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;background:#eef3ec;border:1.5px solid #114232">
+                    <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">Livraison</span>
+                    <span style="font-size:15px;font-weight:800;color:#202820">{{ livInfo }}</span>
+                  </div>
+                </sc-if>
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">Créneau</span>
                   <sc-for list="{{ slotDays }}" as="sd" hint-placeholder-count="1">
@@ -1232,8 +1228,26 @@ class Component extends DCLogic {
   // Web app URL of the Google Apps Script (casa-rosa-outils/Code.gs). Empty = demo mode.
   ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
+  livGeo = {}; // zones de livraison déjà calculées depuis l'adresse, clé « rue|commune »
   cmd = { ch: [-1, -1, -1], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', remarques: '', sending: false, mode: 'collect', adresse: '', truckGo: false, zone: 0, slots: {}, pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', dayHint: '', done: null, bar: false, composing: true };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
+  // Communes proposées (réponse du script, ou repli) : sert à construire l'adresse à géocoder.
+  communesList() { for (const k in this.dispo) { const d = this.dispo[k]; if (d && d.communes) return d.communes; } return ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)']; }
+  // Le script calcule la zone (et son tarif) depuis l'adresse ; on le fait une fois la saisie stabilisée.
+  geocodeLiv() {
+    const c = this.cmd;
+    if (!this.ORDER_API || c.mode !== 'livraison') return;
+    const rue = String(c.rue || '').trim(), commune = this.communesList()[c.commune] || '';
+    if (rue.length < 5) return;
+    const key = rue + '|' + commune;
+    if (key in this.livGeo) return; // déjà demandé (null = en cours)
+    this.livGeo[key] = null; this.forceUpdate();
+    fetch(this.ORDER_API + '?action=zone&rue=' + encodeURIComponent(rue) + '&commune=' + encodeURIComponent(commune))
+      .then(r => r.json())
+      .then(d => { this.livGeo[key] = (d && d.ok) ? d : { ok: false }; this.forceUpdate(); })
+      .catch(() => { delete this.livGeo[key]; });
+  }
+  scheduleGeo(ms) { clearTimeout(this.geoT); this.geoT = setTimeout(() => this.geocodeLiv(), ms || 500); }
   watchCmd() {
     const el = this.cmdRef.current;
     if (!el || this.io2) return;
@@ -1284,10 +1298,19 @@ class Component extends DCLogic {
     const menuShut = (y, wd) => { const m = this.weekMenu(this.mondayOf(y)); return m.exact && m.rows[wd - 1][4]; };
     d.setHours(12, 0, 0, 0);
     d.setDate(d.getDate() + (now.getHours() < 13 ? 1 : 2));
+    // Commandes ouvertes jusqu'à 2 semaines ; une semaine future n'est commandable qu'une fois son menu publié
+    const curMon = this.mondayOf(today);
+    const baseMon = now.getDay() === 0 || now.getDay() === 6 ? this.plusDays(curMon, 7) : curMon;
+    const orderableDay = (y, wd) => {
+      const m = this.weekMenu(this.mondayOf(y));
+      if (m.exact && m.rows[wd - 1][4]) return false;           // jour marqué fermé par Céline
+      if (this.mondayOf(y) > baseMon && !m.exact) return false; // semaine future pas encore publiée
+      return true;
+    };
     const out = [];
-    for (let n = 0; out.length < 5 && n < 120; n++) {
+    for (let n = 0; out.length < 10 && n < 120; n++) {
       const wd = d.getDay(), y = this.ymdOf(d);
-      if (wd !== 0 && wd !== 6 && !allNoel.includes(y) && !shut.has(y) && !menuShut(y, wd)) out.push({ d: new Date(d), ymd: y, noel: false });
+      if (wd !== 0 && wd !== 6 && !allNoel.includes(y) && !shut.has(y) && orderableDay(y, wd)) out.push({ d: new Date(d), ymd: y, noel: false });
       d.setDate(d.getDate() + 1);
     }
     return out.concat(noel.map(y => ({ d: new Date(y + 'T12:00:00'), ymd: y, noel: true })));
@@ -1315,7 +1338,8 @@ class Component extends DCLogic {
       if (x.noel) return N.courses.map(([k, list]) => [k, list.map(o => o[0])]);
       // Only the dishes Céline cooks that day (one per course): the client taps the ones wanted
       const wd = x.d.getDay() - 1, W = this.weekMenu(this.mondayOf(y)).rows;
-      const dayOpts = col => [W[wd][col]];
+      // « X ou Y » dans un plat = plusieurs propositions au choix (sinon un seul plat)
+      const dayOpts = col => { const o = String(W[wd][col] || '').split(/\s+ou\s+/i).map(t => t.trim()).filter(Boolean); return o.length ? o : ['']; };
       return [['Entrée', dayOpts(1)], ['Plat', dayOpts(2)], ['Dessert', dayOpts(3)]];
     };
 
@@ -1328,11 +1352,12 @@ class Component extends DCLogic {
     const filled = l => l.formule === 'carte' ? l.sel.some(v => v >= 0) : l.sel.every(v => v >= 0);
     const formLabel = f => f === 'carte' ? 'À la carte' : f === 'noel' ? 'Menu de Noël' : 'Menu complet';
     const lineText = l => itemsOf(l).filter(Boolean).join(' · ') + (l.pain ? ' + pain' : '');
-    const current = { date: ymd, formule, sel: autoMenu ? optsFor(ymd).map(() => 0) : c.ch.slice(), pain: !isNoelDay && c.pain, qty: c.qty };
+    // Menu complet : un plat à choix unique est inclus d'office ; un plat avec « ou » demande de choisir
+    const current = { date: ymd, formule, sel: autoMenu ? optsFor(ymd).map(([, list], i) => list.length > 1 ? c.ch[i] : 0) : c.ch.slice(), pain: !isNoelDay && c.pain, qty: c.qty };
     const curStarted = current.sel.some(v => v >= 0), curOk = filled(current);
     const lines = [...c.cart, ...(curOk ? [current] : [])];
     const days = [...new Set(lines.map(l => l.date))].sort();
-    const total = lines.reduce((s, l) => s + lineTotal(l), 0);
+    const baseTotal = lines.reduce((s, l) => s + lineTotal(l), 0);
     const meals = lines.reduce((s, l) => s + l.qty, 0);
     const menusOn = y => lines.filter(l => l.date === y && l.formule !== 'carte').reduce((s, l) => s + l.qty, 0);
     const missing = () => optsFor(ymd).filter((_, i) => current.sel[i] < 0).map(([k]) => k.toLowerCase()).join(', ');
@@ -1359,8 +1384,16 @@ class Component extends DCLogic {
     const isNoelY = y => dayOf(y).noel;
     const slotsOf = y => { const x = dispoOf(y); return (x && x.creneaux) || (isNoelY(y) ? N.slots : ['11h30', '12h00', '12h30', '13h00']); };
     const COMMUNES = (dd && dd.communes) || ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)'];
-    const ZONES = [['Centre-ville', '7 € HT'], ['Hors centre-ville', '15 € HT'], ['Jusqu’à Arpajon', '20 € HT']];
-    const zoneIdx = c.commune === 1 ? 2 : Math.min(c.zone, 1); // Arpajon is its own zone
+    // Livraison : la zone et son tarif viennent du script, calculés depuis l'adresse (plus de choix manuel, pas trichable).
+    const livKey = String(c.rue || '').trim() + '|' + COMMUNES[c.commune];
+    const geo = isLiv ? this.livGeo[livKey] : undefined; // undefined = pas demandé, null = en cours, objet = répondu
+    const livOk = !!(geo && geo.ok && geo.found && geo.label); // zone bien calculée, avec un tarif
+    const livFee = livOk ? (Number(geo.fee) || 0) : 0;
+    const livInfo = geo === null ? 'Calcul de la zone de livraison…'
+      : livOk ? geo.label + ' · livraison ' + fmt(geo.fee)
+      : (geo && geo.ok === false) ? 'Adresse non reconnue : le tarif sera confirmé à la validation.'
+      : (String(c.rue || '').trim().length >= 5 ? 'Calcul de la zone de livraison…' : 'Indiquez votre adresse de livraison ci-dessus.');
+    const total = baseTotal + (isLiv ? livFee : 0);
     const full = (sl, y) => { const x = this.dispo[y]; return this.ORDER_API ? !!(x && (x.creneauxComplets || []).includes(sl)) : false; };
     // Paiement : si Stripe est activé (réponse du script), on propose « Carte en ligne » (paiement tout de suite) à la place du boîtier
     const PAYS = this.payOnline ? ['Carte en ligne', 'Espèces', 'Virement'] : ['Carte bancaire', 'Espèces', 'Virement'];
@@ -1384,7 +1417,7 @@ class Component extends DCLogic {
       if (isCarte && !curStarted) tLines = [{ k: 'À la carte', v: 'Choisissez vos plats', ...noRm }];
       if (current.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
     }
-    if (isLiv) tLines.push({ k: 'Livraison', v: ZONES[zoneIdx][0] + (slotDays.some(y => c.slots[y]) ? ' · ' + slotDays.map(y => c.slots[y]).filter(Boolean).join(', ') : ''), ...noRm });
+    if (isLiv) tLines.push({ k: 'Livraison', v: (livOk ? geo.label + ' · ' + fmt(geo.fee) : 'Zone selon votre adresse') + (slotDays.some(y => c.slots[y]) ? ' · ' + slotDays.map(y => c.slots[y]).filter(Boolean).join(', ') : ''), ...noRm });
     if (pickupOn && slotDays.some(y => c.slots[y])) tLines.push({ k: 'Heure de retrait', v: slotDays.map(y => c.slots[y]).filter(Boolean).join(', '), ...noRm });
     tLines.push({ k: 'Paiement', v: PAYS[c.pay], ...noRm });
     const dn = c.done;
@@ -1407,6 +1440,7 @@ class Component extends DCLogic {
       carteBg: sel(isCarte).bg, carteFg: sel(isCarte).fg,
       platsHint: isNoelDay ? 'Choisissez votre entrée, votre plat et votre dessert, puis validez.'
         : isCarte ? 'Touchez les plats que vous voulez, puis validez le menu.'
+        : optsFor(ymd).some(([, l]) => l.length > 1) ? 'Le menu du jour est inclus : touchez votre choix quand plusieurs sont proposés, choisissez la quantité, puis validez.'
         : 'Le menu du jour est déjà inclus : entrée, plat et dessert. Choisissez la quantité, puis validez.',
       pickmenu: () => this.setCmd({ formule: 'menu', ...reset }),
       pickcarte: () => this.setCmd({ formule: 'carte', ch: [-1, -1, -1], ...reset }),
@@ -1416,9 +1450,9 @@ class Component extends DCLogic {
         ? (isLiv ? 'Le menu de Noël ne se livre pas : il se retire à la boutique. Choisissez « Click and collect ».'
           : 'Menu de Noël : retrait au 6 rue Beauclair, Aurillac, entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à l’heure de votre choix')
         : isLiv ? 'Livraison entre ' + slotsOf(ymd)[0] + ' et ' + slotsOf(ymd)[slotsOf(ymd).length - 1] + ', à Aurillac et Arpajon-sur-Cère · à partir de 5 menus complets par jour' : 'Retrait au 6 rue Beauclair, Aurillac · du lundi au vendredi, de 11h30 à 13h · un e-mail vous prévient dès que c’est prêt',
-      communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => this.setCmd({ commune: i, ...reset }) })),
-      showZones: c.commune === 0,
-      zones: ZONES.slice(0, 2).map(([label, fee], i) => ({ label: label + ' · ' + fee, ...sel(i === zoneIdx), pick: () => this.setCmd({ zone: i, ...reset }) })),
+      communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => { this.setCmd({ commune: i, ...reset }); this.scheduleGeo(200); } })),
+      livShow: isLiv,
+      livInfo,
       slotDays: slotDays.map(y => ({
         label: slotDays.length > 1 ? shortDay(y) : '',
         labelD: slotDays.length > 1 ? 'block' : 'none',
@@ -1436,9 +1470,10 @@ class Component extends DCLogic {
       courses: optsFor(ymd).map(([k, list], i) => ({
         label: isCarte ? k + ' · ' + fmt(PRICES[i]) : k,
         opts: list.map((v, n) => {
-          const on = autoMenu ? true : c.ch[i] === n, x = isNoelDay ? N.courses[i][1][n] : null;
+          const multi = list.length > 1;
+          const on = autoMenu ? (multi ? c.ch[i] === n : true) : c.ch[i] === n, x = isNoelDay ? N.courses[i][1][n] : null;
           return { v: v + (x && x[1] ? ' · +' + x[1] + ' €' : '') + (x && x[3] ? ' · végé' : ''), ...sel(on),
-            pick: autoMenu ? () => {} : () => { const ch = c.ch.slice(); ch[i] = on ? -1 : n; this.setCmd({ ch, ...reset }); } };
+            pick: (autoMenu && !multi) ? () => {} : () => { const ch = c.ch.slice(); ch[i] = on ? -1 : n; this.setCmd({ ch, ...reset }); } };
         }),
       })),
       // Validate the menu on screen: it joins the order and the form closes
@@ -1483,7 +1518,7 @@ class Component extends DCLogic {
       email: c.email, onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
       tel: c.tel, onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
       remarques: c.remarques, onRemarques: e => this.setCmd({ remarques: e.target.value, ...reset }),
-      rue: c.rue, onRue: e => this.setCmd({ rue: e.target.value, ...reset }),
+      rue: c.rue, onRue: e => { this.setCmd({ rue: e.target.value, ...reset }); this.scheduleGeo(); },
       complement: c.complement, onComplement: e => this.setCmd({ complement: e.target.value, ...reset }),
       isLiv, pickupOn,
       collectOn: String(!isLiv), livOn: String(isLiv),
@@ -1521,7 +1556,8 @@ class Component extends DCLogic {
           when: isLiv ? `Livraison au ${address} : ${days.map(y => longDay(y) + ' à ' + c.slots[y]).join(' ; ')}.`
             : `À retirer au 6 rue Beauclair à Aurillac : ${days.map(y => longDay(y) + (isNoelY(y) && c.slots[y] ? ' à ' + c.slots[y] : ', entre 11h30 et 13h')).join(' ; ')}.`
               + (days.some(y => !isNoelY(y)) ? ' Un e-mail vous prévient dès que c’est prêt.' : ''),
-          lines: lines.map(l => ({ k: shortDay(l.date) + ' · ' + l.qty + ' × ' + formLabel(l.formule), v: lineText(l), p: fmt(lineTotal(l)) })),
+          lines: [...lines.map(l => ({ k: shortDay(l.date) + ' · ' + l.qty + ' × ' + formLabel(l.formule), v: lineText(l), p: fmt(lineTotal(l)) })),
+            ...(isLiv && livFee ? [{ k: 'Livraison', v: (livOk ? geo.label : address), p: fmt(livFee) }] : [])],
           pay: 'Paiement : ' + PAYS[c.pay], total: fmt(total),
         });
         if (!this.ORDER_API) { this.setCmd({ msg: '', done: done('') }); this.stick(true); return; } // demo mode, no script yet
@@ -1529,7 +1565,7 @@ class Component extends DCLogic {
         const payload = { date: days[0], slot: isLiv ? c.slots[days[0]] : '', mode: c.mode,
           lines: lines.map(l => { const [entree, plat, dessert] = itemsOf(l); return { date: l.date, formule: l.formule, entree, plat, dessert, pain: l.pain, qty: l.qty }; }),
           slots: Object.fromEntries(slotDays.map(y => [y, c.slots[y]])),
-          zone: isLiv ? ZONES[zoneIdx][0] : '',
+          zone: isLiv && livOk ? geo.label : '',
           rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
           paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), remarques: c.remarques.trim(), website: '' };
         this.setCmd({ sending: true, msg: 'Envoi de votre commande…' });
