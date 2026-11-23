@@ -1952,11 +1952,23 @@ class Component extends DCLogic {
   function fit(box) {
     var dish = box.querySelector('.wk-dish');
     if (!dish) return;
+    // Les enfants ne doivent pas être écrasés par le flex, sinon l'accompagnement est réduit à presque rien
+    // au lieu de faire rétrécir le nom du plat. Et on mesure la hauteur réelle des enfants : box.scrollHeight
+    // reste égal à clientHeight à cause du centrage flex, donc il ne détectait jamais le débordement.
+    var kids = box.children;
+    for (var i = 0; i < kids.length; i++) kids[i].style.flexShrink = '0';
+    var gap = parseFloat(getComputedStyle(box).rowGap) || 0;
     var max = parseFloat(dish.getAttribute('data-max')) || parseFloat(getComputedStyle(dish).fontSize) || 18;
     var fs = max;
     dish.style.fontSize = fs + 'px';
+    function over() {
+      var h = 0;
+      for (var i = 0; i < kids.length; i++) h += kids[i].offsetHeight;
+      h += gap * Math.max(0, kids.length - 1);
+      return h > box.clientHeight + 0.5 || dish.scrollWidth > dish.clientWidth + 0.5;
+    }
     var g = 0;
-    while ((box.scrollHeight > box.clientHeight + 0.5 || dish.scrollWidth > dish.clientWidth + 0.5) && fs > 9 && g++ < 80) {
+    while (over() && fs > 9 && g++ < 100) {
       fs -= 0.5;
       dish.style.fontSize = fs + 'px';
     }
