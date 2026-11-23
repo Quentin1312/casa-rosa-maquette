@@ -111,12 +111,12 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 /* Carte saisonnière */
 .ca-lbl { display: block; font-weight: 700; margin: 0 0 6px; }
 .ca-in, .ca-nom, .ca-desc { width: 100%; box-sizing: border-box; font: inherit; padding: 10px 12px; border: 1.5px solid var(--line, #ccc); border-radius: 10px; background: #fff; }
-.ca-sec { margin-top: 20px; }
-.ca-sec h2 { font-size: 16px; margin: 0 0 8px; }
-.ca-rows { display: flex; flex-direction: column; gap: 8px; }
+.ca-sec { margin-top: 20px; padding-top: 18px; border-top: 1.5px dashed #d9d4c4; }
+.ca-sec h2 { font-size: 16px; margin: 0 0 10px; }
+.ca-rows { display: flex; flex-direction: column; gap: 10px; }
 .ca-row { display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 8px; align-items: center; }
 .ca-del { border: 0; background: transparent; cursor: pointer; font-size: 18px; line-height: 1; padding: 6px 10px; color: var(--red, #8D1D2C); }
-.ca-add { margin-top: 10px; }
+.ca-add { margin-top: 12px; }
 @media (max-width: 560px) { .ca-row { grid-template-columns: 1fr auto; } .ca-row .ca-desc { grid-column: 1 / -1; } }
 .week { appearance: none; text-align: left; cursor: pointer; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 14px; padding: 12px 14px; font-family: inherit; display: flex; flex-direction: column; gap: 3px; min-height: 92px; transition: background .2s, color .2s; }
 .week:hover { background: #fff; }
@@ -286,6 +286,35 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
         <h1>La carte saisonnière</h1>
         <p class="lead">Modifie la carte « sur devis » du site : le titre de la saison, les entrées, les plats et les desserts.</p>
         <div class="card">
+          <div class="step-head"><span class="step">1</span><h2>Dicte ou colle ta carte</h2></div>
+          <p class="muted small" style="margin:0">Le titre de la saison, puis « Entrées : », « Plats : », « Desserts : », un plat par ligne (son nom, puis la description après un tiret). Exemple : « Novembre à janvier. Entrées : Taboulé de saison — semoule, poireaux. Plats : … »</p>
+          <label for="caTexte" class="sr">Texte de la carte</label>
+          <textarea id="caTexte" placeholder="Novembre à janvier&#10;Entrées :&#10;Taboulé de saison — semoule, poireaux, orange&#10;Plats :&#10;Chili aux lentilles — bœuf bio et riz&#10;Desserts :&#10;Tarte aux pommes"></textarea>
+          <div class="row">
+            <button class="btn line" type="button" id="caMic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><circle class="dot" cx="12" cy="8.5" r="0" fill="currentColor"></circle></svg>
+              <span id="caMicLabel">Dicter</span>
+            </button>
+            <button class="btn green" type="button" id="caRemplir">Remplir la carte</button>
+          </div>
+          <p class="note" id="caParseNote" role="status"></p>
+          <p class="muted small" id="caMicTip" hidden style="margin:8px 0 0">Astuce : le micro de ton clavier marche aussi pour dicter.</p>
+          <details>
+            <summary>Tu passes par ChatGPT ?</summary>
+            <p class="small" style="margin:8px 0 0">Donne-lui cette consigne avec ta carte, puis colle sa réponse ici.</p>
+            <div class="prompt" id="caPrompt">Remets ma carte saisonnière sous cette forme, sans rien ajouter :
+Titre : …
+Entrées :
+Nom du plat — description
+Plats :
+Nom du plat — description
+Desserts :
+Nom du plat — description</div>
+            <button class="btn line" type="button" id="caCopy" style="min-height:44px">Copier la consigne</button>
+          </details>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <div class="step-head"><span class="step">2</span><h2>Vérifie et publie</h2></div>
           <label class="ca-lbl" for="caTitre">Titre de la saison</label>
           <input id="caTitre" class="ca-in" type="text" maxlength="60" placeholder="Novembre à janvier">
           <div class="ca-sec" data-sec="entrees"><h2>Entrées</h2><div class="ca-rows"></div><button class="btn line ca-add" type="button" data-sec="entrees" style="min-height:44px">+ Ajouter une entrée</button></div>
@@ -861,6 +890,63 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       .then(function () { state.busy = false; btn.disabled = false; btn.textContent = 'Publier la carte'; });
   });
 
+  // ---------- Carte : dictée / collage ----------
+  var caRec = null;
+  function caSplitItem(s) {
+    var m = String(s).match(/^(.*?)\s+(?:—|–|·|:)\s+(.*)$/) || String(s).match(/^(.*?)\s+-\s+(.*)$/);
+    if (m && m[1].trim()) return { nom: m[1].trim(), desc: m[2].trim() };
+    return { nom: String(s).trim(), desc: '' };
+  }
+  function caSectionKey(s) {
+    var t = String(s).toLowerCase().replace(/^[\s•\-–—]+/, '').trim();
+    if (/^titre\b|^saison\b/.test(t)) return 'titre';
+    if (/^entr[ée]es?\b/.test(t)) return 'entrees';
+    if (/^plats?\b/.test(t)) return 'plats';
+    if (/^desserts?\b/.test(t)) return 'desserts';
+    return null;
+  }
+  function caParse(text) {
+    var res = { titre: '', entrees: [], plats: [], desserts: [] }, sec = null;
+    String(text || '').split(/\r?\n/).forEach(function (raw) {
+      var line = raw.trim();
+      if (!line) return;
+      var head = line.match(/^(.*?)\s*[:：]\s*(.*)$/);
+      var key = caSectionKey(head ? head[1] : line);
+      if (key) {
+        sec = key;
+        var rest = head ? head[2].trim() : '';
+        if (key === 'titre') { if (rest) res.titre = rest; return; }
+        if (rest) rest.split(/\s*,\s*|\s*;\s*/).forEach(function (p) { if (p.trim()) res[key].push({ nom: p.trim(), desc: '' }); });
+        return;
+      }
+      if (sec && sec !== 'titre') { res[sec].push(caSplitItem(line)); return; }
+      if (!res.titre) res.titre = line;
+    });
+    return res;
+  }
+  function caFill() {
+    var r = caParse($('caTexte').value), n = r.entrees.length + r.plats.length + r.desserts.length;
+    if (!r.titre && !n) {
+      $('caParseNote').className = 'note bad';
+      $('caParseNote').textContent = 'Je n’ai pas réussi à lire la carte. Mets le titre, puis « Entrées : », « Plats : », « Desserts : ».';
+      return;
+    }
+    if (r.titre) $('caTitre').value = r.titre;
+    ['entrees', 'plats', 'desserts'].forEach(function (s) {
+      var box = caRowsOf(s); box.innerHTML = '';
+      var arr = r[s].length ? r[s] : [{ nom: '', desc: '' }];
+      arr.forEach(function (it) { box.appendChild(caRow(it.nom, it.desc)); });
+    });
+    $('caParseNote').className = 'note ok';
+    $('caParseNote').textContent = 'Carte lue : ' + n + ' plat' + (n > 1 ? 's' : '') + '. Vérifie et publie.';
+  }
+  $('caRemplir').addEventListener('click', caFill);
+  $('caCopy').addEventListener('click', function () {
+    var t = $('caPrompt').textContent;
+    var done = function () { $('caCopy').textContent = 'Consigne copiée ✓'; setTimeout(function () { $('caCopy').textContent = 'Copier la consigne'; }, 2500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {});
+  });
+
   // ---------- Dictation (Chrome, Safari) ----------
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   var rec = null;
@@ -895,6 +981,19 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     $('mic').classList.add('rec');
     $('micLabel').textContent = 'J’écoute… touche pour finir';
     $('mic').querySelector('.dot').setAttribute('r', '2.2');
+  });
+
+  // Micro de la carte (même logique que le menu)
+  if (!SR) { $('caMic').hidden = true; $('caMicTip').hidden = false; }
+  else $('caMic').addEventListener('click', function () {
+    if (caRec) { caRec.stop(); return; }
+    var ta = $('caTexte');
+    var base = ta.value.trim() ? ta.value.replace(/\s*$/, '\n') : '';
+    caRec = new SR(); caRec.lang = 'fr-FR'; caRec.continuous = true; caRec.interimResults = true;
+    caRec.onresult = function (e) { var t = ''; for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + ' '; ta.value = base + t.trim(); };
+    caRec.onerror = function (e) { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { $('caParseNote').className = 'note bad'; $('caParseNote').textContent = 'Le micro est bloqué : autorise-le pour ce site, ou utilise le micro de ton clavier.'; } };
+    caRec.onend = function () { caRec = null; $('caMic').classList.remove('rec'); $('caMicLabel').textContent = 'Dicter'; $('caMic').querySelector('.dot').setAttribute('r', '0'); if (ta.value.trim()) caFill(); };
+    caRec.start(); $('caMic').classList.add('rec'); $('caMicLabel').textContent = 'J’écoute… touche pour finir'; $('caMic').querySelector('.dot').setAttribute('r', '2.2');
   });
 
   $('copy').addEventListener('click', function () {
