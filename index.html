@@ -517,8 +517,8 @@
                   <input value="{{ complement }}" sc-camel-on-change="{{ onComplement }}" placeholder="Complément (entreprise, étage…)" aria-label="Complément d’adresse" maxlength="80" style="width:100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 </div>
                 <sc-if value="{{ livShow }}" hint-placeholder-val="{{ true }}">
-                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;background:#eef3ec;border:1.5px solid #114232">
-                    <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#114232">Livraison</span>
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;background:{{ livPastBg }};border:1.5px solid {{ livPastBorder }}">
+                    <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:{{ livPastBorder }}">Livraison</span>
                     <span style="font-size:15px;font-weight:800;color:#202820">{{ livInfo }}</span>
                   </div>
                 </sc-if>
@@ -1388,9 +1388,11 @@ class Component extends DCLogic {
     const livKey = String(c.rue || '').trim() + '|' + COMMUNES[c.commune];
     const geo = isLiv ? this.livGeo[livKey] : undefined; // undefined = pas demandé, null = en cours, objet = répondu
     const livOk = !!(geo && geo.ok && geo.found && geo.label); // zone bien calculée, avec un tarif
+    const livOut = !!(geo && geo.ok && geo.found && geo.out);   // adresse confirmée hors zone de livraison (trop loin)
     const livFee = livOk ? (Number(geo.fee) || 0) : 0;
     const livInfo = geo === null ? 'Calcul de la zone de livraison…'
       : livOk ? geo.label + ' · livraison ' + fmt(geo.fee)
+      : livOut ? 'Hors zone de livraison : cette adresse est trop loin. Choisissez le click and collect.'
       : (geo && geo.ok === false) ? 'Adresse non reconnue : le tarif sera confirmé à la validation.'
       : (String(c.rue || '').trim().length >= 5 ? 'Calcul de la zone de livraison…' : 'Indiquez votre adresse de livraison ci-dessus.');
     const total = baseTotal + (isLiv ? livFee : 0);
@@ -1417,7 +1419,7 @@ class Component extends DCLogic {
       if (isCarte && !curStarted) tLines = [{ k: 'À la carte', v: 'Choisissez vos plats', ...noRm }];
       if (current.pain) tLines.push({ k: 'En plus', v: 'Pain artisanal', ...noRm });
     }
-    if (isLiv) tLines.push({ k: 'Livraison', v: (livOk ? geo.label + ' · ' + fmt(geo.fee) : 'Zone selon votre adresse') + (slotDays.some(y => c.slots[y]) ? ' · ' + slotDays.map(y => c.slots[y]).filter(Boolean).join(', ') : ''), ...noRm });
+    if (isLiv) tLines.push({ k: 'Livraison', v: (livOk ? geo.label + ' · ' + fmt(geo.fee) : livOut ? 'Hors zone — non livrable' : 'Zone selon votre adresse') + (slotDays.some(y => c.slots[y]) ? ' · ' + slotDays.map(y => c.slots[y]).filter(Boolean).join(', ') : ''), ...noRm });
     if (pickupOn && slotDays.some(y => c.slots[y])) tLines.push({ k: 'Heure de retrait', v: slotDays.map(y => c.slots[y]).filter(Boolean).join(', '), ...noRm });
     tLines.push({ k: 'Paiement', v: PAYS[c.pay], ...noRm });
     const dn = c.done;
@@ -1453,6 +1455,8 @@ class Component extends DCLogic {
       communes: COMMUNES.map((label, i) => ({ label, ...sel(i === c.commune), pick: () => { this.setCmd({ commune: i, ...reset }); this.scheduleGeo(200); } })),
       livShow: isLiv,
       livInfo,
+      livPastBg: livOut ? '#f6e9e6' : '#eef3ec',
+      livPastBorder: livOut ? '#8D1D2C' : '#114232',
       slotDays: slotDays.map(y => ({
         label: slotDays.length > 1 ? shortDay(y) : '',
         labelD: slotDays.length > 1 ? 'block' : 'none',
@@ -1543,6 +1547,7 @@ class Component extends DCLogic {
           const noSlot = days.find(y => !c.slots[y]);
           if (noSlot) { this.setCmd({ msg: 'Choisissez un créneau de livraison' + (days.length > 1 ? ' (' + shortDay(noSlot) + ')' : '') + '.' }); return; }
           if (!c.rue.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de livraison.' }); return; }
+          if (livOut) { this.setCmd({ msg: 'Cette adresse est hors zone de livraison : choisissez le click and collect à l’étape 1, ou une adresse plus proche.' }); return; }
         }
         if (!p) { this.setCmd({ msg: 'Indiquez votre prénom : il sera écrit sur l’étiquette.' }); return; }
         if (!c.nom.trim()) { this.setCmd({ msg: 'Indiquez aussi votre nom.' }); return; }
