@@ -2021,7 +2021,7 @@ class Component extends DCLogic {
   function wire() {
     document.querySelectorAll('.wk-fit').forEach(function (b) { roots.add(b.closest('section') || document.body); });
     if (!roots.size) roots.add(document.body);
-    mo = new MutationObserver(schedule);
+    mo = new MutationObserver(fitAll); // synchrone (avant le paint) pour éviter un flash de nom coupé quand le menu arrive
     connect();
     schedule();
   }
