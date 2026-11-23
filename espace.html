@@ -107,6 +107,16 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 
 /* Weeks */
 .weeks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 22px 0 18px; }
+/* Carte saisonnière */
+.ca-lbl { display: block; font-weight: 700; margin: 0 0 6px; }
+.ca-in, .ca-nom, .ca-desc { width: 100%; box-sizing: border-box; font: inherit; padding: 10px 12px; border: 1.5px solid var(--line, #ccc); border-radius: 10px; background: #fff; }
+.ca-sec { margin-top: 20px; }
+.ca-sec h2 { font-size: 16px; margin: 0 0 8px; }
+.ca-rows { display: flex; flex-direction: column; gap: 8px; }
+.ca-row { display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 8px; align-items: center; }
+.ca-del { border: 0; background: transparent; cursor: pointer; font-size: 18px; line-height: 1; padding: 6px 10px; color: var(--red, #8D1D2C); }
+.ca-add { margin-top: 10px; }
+@media (max-width: 560px) { .ca-row { grid-template-columns: 1fr auto; } .ca-row .ca-desc { grid-column: 1 / -1; } }
 .week { appearance: none; text-align: left; cursor: pointer; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 14px; padding: 12px 14px; font-family: inherit; display: flex; flex-direction: column; gap: 3px; min-height: 92px; transition: background .2s, color .2s; }
 .week:hover { background: #fff; }
 .week[aria-pressed="true"] { background: var(--green); color: var(--cream); }
@@ -212,6 +222,7 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
       <div class="tabs" role="tablist" aria-label="Espace Céline">
         <button class="tab" type="button" role="tab" id="tabCmd" aria-controls="paneCmd" aria-selected="true"><span>Commandes<span class="long"> du jour</span></span><span class="count" id="cmdCount"></span></button>
         <button class="tab" type="button" role="tab" id="tabMenu" aria-controls="paneMenu" aria-selected="false"><span>Menu<span class="long"> de la semaine</span></span></button>
+        <button class="tab" type="button" role="tab" id="tabCarte" aria-controls="paneCarte" aria-selected="false"><span>Carte<span class="long"> saisonnière</span></span></button>
       </div>
 
       <div id="paneCmd" role="tabpanel" aria-labelledby="tabCmd">
@@ -270,6 +281,20 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       </div>
       </div>
 
+      <div id="paneCarte" role="tabpanel" aria-labelledby="tabCarte" hidden>
+        <h1>La carte saisonnière</h1>
+        <p class="lead">Modifie la carte « sur devis » du site : le titre de la saison, les entrées, les plats et les desserts.</p>
+        <div class="card">
+          <label class="ca-lbl" for="caTitre">Titre de la saison</label>
+          <input id="caTitre" class="ca-in" type="text" maxlength="60" placeholder="Novembre à janvier">
+          <div class="ca-sec" data-sec="entrees"><h2>Entrées</h2><div class="ca-rows"></div><button class="btn line ca-add" type="button" data-sec="entrees" style="min-height:44px">+ Ajouter une entrée</button></div>
+          <div class="ca-sec" data-sec="plats"><h2>Plats</h2><div class="ca-rows"></div><button class="btn line ca-add" type="button" data-sec="plats" style="min-height:44px">+ Ajouter un plat</button></div>
+          <div class="ca-sec" data-sec="desserts"><h2>Desserts</h2><div class="ca-rows"></div><button class="btn line ca-add" type="button" data-sec="desserts" style="min-height:44px">+ Ajouter un dessert</button></div>
+          <p class="note" id="caNote" role="status" style="margin:14px 0 0"></p>
+          <div class="row" style="margin-top:12px"><button class="btn green" type="button" id="caPublish" style="min-height:48px">Publier la carte</button></div>
+        </div>
+      </div>
+
       <p class="out"><a href="#" id="logout">Se déconnecter</a></p>
     </section>
   </div>
@@ -293,7 +318,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   var $ = function (id) { return document.getElementById(id); };
   var LONG_DAYS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   var LONG_MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-  var state = { code: '', semaines: {}, bloques: {}, today: '', weeks: [], week: '', dirty: false, busy: false, tab: '', jour: null, armed: null, sending: null, lastLoad: 0 };
+  var state = { code: '', semaines: {}, carte: { titre: '', entrees: [], plats: [], desserts: [] }, bloques: {}, today: '', weeks: [], week: '', dirty: false, busy: false, tab: '', jour: null, armed: null, sending: null, lastLoad: 0 };
 
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
@@ -404,28 +429,29 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   });
 
   // ---------- Tabs ----------
+  var TABS = [['commandes', 'tabCmd', 'paneCmd'], ['menu', 'tabMenu', 'paneMenu'], ['carte', 'tabCarte', 'paneCarte']];
   function setTab(t) {
     state.tab = t;
-    $('tabCmd').setAttribute('aria-selected', String(t === 'commandes'));
-    $('tabMenu').setAttribute('aria-selected', String(t === 'menu'));
-    $('tabCmd').tabIndex = t === 'commandes' ? 0 : -1;
-    $('tabMenu').tabIndex = t === 'menu' ? 0 : -1;
-    $('paneCmd').hidden = t !== 'commandes';
-    $('paneMenu').hidden = t !== 'menu';
+    TABS.forEach(function (p) {
+      $(p[1]).setAttribute('aria-selected', String(t === p[0]));
+      $(p[1]).tabIndex = t === p[0] ? 0 : -1;
+      $(p[2]).hidden = t !== p[0];
+    });
     $('bar').hidden = $('app').hidden || t !== 'menu';
     try { history.replaceState(null, '', '#' + t); } catch (e) {}
     if (t === 'commandes' && state.code && Date.now() - state.lastLoad > 60000) refresh();
   }
-  $('tabCmd').addEventListener('click', function () { setTab('commandes'); });
-  $('tabMenu').addEventListener('click', function () { setTab('menu'); });
+  TABS.forEach(function (p) { $(p[1]).addEventListener('click', function () { setTab(p[0]); }); });
   document.querySelector('.tabs').addEventListener('keydown', function (e) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    setTab(state.tab === 'menu' ? 'commandes' : 'menu');
-    $(state.tab === 'menu' ? 'tabMenu' : 'tabCmd').focus();
+    var order = TABS.map(function (p) { return p[0]; });
+    var i = (order.indexOf(state.tab) + (e.key === 'ArrowRight' ? 1 : -1) + order.length) % order.length;
+    setTab(order[i]);
+    var tab = TABS[i][1]; $(tab).focus();
   });
   window.addEventListener('hashchange', function () {
     var h = location.hash.slice(1);
-    if (state.code && (h === 'menu' || h === 'commandes') && h !== state.tab) setTab(h);
+    if (state.code && (h === 'menu' || h === 'commandes' || h === 'carte') && h !== state.tab) setTab(h);
   });
 
   // ---------- Today's orders ----------
@@ -566,6 +592,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
   // ---------- Weeks ----------
   function load(res) {
     state.semaines = res.semaines || {};
+    state.carte = res.carte || state.carte;
     state.bloques = res.bloques || {};
     state.today = res.aujourdhui;
     setJour(res.jour);
@@ -579,6 +606,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     }
     renderWeeks();
     renderDays(state.semaines[state.week]);
+    renderCarte();
     status();
   }
   function weekLabel(i) {
@@ -785,6 +813,52 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
       .then(function () { state.busy = false; btn.disabled = false; btn.textContent = 'Publier sur le site'; });
   });
   window.addEventListener('beforeunload', function (e) { if (state.dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---------- Carte saisonnière ----------
+  function caRowsOf(sec) { return $('paneCarte').querySelector('.ca-sec[data-sec="' + sec + '"] .ca-rows'); }
+  function caRow(nom, desc) {
+    var row = el('div', 'ca-row');
+    var n = el('input', 'ca-nom'); n.type = 'text'; n.maxLength = 120; n.placeholder = 'Nom du plat'; n.value = nom || '';
+    var d = el('input', 'ca-desc'); d.type = 'text'; d.maxLength = 200; d.placeholder = 'Description (facultatif)'; d.value = desc || '';
+    var x = el('button', 'ca-del'); x.type = 'button'; x.setAttribute('aria-label', 'Retirer'); x.textContent = '✕';
+    x.addEventListener('click', function () { if (row.parentNode) row.parentNode.removeChild(row); });
+    row.appendChild(n); row.appendChild(d); row.appendChild(x);
+    return row;
+  }
+  function renderCarte() {
+    var c = state.carte || {};
+    $('caTitre').value = c.titre || '';
+    ['entrees', 'plats', 'desserts'].forEach(function (sec) {
+      var box = caRowsOf(sec); box.innerHTML = '';
+      var arr = Array.isArray(c[sec]) && c[sec].length ? c[sec] : [{ nom: '', desc: '' }];
+      arr.forEach(function (it) { box.appendChild(caRow(it && it.nom, it && it.desc)); });
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.ca-add'), function (btn) {
+    btn.addEventListener('click', function () { caRowsOf(btn.getAttribute('data-sec')).appendChild(caRow('', '')); });
+  });
+  function collectCarte(sec) {
+    return Array.prototype.map.call(caRowsOf(sec).querySelectorAll('.ca-row'), function (r) {
+      return { nom: r.querySelector('.ca-nom').value.trim(), desc: r.querySelector('.ca-desc').value.trim() };
+    }).filter(function (x) { return x.nom; });
+  }
+  $('caPublish').addEventListener('click', function () {
+    if (state.busy) return;
+    var payload = { action: 'carte', code: state.code, titre: $('caTitre').value.trim(),
+      entrees: collectCarte('entrees'), plats: collectCarte('plats'), desserts: collectCarte('desserts') };
+    if (!payload.entrees.length && !payload.plats.length && !payload.desserts.length) {
+      $('caNote').className = 'note bad'; $('caNote').textContent = 'Ajoute au moins un plat à la carte.'; return;
+    }
+    state.busy = true;
+    var btn = $('caPublish'); btn.disabled = true; btn.textContent = 'Publication…';
+    $('caNote').className = 'note'; $('caNote').textContent = '';
+    post(payload).then(function (res) {
+      if (!res.ok) { if (codeError(res)) return; $('caNote').className = 'note bad'; $('caNote').textContent = res.error || 'Réessaie dans un instant.'; return; }
+      state.carte = res.carte || state.carte; renderCarte();
+      $('caNote').className = 'note ok'; $('caNote').textContent = 'Carte en ligne ✓';
+    }).catch(function () { $('caNote').className = 'note bad'; $('caNote').textContent = 'Pas de connexion : réessaie.'; })
+      .then(function () { state.busy = false; btn.disabled = false; btn.textContent = 'Publier la carte'; });
+  });
 
   // ---------- Dictation (Chrome, Safari) ----------
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;

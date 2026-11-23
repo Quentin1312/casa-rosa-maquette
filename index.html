@@ -885,23 +885,25 @@
         <div style="background:#fbf9f3;border:1.5px solid #202820;border-radius:6px;padding:12px;box-shadow:0 22px 30px -18px rgba(32,40,32,.45)">
           <div style="border:1.5px solid #B08D57;border-radius:3px;padding:26px 22px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
             <span style="font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#114232">Carte saisonnière</span>
-            <span style="margin-top:-8px;font-family:'Titan One',sans-serif;font-weight:400;font-size:30px;line-height:1">Novembre à janvier</span>
+            <span style="margin-top:-8px;font-family:'Titan One',sans-serif;font-weight:400;font-size:30px;line-height:1">{{ carteTitre }}</span>
             <span style="width:60px;border-top:1.5px solid #B08D57"></span>
             <div style="display:flex;flex-direction:column;gap:8px">
               <span style="font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8D1D2C">L’entrée</span>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Taboulé de saison</span><span style="font-size:13px;line-height:1.4">Semoule, poireaux, cranberries, orange, persil et courges</span></div>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Salade de lentilles</span><span style="font-size:13px;line-height:1.4">Lentilles, carottes, noisettes et échalotes, vinaigrette maison</span></div>
+              <sc-for list="{{ carteEntrees }}" as="it" hint-placeholder-count="2">
+                <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">{{ it.nom }}</span><span style="font-size:13px;line-height:1.4">{{ it.desc }}</span></div>
+              </sc-for>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <span style="font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8D1D2C">Le plat · un seul choix pour la tablée</span>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Chili aux lentilles de la Planèze</span><span style="font-size:13px;line-height:1.4">Lentilles locales, bœuf bio et riz bio</span></div>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Sauté de dinde à la sauce forestière</span><span style="font-size:13px;line-height:1.4">Gratin duo de pommes de terre au Cantal</span></div>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Mijoté de porc aux pommes</span><span style="font-size:13px;line-height:1.4">Cannelle, cardamome et clous de girofle, purée de pommes de terre</span></div>
+              <sc-for list="{{ cartePlats }}" as="it" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">{{ it.nom }}</span><span style="font-size:13px;line-height:1.4">{{ it.desc }}</span></div>
+              </sc-for>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <span style="font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8D1D2C">Le dessert · à partager, 7 parts</span>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Tarte aux pommes et ganache au chocolat</span><span style="font-size:13px;line-height:1.4"></span></div>
-              <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">Nuage au chocolat</span><span style="font-size:13px;line-height:1.4">Avec sa crème anglaise</span></div>
+              <sc-for list="{{ carteDesserts }}" as="it" hint-placeholder-count="2">
+                <div style="display:flex;flex-direction:column;gap:1px"><span style="font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.15;color:#114232">{{ it.nom }}</span><span style="font-size:13px;line-height:1.4">{{ it.desc }}</span></div>
+              </sc-for>
             </div>
             <span style="margin-top:4px;padding:8px 16px;border-radius:6px;background:#8D1D2C;color:#f4f0e5;font-family:'Titan One',sans-serif;font-weight:400;font-size:17px;line-height:1.2">Dès 7 personnes · tarif sur devis</span>
           </div>
@@ -1688,14 +1690,38 @@ class Component extends DCLogic {
   // Menus published from Céline's space (sheet « Menus »): { monday: [5 × { e, p, d, ferme }] }.
   // Read from the order script; the last answer is kept in the browser so the page opens with it.
   menus = (() => { try { return JSON.parse(localStorage.getItem('casa-menus') || 'null'); } catch (e) { return null; } })();
+  // Carte saisonnière, modifiable depuis l'espace Céline ; sinon la carte par défaut ci-dessous
+  CARTE_DEFAULT = {
+    titre: 'Novembre à janvier',
+    entrees: [
+      { nom: 'Taboulé de saison', desc: 'Semoule, poireaux, cranberries, orange, persil et courges' },
+      { nom: 'Salade de lentilles', desc: 'Lentilles, carottes, noisettes et échalotes, vinaigrette maison' },
+    ],
+    plats: [
+      { nom: 'Chili aux lentilles de la Planèze', desc: 'Lentilles locales, bœuf bio et riz bio' },
+      { nom: 'Sauté de dinde à la sauce forestière', desc: 'Gratin duo de pommes de terre au Cantal' },
+      { nom: 'Mijoté de porc aux pommes', desc: 'Cannelle, cardamome et clous de girofle, purée de pommes de terre' },
+    ],
+    desserts: [
+      { nom: 'Tarte aux pommes et ganache au chocolat', desc: '' },
+      { nom: 'Nuage au chocolat', desc: 'Avec sa crème anglaise' },
+    ],
+  };
+  carte = (() => { try { return JSON.parse(localStorage.getItem('casa-carte') || 'null'); } catch (e) { return null; } })();
   loadMenus() {
     if (!this.ORDER_API) return;
     fetch(this.ORDER_API + '?action=menus').then(r => r.json()).then(d => {
       if (!d || !d.ok || !d.semaines) return;
       this.menus = d.semaines;
       try { localStorage.setItem('casa-menus', JSON.stringify(d.semaines)); } catch (e) {}
+      if (d.carte && d.carte.titre) { this.carte = d.carte; try { localStorage.setItem('casa-carte', JSON.stringify(d.carte)); } catch (e) {} }
       this.forceUpdate();
     }).catch(() => {});
+  }
+  carteVals() {
+    const d = this.CARTE_DEFAULT, c = this.carte && this.carte.titre ? this.carte : d;
+    const items = a => (Array.isArray(a) ? a : []).map(x => ({ nom: String((x && x.nom) || ''), desc: String((x && x.desc) || '') })).filter(x => x.nom);
+    return { carteTitre: c.titre || d.titre, carteEntrees: items(c.entrees), cartePlats: items(c.plats), carteDesserts: items(c.desserts) };
   }
   mondayOf(y) { const d = new Date(y + 'T12:00:00'); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return this.ymdOf(d); }
   plusDays(y, n) { const d = new Date(y + 'T12:00:00'); d.setDate(d.getDate() + n); return this.ymdOf(d); }
@@ -1921,6 +1947,7 @@ class Component extends DCLogic {
     return {
       ...this.boxVals(),
       ...this.cmdVals(),
+      ...this.carteVals(),
       ...this.weekVals(w, wide),
       ...this.heroVals(w, wide),
       ...this.entVals(w, wide),
