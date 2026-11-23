@@ -106,7 +106,7 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 .empty { padding: 28px 20px; text-align: center; }
 
 /* Weeks */
-.weeks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 18px; }
+.weeks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 22px 0 18px; }
 .week { appearance: none; text-align: left; cursor: pointer; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 14px; padding: 12px 14px; font-family: inherit; display: flex; flex-direction: column; gap: 3px; min-height: 92px; transition: background .2s, color .2s; }
 .week:hover { background: #fff; }
 .week[aria-pressed="true"] { background: var(--green); color: var(--cream); }
@@ -573,7 +573,7 @@ Et pareil pour mardi, mercredi, jeudi et vendredi. Écris « Fermé » pour un j
     var wd = new Date(state.today + 'T12:00:00Z').getUTCDay();
     var first = mondayOf(state.today);
     if (wd === 6 || wd === 0) first = addDays(first, 7);
-    state.weeks = [first, addDays(first, 7), addDays(first, 14)];
+    state.weeks = [first, addDays(first, 7), addDays(first, 14), addDays(first, 21)];
     if (!state.week || state.weeks.indexOf(state.week) < 0) {
       state.week = state.weeks.slice(0, 2).filter(function (w) { return !state.semaines[w]; })[0] || state.weeks[0];
     }
