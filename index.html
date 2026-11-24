@@ -574,6 +574,18 @@
                 <input value="{{ remarques }}" sc-camel-on-change="{{ onRemarques }}" placeholder="Allergie, menu végétarien… à signaler (facultatif)" aria-label="Allergie ou régime à signaler" maxlength="300" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
                 <span style="flex:1 1 100%;font-size:13px;line-height:1.4;padding:0 6px">Vos coordonnées servent seulement à préparer et suivre votre commande. <a href="mentions-legales.html" style="font-weight:700">En savoir plus</a></span>
               </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <button sc-camel-on-click="{{ toggleEntreprise }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;appearance:none;cursor:pointer;background:{{ entBg }};color:{{ entFg }};border:1.5px solid #202820;border-radius:999px;min-height:46px;padding:0 20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;transition:background .2s,color .2s"><span style="font-size:17px;line-height:1">{{ entMark }}</span>Je commande pour mon entreprise</button>
+                <sc-if value="{{ entrepriseOn }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-wrap:wrap;gap:10px">
+                    <input value="{{ raison }}" sc-camel-on-change="{{ onRaison }}" placeholder="Raison sociale" aria-label="Raison sociale" maxlength="80" style="flex:1 1 100%;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                    <input value="{{ siret }}" sc-camel-on-change="{{ onSiret }}" inputmode="numeric" placeholder="SIRET (14 chiffres)" aria-label="SIRET" maxlength="20" style="flex:1 1 180px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                    <input value="{{ factAdr }}" sc-camel-on-change="{{ onFactAdr }}" placeholder="Adresse de facturation" aria-label="Adresse de facturation" maxlength="140" style="flex:1 1 220px;min-width:0;height:54px;border-radius:999px;border:1.5px solid #202820;background:#fbf9f3;color:#202820;padding:0 22px;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;outline:none">
+                    <span style="flex:1 1 100%;font-size:13px;line-height:1.4;padding:0 6px;color:#575c54">Paiement par virement. La facture et le RIB vous sont envoyés par e-mail.</span>
+                  </div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ payChoose }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;flex-direction:column;gap:8px">
                 <span style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase">{{ payLabel }}</span>
                 <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -582,6 +594,7 @@
                   </sc-for>
                 </div>
               </div>
+              </sc-if>
             </div>
           </div>
         </div>
@@ -1231,7 +1244,7 @@ class Component extends DCLogic {
   ORDER_API = 'https://script.google.com/macros/s/AKfycbybv3JWdy-K9PStqFwIz6m4Qt7w3zWPkvH1KJoK3aTYv0ylhXG1fkhTlg-ObEC2dAbSrQ/exec';
   dispo = {};
   livGeo = {}; // zones de livraison déjà calculées depuis l'adresse, clé « rue|commune »
-  cmd = { ch: [-1, -1, -1], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', remarques: '', sending: false, mode: 'collect', adresse: '', truckGo: false, zone: 0, slots: {}, pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', dayHint: '', done: null, bar: false, composing: true };
+  cmd = { ch: [-1, -1, -1], formule: 'menu', qty: 1, pain: false, prenom: '', nom: '', email: '', tel: '', remarques: '', entreprise: false, raison: '', siret: '', factAdr: '', sending: false, mode: 'collect', adresse: '', truckGo: false, zone: 0, slots: {}, pay: 0, commune: 0, rue: '', complement: '', cart: [], dateIdx: 0, ly: 'translateY(-30px) rotate(-6deg) scale(1.06)', lo: 0, lt: 'none', stamped: false, msg: '', hint: '', dayHint: '', done: null, bar: false, composing: true };
   setCmd(p) { this.cmd = { ...this.cmd, ...p }; this.forceUpdate(); }
   // Communes proposées (réponse du script, ou repli) : sert à construire l'adresse à géocoder.
   communesList() { for (const k in this.dispo) { const d = this.dispo[k]; if (d && d.communes) return d.communes; } return ['Aurillac (15000)', 'Arpajon-sur-Cère (15130)']; }
@@ -1531,6 +1544,12 @@ class Component extends DCLogic {
       email: c.email, onEmail: e => this.setCmd({ email: e.target.value, ...reset }),
       tel: c.tel, onTel: e => this.setCmd({ tel: e.target.value, ...reset }),
       remarques: c.remarques, onRemarques: e => this.setCmd({ remarques: e.target.value, ...reset }),
+      raison: c.raison, onRaison: e => this.setCmd({ raison: e.target.value, ...reset }),
+      siret: c.siret, onSiret: e => this.setCmd({ siret: e.target.value, ...reset }),
+      factAdr: c.factAdr, onFactAdr: e => this.setCmd({ factAdr: e.target.value, ...reset }),
+      entrepriseOn: c.entreprise, payChoose: !c.entreprise,
+      entMark: c.entreprise ? '✓' : '＋', entBg: c.entreprise ? '#114232' : 'transparent', entFg: c.entreprise ? '#f4f0e5' : '#202820',
+      toggleEntreprise: () => this.setCmd({ entreprise: !c.entreprise, pay: !c.entreprise ? 2 : c.pay, ...reset }),
       rue: c.rue, onRue: e => { this.setCmd({ rue: e.target.value, ...reset }); this.scheduleGeo(); },
       complement: c.complement, onComplement: e => this.setCmd({ complement: e.target.value, ...reset }),
       isLiv, pickupOn,
@@ -1562,6 +1581,11 @@ class Component extends DCLogic {
         if (!c.nom.trim()) { this.setCmd({ msg: 'Indiquez aussi votre nom.' }); return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim())) { this.setCmd({ msg: 'Indiquez une adresse e-mail valide.' }); return; }
         if (c.tel.replace(/\D/g, '').length < 10) { this.setCmd({ msg: 'Indiquez un numéro de téléphone.' }); return; }
+        if (c.entreprise) {
+          if (!c.raison.trim()) { this.setCmd({ msg: 'Indiquez la raison sociale de l’entreprise.' }); return; }
+          if (c.siret.replace(/\D/g, '').length !== 14) { this.setCmd({ msg: 'Le SIRET doit comporter 14 chiffres.' }); return; }
+          if (!c.factAdr.trim()) { this.setCmd({ msg: 'Indiquez l’adresse de facturation de l’entreprise.' }); return; }
+        }
         // Confirmation window content, frozen at the moment of the order
         const done = id => ({
           id: id ? 'Commande n° ' + id : 'Commande (démo)', name: p,
@@ -1581,6 +1605,7 @@ class Component extends DCLogic {
           slots: Object.fromEntries(slotDays.map(y => [y, c.slots[y]])),
           zone: isLiv && livOk ? geo.label : '',
           rue: isLiv ? c.rue.trim() : '', complement: isLiv ? c.complement.trim() : '', commune: isLiv ? COMMUNES[c.commune] : '',
+          entreprise: c.entreprise, raison: c.raison.trim(), siret: c.siret.trim(), factAdr: c.factAdr.trim(),
           paiement: PAYS[c.pay], prenom: p, nom: c.nom.trim(), email: c.email.trim(), tel: c.tel.trim(), remarques: c.remarques.trim(), website: '' };
         this.setCmd({ sending: true, msg: 'Envoi de votre commande…' });
         // text/plain body: no CORS preflight, which Apps Script does not answer
