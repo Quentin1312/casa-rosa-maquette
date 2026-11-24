@@ -51,6 +51,14 @@ h2 { margin: 0; font-family: 'Titan One', sans-serif; font-weight: 400; font-siz
 .btn.green:hover { background: var(--ink); }
 .btn.line { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
 .btn.line:hover { background: var(--ink); color: var(--cream); }
+.add-wrap { margin-top: 18px; }
+.add-form { margin-top: 12px; border: 1.5px solid var(--line); border-radius: 14px; padding: 16px; background: var(--card); }
+.add-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.add-field { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.add-field input, .add-field select { height: 46px; border: 1.5px solid var(--ink); border-radius: 10px; background: #fff; color: var(--ink); padding: 0 12px; font-family: inherit; font-size: 16px; font-weight: 500; }
+.add-full { grid-column: 1 / -1; }
+.add-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+@media (max-width: 560px) { .add-grid { grid-template-columns: minmax(0, 1fr); } }
 .btn svg { width: 20px; height: 20px; flex: 0 0 auto; }
 :focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
 
@@ -238,6 +246,26 @@ summary { cursor: pointer; font-weight: 700; font-size: 15px; min-height: 32px; 
         <div class="sum" id="cmdSum"></div>
         <p class="note" id="cmdNote" role="status" style="margin:0 0 12px"></p>
         <div class="orders" id="orders"></div>
+        <div class="add-wrap">
+          <button class="btn line" type="button" id="addToggle" style="min-height:46px">+ Ajouter une commande</button>
+          <form id="addForm" class="add-form" hidden>
+            <div class="add-grid">
+              <label class="add-field"><span>Jour</span><select id="adDate"></select></label>
+              <label class="add-field"><span>Client / entreprise</span><input id="adClient" type="text" maxlength="120" placeholder="Nom ou raison sociale"></label>
+              <label class="add-field"><span>Téléphone</span><input id="adTel" type="tel" maxlength="20" placeholder="facultatif"></label>
+              <label class="add-field"><span>Nombre de menus</span><input id="adQty" type="number" min="1" max="500" value="1"></label>
+              <label class="add-field"><span>Mode</span><select id="adMode"><option value="collect">Click and collect</option><option value="livraison">Livraison</option></select></label>
+              <label class="add-field"><span>Créneau / heure</span><input id="adCreneau" type="text" maxlength="30" placeholder="facultatif, ex. 12h30"></label>
+              <label class="add-field"><span>Paiement</span><select id="adPay"><option>Virement</option><option>Espèces</option><option>Carte sur place</option><option>Déjà payé</option></select></label>
+              <label class="add-field"><span>Total €</span><input id="adTotal" type="number" min="0" step="0.01" placeholder="auto : menus x 17,50"></label>
+              <label class="add-field add-full"><span>Détail (SIRET, adresse de facturation, plats…)</span><input id="adDetail" type="text" maxlength="400" placeholder="facultatif"></label>
+            </div>
+            <div class="add-actions">
+              <button class="btn green" type="submit" id="adSave">Enregistrer la commande</button>
+              <button class="btn line" type="button" id="adCancel">Annuler</button>
+            </div>
+          </form>
+        </div>
       </div>
 
       <div id="paneMenu" role="tabpanel" aria-labelledby="tabMenu" hidden>
@@ -614,6 +642,44 @@ Nom du plat — description</div>
       .then(function () { btn.disabled = false; btn.textContent = 'Actualiser'; });
   }
   $('refresh').addEventListener('click', refresh);
+
+  // ---------- Ajouter une commande à la main (ex. commandes entreprises reçues par mail) ----------
+  function adDates() {
+    var sel = $('adDate'); sel.innerHTML = '';
+    var DAYS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    var first = state.today || new Date().toISOString().slice(0, 10), n = 0, added = 0;
+    while (added < 15 && n < 32) {
+      var ymd = addDays(first, n); n++;
+      var wd = new Date(ymd + 'T12:00:00Z').getUTCDay();
+      if (wd === 0 || wd === 6) continue;
+      var op = document.createElement('option'); op.value = ymd;
+      op.textContent = DAYS[wd] + ' ' + dayNum(ymd) + ' ' + monthOf(ymd); sel.appendChild(op); added++;
+    }
+  }
+  $('addToggle').addEventListener('click', function () {
+    var f = $('addForm'); f.hidden = !f.hidden;
+    if (!f.hidden) { adDates(); $('adClient').focus(); }
+  });
+  $('adCancel').addEventListener('click', function () { $('addForm').hidden = true; });
+  $('addForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var client = $('adClient').value.trim();
+    if (!client) { cmdNote('Indique le nom ou la raison sociale.', false); return; }
+    var qty = Math.floor(Number($('adQty').value));
+    if (!(qty >= 1)) { cmdNote('Nombre de menus invalide.', false); return; }
+    var btn = $('adSave'); if (btn.disabled) return; btn.disabled = true; btn.textContent = 'Enregistrement…';
+    post({ action: 'ajout', code: state.code, date: $('adDate').value, client: client, tel: $('adTel').value.trim(),
+      qty: qty, mode: $('adMode').value, creneau: $('adCreneau').value.trim(), paiement: $('adPay').value,
+      detail: $('adDetail').value.trim(), total: Number($('adTotal').value) || 0 })
+      .then(function (res) {
+        if (!res.ok) { if (!codeError(res)) cmdNote(res.error || 'Réessaie dans un instant.', false); return; }
+        setJour(res.jour); state.semaines = res.semaines || state.semaines;
+        $('addForm').hidden = true; $('addForm').reset(); $('adQty').value = '1';
+        cmdNote('Commande ajoutée ✓', true);
+      })
+      .catch(function () { cmdNote('Pas de connexion : réessaie.', false); })
+      .then(function () { btn.disabled = false; btn.textContent = 'Enregistrer la commande'; });
+  });
   // Back on the page after a while (phone in the pocket): fresh list
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden && state.code && state.tab === 'commandes' && Date.now() - state.lastLoad > 60000) refresh();
